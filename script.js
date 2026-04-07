@@ -1,361 +1,446 @@
-// ==============================
-// KONFIGURASI
-// ==============================
-const emailPenerima = "hilmikaut@gmail.com"; // ganti dengan email kamu
-const textToType = "Aku bikin pesan ini khusus buat kamu. Semoga setelah baca semuanya, hati kamu bisa sedikit lebih lembut buat aku. 💗";
+// =========================================================
+// CONFIGURATION
+// =========================================================
+const emailPenerima = "hilmikaut@gmail.com"; 
 
+// DOM Elements
 const scenes = [
-    document.getElementById("scene-1"),
-    document.getElementById("scene-2"),
-    document.getElementById("scene-3"),
-    document.getElementById("scene-4"),
-    document.getElementById("scene-5")
+    document.getElementById('scene-1'),
+    document.getElementById('scene-2'),
+    document.getElementById('scene-3'),
+    document.getElementById('scene-4'),
+    document.getElementById('scene-5')
 ];
 
-const progressFill = document.getElementById("progress-fill");
-const progressDots = document.querySelectorAll(".progress-dot");
-const actionArea = document.getElementById("action-area-1");
-const typingText = document.getElementById("typing-text");
-const complimentText = document.getElementById("rotating-compliment");
-const textarea = document.getElementById("curhatan");
-const charCount = document.getElementById("char-count");
-const typingStatus = document.getElementById("typing-status");
-const previewCurhat = document.getElementById("preview-curhat");
-const btnNo = document.getElementById("btn-no");
-const btnYes = document.getElementById("btn-yes");
-const pleadingText = document.getElementById("pleading-text");
-const buttonGroup = document.getElementById("button-group");
+const inputCurhatan = document.getElementById('curhatan');
+const progressBar = document.querySelector('.progress-bar::before') || document.querySelector('.progress-bar');
+const progressDots = document.querySelectorAll('.dot');
 
-const starsLayer = document.getElementById("stars-layer");
-const floatingHeartsLayer = document.getElementById("floating-hearts-layer");
-const petalsLayer = document.getElementById("petals-layer");
-const burstLayer = document.getElementById("burst-layer");
-
+// State
 let currentScene = 0;
-let charIndex = 0;
-let noClickCount = 0;
-let historyTombol = [];
 let keluhKesahText = "";
+let historyTombol = [];
 
-const compliments = [
-    "senyummu bikin hati aku tenang.",
-    "cara kamu peduli itu selalu bikin aku merasa beruntung.",
-    "kamu punya hati yang hangat dan itu berharga banget.",
-    "kehadiran kamu selalu bikin hari aku lebih baik.",
-    "kamu itu rumah yang paling nyaman buat hati aku."
-];
+// =========================================================
+// 1. BACKGROUND GENERATION - FLOATING HEARTS
+// =========================================================
+const floatingHeartsContainer = document.getElementById('floating-hearts-bg');
+const heartEmojis = ['💕', '💗', '💖', '💝', '💓'];
 
-const noTexts = [
-    "Yakin nih? 🥺",
-    "Jangan gitu dong 😭",
-    "Kasih aku kesempatan yaa 💗",
-    "Aku bakal lebih baik ✨",
-    "Pliss maafin aku 💞"
-];
-
-const pleadings = [
-    "Aku bakal berusaha lebih baik, janji.",
-    "Aku serius mau memperbaiki semuanya.",
-    "Kasih aku satu kesempatan lagi ya sayang.",
-    "Aku tidak mau bikin kamu kecewa lagi.",
-    "Aku benar-benar sayang sama kamu."
-];
-
-// ==============================
-// BACKGROUND DECORATIONS
-// ==============================
-function createStars() {
-    for (let i = 0; i < 70; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        const size = Math.random() * 3 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.animationDuration = `${1.8 + Math.random() * 2.2}s`;
-        star.style.animationDelay = `${Math.random() * 2}s`;
-        starsLayer.appendChild(star);
-    }
+function createFloatingHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'bg-heart';
+    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+    heart.style.animationDuration = (Math.random() * 8 + 8) + 's';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    floatingHeartsContainer.appendChild(heart);
+    
+    setTimeout(() => heart.remove(), 16000);
 }
 
-function createFloatingHearts() {
-    const hearts = ["💗", "🤍", "💖", "💕"];
-    for (let i = 0; i < 16; i++) {
-        const el = document.createElement("div");
-        el.className = "float-heart";
-        el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        el.style.left = `${Math.random() * 100}%`;
-        el.style.animationDuration = `${10 + Math.random() * 10}s`;
-        el.style.animationDelay = `${Math.random() * 8}s`;
-        el.style.fontSize = `${12 + Math.random() * 14}px`;
-        floatingHeartsLayer.appendChild(el);
-    }
+for (let i = 0; i < 15; i++) {
+    createFloatingHeart();
+}
+setInterval(createFloatingHeart, 1200);
+
+// =========================================================
+// 2. BACKGROUND GENERATION - SPARKLES
+// =========================================================
+const sparklesContainer = document.getElementById('sparkles-container');
+
+function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = Math.random() * 100 + 'vw';
+    sparkle.style.top = Math.random() * 100 + 'vh';
+    sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    sparkle.style.animationDelay = Math.random() * 2 + 's';
+    sparklesContainer.appendChild(sparkle);
+    
+    setTimeout(() => sparkle.remove(), 5000);
 }
 
-function createPetals() {
-    const petals = ["🌸", "💮", "🌷"];
-    for (let i = 0; i < 10; i++) {
-        const petal = document.createElement("div");
-        petal.className = "falling-petal";
-        petal.textContent = petals[Math.floor(Math.random() * petals.length)];
-        petal.style.left = `${Math.random() * 100}%`;
-        petal.style.animationDuration = `${12 + Math.random() * 12}s`;
-        petal.style.animationDelay = `${Math.random() * 8}s`;
-        petal.style.fontSize = `${14 + Math.random() * 10}px`;
-        petalsLayer.appendChild(petal);
-    }
+for (let i = 0; i < 30; i++) {
+    setTimeout(createSparkle, Math.random() * 3000);
+}
+setInterval(createSparkle, 200);
+
+// =========================================================
+// 3. BACKGROUND GENERATION - GRADIENT ORBS
+// =========================================================
+const gradientOrbsContainer = document.getElementById('gradient-orbs');
+const orbColors = [
+    'radial-gradient(circle, rgba(255,182,193,0.6), transparent)',
+    'radial-gradient(circle, rgba(255,105,180,0.5), transparent)',
+    'radial-gradient(circle, rgba(255,228,233,0.7), transparent)'
+];
+
+for (let i = 0; i < 5; i++) {
+    const orb = document.createElement('div');
+    orb.className = 'gradient-orb';
+    orb.style.width = (Math.random() * 200 + 150) + 'px';
+    orb.style.height = orb.style.width;
+    orb.style.background = orbColors[Math.floor(Math.random() * orbColors.length)];
+    orb.style.left = Math.random() * 100 + '%';
+    orb.style.top = Math.random() * 100 + '%';
+    orb.style.animationDuration = (Math.random() * 10 + 15) + 's';
+    orb.style.animationDelay = Math.random() * 5 + 's';
+    gradientOrbsContainer.appendChild(orb);
 }
 
-// ==============================
-// TYPING EFFECT
-// ==============================
-function typeIntro() {
+// =========================================================
+// 4. TYPING EFFECT (Scene 1)
+// =========================================================
+const textToType = '"With this message, I hope you can forgive me, My Darling."';
+const typingElement = document.getElementById('typing-text');
+const actionArea = document.getElementById('action-area-1');
+let charIndex = 0;
+
+function typeText() {
     if (charIndex < textToType.length) {
-        typingText.textContent += textToType.charAt(charIndex);
+        typingElement.innerHTML += textToType.charAt(charIndex);
         charIndex++;
-        setTimeout(typeIntro, 38);
+        setTimeout(typeText, 50);
     } else {
         setTimeout(() => {
-            actionArea.classList.remove("hidden-fade");
-            actionArea.classList.add("show-fade");
-        }, 400);
+            actionArea.classList.remove('hidden-fade');
+            actionArea.classList.add('show-fade');
+        }, 600);
     }
 }
 
-// ==============================
-// SCENE CONTROL
-// ==============================
-function updateProgress(index) {
-    const percent = ((index + 1) / scenes.length) * 100;
-    progressFill.style.width = `${percent}%`;
+setTimeout(typeText, 1500);
 
-    progressDots.forEach((dot, i) => {
-        dot.classList.toggle("active", i <= index);
+// =========================================================
+// 5. SCENE TRANSITION SYSTEM
+// =========================================================
+function updateProgress(sceneIndex) {
+    const progress = ((sceneIndex + 1) / scenes.length) * 100;
+    if (progressBar) {
+        progressBar.style.setProperty('--progress', progress + '%');
+        document.querySelector('.progress-bar').style.setProperty('--progress-width', progress + '%');
+    }
+    
+    const progressBarElement = document.querySelector('.progress-bar');
+    if (progressBarElement) {
+        progressBarElement.style.setProperty('--progress-width', progress + '%');
+    }
+    
+    progressDots.forEach((dot, index) => {
+        if (index <= sceneIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
     });
 }
 
-function showScene(nextIndex) {
-    scenes[currentScene].classList.remove("visible");
-    scenes[currentScene].classList.add("hidden");
-
+function changeScene(fromIndex, toIndex) {
+    currentScene = toIndex;
+    
+    scenes[fromIndex].classList.remove('visible');
+    scenes[fromIndex].classList.add('hidden');
+    
     setTimeout(() => {
-        scenes[currentScene].style.display = "none";
-        scenes[nextIndex].style.display = "block";
-
-        requestAnimationFrame(() => {
-            scenes[nextIndex].classList.remove("hidden");
-            scenes[nextIndex].classList.add("visible");
-            currentScene = nextIndex;
-            updateProgress(currentScene);
-        });
-    }, 420);
+        scenes[fromIndex].style.display = 'none';
+        scenes[toIndex].style.display = 'block';
+        
+        void scenes[toIndex].offsetWidth;
+        
+        scenes[toIndex].classList.remove('hidden');
+        scenes[toIndex].classList.add('visible');
+        
+        updateProgress(toIndex);
+    }, 800);
 }
 
-// ==============================
-// COMPLIMENT ROTATOR
-// ==============================
-let complimentIndex = 0;
-setInterval(() => {
-    if (!complimentText) return;
-    complimentIndex = (complimentIndex + 1) % compliments.length;
-    complimentText.style.opacity = "0";
-    complimentText.style.transform = "translateY(6px)";
-    setTimeout(() => {
-        complimentText.textContent = compliments[complimentIndex];
-        complimentText.style.opacity = "1";
-        complimentText.style.transform = "translateY(0)";
-    }, 180);
-}, 2600);
+// Initialize
+scenes.forEach((scene, index) => {
+    if (index !== 0) scene.style.display = 'none';
+});
+updateProgress(0);
 
-// ==============================
-// TEXTAREA HANDLER
-// ==============================
-function updateTextareaInfo() {
-    const value = textarea.value;
-    const length = value.length;
-    charCount.textContent = `${length}/500`;
-
-    if (length === 0) {
-        typingStatus.textContent = "Aku siap baca semuanya 💗";
-    } else if (length < 40) {
-        typingStatus.textContent = "Tulis lagi, aku masih dengerin 🤍";
-    } else if (length < 120) {
-        typingStatus.textContent = "Makasih udah jujur sama perasaanmu 💞";
-    } else {
-        typingStatus.textContent = "Aku akan baca ini dengan sungguh-sungguh 💌";
+const style = document.createElement('style');
+style.textContent = `
+    .progress-bar::before {
+        width: var(--progress-width, 0%);
     }
+`;
+document.head.appendChild(style);
 
-    if (length > 500) {
-        textarea.value = value.slice(0, 500);
-    }
-}
-
-textarea.addEventListener("input", updateTextareaInfo);
-
-// ==============================
-// MAGIC BURST
-// ==============================
-function createBurst(x, y, amount = 12) {
-    const items = ["💖", "✨", "🌸", "💗", "🤍"];
-    for (let i = 0; i < amount; i++) {
-        const piece = document.createElement("div");
-        piece.className = "burst-item";
-        piece.textContent = items[Math.floor(Math.random() * items.length)];
-        piece.style.left = `${x}px`;
-        piece.style.top = `${y}px`;
-
-        const dx = (Math.random() - 0.5) * 180;
-        const dy = (Math.random() - 0.5) * 180 - 60;
-        piece.style.setProperty("--tx", `${dx}px`);
-        piece.style.setProperty("--ty", `${dy}px`);
-        piece.style.setProperty("--rot", `${Math.random() * 240 - 120}deg`);
-
-        burstLayer.appendChild(piece);
-        setTimeout(() => piece.remove(), 1200);
-    }
-}
-
-document.addEventListener("mousedown", (e) => {
-    const tag = e.target.tagName.toLowerCase();
-    if (tag !== "textarea" && tag !== "button") {
-        createBurst(e.clientX, e.clientY, 8);
-    }
+// =========================================================
+// 6. BUTTON EVENT LISTENERS
+// =========================================================
+document.getElementById('btn-next-1').addEventListener('click', () => {
+    historyTombol.push('Membuka Surat');
+    changeScene(0, 1);
 });
 
-document.addEventListener("touchstart", (e) => {
-    const tag = e.target.tagName.toLowerCase();
-    if (tag !== "textarea" && tag !== "button") {
-        const touch = e.touches[0];
-        createBurst(touch.clientX, touch.clientY, 8);
+document.getElementById('btn-next-2').addEventListener('click', () => {
+    historyTombol.push('Lanjut ke Curhatan');
+    changeScene(1, 2);
+});
+
+document.getElementById('btn-next-3').addEventListener('click', () => {
+    keluhKesahText = inputCurhatan.value;
+    if (keluhKesahText.trim() === "") {
+        keluhKesahText = "(Tidak ada curhatan yang ditulis)";
     }
-}, { passive: true });
-
-// ==============================
-// BUTTON EVENTS
-// ==============================
-document.getElementById("btn-next-1").addEventListener("click", () => {
-    historyTombol.push("Buka Pesan");
-    showScene(1);
+    historyTombol.push('Mengirim Curhatan');
+    changeScene(2, 3);
 });
 
-document.getElementById("btn-next-2").addEventListener("click", () => {
-    historyTombol.push("Lanjut ke Curhat");
-    showScene(2);
-});
+// =========================================================
+// 7. "GAK" BUTTON LOGIC - EVADING & BEGGING
+// =========================================================
+const btnNo = document.getElementById('btn-no');
+const teksMohon = [
+    "Pliss dimaafin 🥺",
+    "Serius gak mau? 😭",
+    "Ayolah sayangku 🥹",
+    "Jangan hukum aku 💔",
+    "Aku mohon banget ✨",
+    "Maafin dong sayang 💕",
+    "Please please please 🙏",
+    "Aku janji gak ngulangin 💝"
+];
+let noClickCount = 0;
 
-document.getElementById("btn-next-3").addEventListener("click", () => {
-    keluhKesahText = textarea.value.trim();
-
-    if (!keluhKesahText) {
-        keluhKesahText = "Dia tidak menulis curhatan, tapi tetap lanjut membaca.";
-    }
-
-    previewCurhat.textContent = keluhKesahText;
-    historyTombol.push("Kirim Curhat");
-    showScene(3);
-});
-
-btnNo.addEventListener("click", () => {
+btnNo.addEventListener('click', () => {
+    historyTombol.push(`Klik Gak (ke-${noClickCount + 1})`);
+    btnNo.innerHTML = `<span>${teksMohon[noClickCount % teksMohon.length]}</span>`;
     noClickCount++;
-    historyTombol.push(`Klik Gak ${noClickCount}x`);
-
-    btnNo.textContent = noTexts[(noClickCount - 1) % noTexts.length];
-    pleadingText.textContent = pleadings[(noClickCount - 1) % pleadings.length];
-
-    btnNo.classList.remove("shake");
-    void btnNo.offsetWidth;
-    btnNo.classList.add("shake");
-
-    const moveX = Math.floor(Math.random() * 70) - 35;
-    const moveY = Math.floor(Math.random() * 24) - 12;
-    btnNo.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${Math.floor(Math.random() * 10) - 5}deg)`;
-
-    btnYes.classList.add("glow-yes");
-    setTimeout(() => btnYes.classList.remove("glow-yes"), 700);
-
-    const rect = btnNo.getBoundingClientRect();
-    createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 10);
-
-    if (noClickCount >= 5) {
-        btnNo.textContent = "Yaudah deh, pikirin lagi 🥹";
-    }
+    
+    btnNo.style.transition = 'all 0.1s ease';
+    btnNo.style.transform = "translateX(20px) scale(0.85)";
+    setTimeout(() => btnNo.style.transform = "translateX(-20px) scale(0.85)", 60);
+    setTimeout(() => btnNo.style.transform = "translateX(15px) scale(0.9)", 120);
+    setTimeout(() => btnNo.style.transform = "translateX(-10px) scale(0.95)", 180);
+    setTimeout(() => {
+        btnNo.style.transition = 'all 0.3s ease';
+        btnNo.style.transform = "translateX(0) scale(1)";
+    }, 240);
+    
+    createSadParticles(btnNo);
 });
 
-btnYes.addEventListener("click", async () => {
+function createSadParticles(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const sadEmojis = ['😢', '💔', '😭'];
+    
+    for (let i = 0; i < 3; i++) {
+        createMagicBurst(centerX, centerY, sadEmojis);
+    }
+}
+
+// =========================================================
+// 8. "IYA" BUTTON & EMAIL SUBMISSION
+// =========================================================
+const btnYes = document.getElementById('btn-yes');
+
+btnYes.addEventListener('click', () => {
     historyTombol.push("Akhirnya Klik Iya ❤️");
-
+    
+    btnYes.innerHTML = "<span class='btn-content'><span class='btn-icon'>✨</span><span class='btn-text'>Memproses Cinta...</span></span>";
     btnYes.disabled = true;
-    btnNo.disabled = true;
-    btnYes.innerHTML = `<span>Memproses cinta... 💗</span><div class="btn-shine"></div>`;
-    pleadingText.textContent = "Makasih udah kasih aku kesempatan.";
-
-    const rect = btnYes.getBoundingClientRect();
-    createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 22);
-
-    const dataKirim = {
+    btnYes.style.opacity = '0.7';
+    btnNo.style.display = 'none';
+    
+    let dataKirim = {
         Pesan_Curhatan: keluhKesahText,
-        Riwayat_Tombol_Ditekan: historyTombol.join(" -> "),
-        Waktu: new Date().toLocaleString("id-ID")
+        Riwayat_Tombol: historyTombol.join(" → "),
+        Jumlah_Penolakan: noClickCount
     };
 
-    try {
-        await fetch(`https://formsubmit.co/ajax/${emailPenerima}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(dataKirim)
-        });
-    } catch (error) {
-        console.log("Submit gagal, tapi scene tetap lanjut.", error);
+    fetch(`https://formsubmit.co/ajax/${emailPenerima}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(dataKirim)
+    })
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            changeScene(3, 4);
+            setTimeout(createConfetti, 500);
+        }, 1000);
+    })
+    .catch(error => {
+        setTimeout(() => {
+            changeScene(3, 4);
+            setTimeout(createConfetti, 500);
+        }, 1000);
+    });
+});
+
+// Tombol Ulangi
+document.getElementById('btn-replay')?.addEventListener('click', () => {
+    location.reload();
+});
+
+// =========================================================
+// 9. CONFETTI CELEBRATION EFFECT
+// =========================================================
+function createConfetti() {
+    const confettiContainer = document.getElementById('confetti-container');
+    const colors = ['#FF69B4', '#FFB6C1', '#FF1493', '#FFC0CB', '#FF85A2', '#FFE4E9'];
+    const confettiCount = 100;
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.width = (Math.random() * 8 + 5) + 'px';
+        confetti.style.height = confetti.style.width;
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        
+        confettiContainer.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 5000);
     }
-
-    setTimeout(() => {
-        showScene(4);
-        launchFinalCelebration();
-    }, 750);
-});
-
-document.getElementById("btn-replay").addEventListener("click", () => {
-    window.location.reload();
-});
-
-// ==============================
-// FINAL CELEBRATION
-// ==============================
-function launchFinalCelebration() {
-    let count = 0;
-    const interval = setInterval(() => {
-        const x = Math.random() * window.innerWidth;
-        const y = Math.random() * (window.innerHeight * 0.6);
-        createBurst(x, y, 12);
-        count++;
-
-        if (count >= 10) {
-            clearInterval(interval);
-        }
-    }, 220);
 }
 
-// ==============================
-// INIT
-// ==============================
-function init() {
-    scenes.forEach((scene, index) => {
-        if (index !== 0) {
-            scene.style.display = "none";
+// =========================================================
+// 10. INTERACTIVE PARTICLE BURST SYSTEM
+// =========================================================
+const particleContainer = document.getElementById('interactive-particles');
+
+function createMagicBurst(x, y, customEmojis = null) {
+    const emojis = customEmojis || ['✨', '💖', '💫', '🌸', '💕', '⭐', '💗', '🌟'];
+    const burstCount = 12;
+
+    for (let i = 0; i < burstCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('magic-particle');
+        particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+
+        const angle = (i / burstCount) * Math.PI * 2;
+        const velocity = Math.random() * 100 + 80;
+        const tx = Math.cos(angle) * velocity + 'px';
+        const ty = Math.sin(angle) * velocity - 50 + 'px';
+        
+        particle.style.setProperty('--tx', tx);
+        particle.style.setProperty('--ty', ty);
+        particle.style.setProperty('--rot', Math.random() * 720 - 360 + 'deg');
+
+        particleContainer.appendChild(particle);
+        setTimeout(() => particle.remove(), 1500);
+    }
+}
+
+let lastBurstTime = 0;
+const burstCooldown = 300; 
+
+function handleInteraction(e) {
+    const now = Date.now();
+    if (now - lastBurstTime < burstCooldown) return;
+    
+    const target = e.target;
+    if (target.tagName.toLowerCase() === 'textarea' || 
+        target.tagName.toLowerCase() === 'button' ||
+        target.tagName.toLowerCase() === 'input') {
+        return;
+    }
+    
+    let x, y;
+    if (e.type === 'touchstart') {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+    } else {
+        x = e.clientX;
+        y = e.clientY;
+    }
+    
+    createMagicBurst(x, y);
+    lastBurstTime = now;
+}
+
+document.addEventListener('touchstart', handleInteraction, { passive: true });
+document.addEventListener('mousedown', handleInteraction);
+
+// =========================================================
+// 11. FLOATING LABEL FOR INPUT
+// =========================================================
+const floatingLabel = document.getElementById('floating-label');
+
+if (inputCurhatan && floatingLabel) {
+    inputCurhatan.addEventListener('focus', () => {
+        floatingLabel.style.top = '-12px';
+        floatingLabel.style.fontSize = '0.85rem';
+        floatingLabel.style.color = 'var(--pink-primary)';
+    });
+    
+    inputCurhatan.addEventListener('blur', () => {
+        if (inputCurhatan.value === '') {
+            floatingLabel.style.top = '20px';
+            floatingLabel.style.fontSize = '1rem';
+            floatingLabel.style.color = '#999';
         }
     });
-
-    createStars();
-    createFloatingHearts();
-    createPetals();
-    updateProgress(0);
-    updateTextareaInfo();
-
-    setTimeout(typeIntro, 600);
 }
 
-init();
+// =========================================================
+// 12. SMOOTH SCROLL PREVENTION
+// =========================================================
+document.body.style.overflow = 'hidden';
+document.documentElement.style.overflow = 'hidden';
+
+// =========================================================
+// 13. PERFORMANCE OPTIMIZATION
+// =========================================================
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.style.setProperty('--animation-duration', '0.01s');
+}
+
+// =========================================================
+// 14. ADDITIONAL BUTTON INTERACTIONS
+// =========================================================
+const allButtons = document.querySelectorAll('button');
+
+allButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.width = '20px';
+        ripple.style.height = '20px';
+        ripple.style.pointerEvents = 'none';
+        
+        const rect = this.getBoundingClientRect();
+        ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+        ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+        
+        this.appendChild(ripple);
+        
+        ripple.animate([
+            { transform: 'scale(0)', opacity: 1 },
+            { transform: 'scale(4)', opacity: 0 }
+        ], {
+            duration: 600,
+            easing: 'ease-out'
+        });
+        
+        setTimeout(() => ripple.remove(), 600);
+    });
+});
+
+// =========================================================
+// 15. CONSOLE MESSAGE
+// =========================================================
+console.log('%c💖 Made with Love 💖', 'color: #FF69B4; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);');
+
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});

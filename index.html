@@ -7,179 +7,180 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700;900&family=Sacramento&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div class="bg-glow glow-1"></div>
-    <div class="bg-glow glow-2"></div>
-    <div class="bg-glow glow-3"></div>
+    <div id="gradient-orbs"></div>
+    <div id="floating-hearts-bg"></div>
+    <div id="sparkles-container"></div>
+    <div id="confetti-container"></div>
+    <div id="interactive-particles"></div>
 
-    <div id="stars-layer"></div>
-    <div id="floating-hearts-layer"></div>
-    <div id="petals-layer"></div>
-    <div id="burst-layer"></div>
-
-    <main class="app-shell">
-        <div class="top-chip">for my favorite person 💌</div>
-
-        <div class="progress-wrap">
-            <div class="progress-line">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
+    <main class="master-container">
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
             <div class="progress-dots">
-                <span class="progress-dot active"></span>
-                <span class="progress-dot"></span>
-                <span class="progress-dot"></span>
-                <span class="progress-dot"></span>
-                <span class="progress-dot"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </div>
 
-        <div class="master-container">
-            <!-- Scene 1 -->
-            <section class="scene visible" id="scene-1">
-                <div class="halo-ring"></div>
-                <div class="hero-badge">💖</div>
-
-                <p class="mini-label">special message</p>
-                <h1 class="main-title">Untuk Kesayanganku</h1>
-
-                <div class="typing-card">
-                    <p id="typing-text" class="hero-quote"></p>
+        <section class="scene visible" id="scene-1">
+            <div class="scene-header">
+                <div class="wax-seal love-letter-seal">
+                    <span class="seal-heart">💌</span>
                 </div>
+            </div>
 
-                <div class="love-tags">
-                    <span>manis</span>
-                    <span>cantik</span>
-                    <span>berharga</span>
+            <p class="subtitle-elegant">special message</p>
+            <h1 class="luxury-title">Untuk Kesayanganku</h1>
+
+            <div class="typing-container">
+                <p id="typing-text" class="luxury-quote"></p>
+                <span class="cursor-blink">|</span>
+            </div>
+
+            <div class="action-area hidden-fade" id="action-area-1">
+                <div class="instruction-shimmer">
+                    <span class="shimmer-text">sentuh tombolnya yaa ✨</span>
+                    <div class="arrow-bounce">↓</div>
                 </div>
-
-                <div class="action-area hidden-fade" id="action-area-1">
-                    <p class="instruction-text">sentuh tombolnya yaa ✨</p>
-                    <button id="btn-next-1" class="btn btn-primary">
-                        <span>Buka Pesan Ini</span>
-                        <div class="btn-shine"></div>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Scene 2 -->
-            <section class="scene hidden" id="scene-2">
-                <p class="mini-label">my apology</p>
-                <h2 class="section-title">Maafin Aku Ya? 🥺</h2>
-
-                <div class="message-card">
-                    <p class="body-text">
-                        Sayang, aku minta maaf karena sempat melupakan hal-hal penting tentang kamu.
-                        Aku sadar itu bisa bikin kamu sedih, kecewa, dan merasa kurang dihargai.
-                    </p>
-                    <p class="body-text">
-                        Padahal buat aku, kamu itu sangat berarti. Aku ingin jadi orang yang lebih baik,
-                        lebih peka, dan lebih perhatian sama semua hal kecil tentang kamu.
-                    </p>
-                    <p class="body-text">
-                        Aku tidak mau cuma minta maaf. Aku juga mau memperbaiki semuanya pelan-pelan,
-                        dengan tindakan yang nyata.
-                    </p>
-                </div>
-
-                <div class="compliment-box">
-                    <span class="compliment-label">yang selalu aku suka dari kamu</span>
-                    <p id="rotating-compliment" class="compliment-text">senyummu bikin hati aku tenang.</p>
-                </div>
-
-                <button id="btn-next-2" class="btn btn-primary spaced">
-                    <span>Lanjut baca...</span>
-                    <div class="btn-shine"></div>
+                <button id="btn-next-1" class="btn-luxury-pink">
+                    <span class="btn-content">Buka Pesan Ini</span>
+                    <div class="btn-glow"></div>
+                    <div class="btn-shimmer"></div>
                 </button>
-            </section>
+            </div>
+        </section>
 
-            <!-- Scene 3 -->
-            <section class="scene hidden" id="scene-3">
-                <p class="mini-label">i want to listen</p>
-                <h2 class="section-title">Keluarkan Semuanya</h2>
+        <section class="scene hidden" id="scene-2">
+            <div class="pulse-heart">
+                <span class="emoji-3d">🥺</span>
+            </div>
+            <p class="subtitle-elegant">my apology</p>
+            <h2 class="luxury-heading">Maafin Aku Ya?</h2>
+            <div class="divider-elegant"></div>
 
-                <p class="body-text centered">
-                    Sebelum kamu memutuskan apa pun, tulis semua unek-unekmu di sini.
-                    Aku mau dengerin semuanya dengan hati yang serius.
+            <div class="glass-card">
+                <p class="text-luxury">
+                    Sayang, aku minta maaf karena sempat melupakan hal-hal penting tentang kamu.
+                    Aku sadar itu bisa bikin kamu sedih, kecewa, dan merasa kurang dihargai.
                 </p>
+                <p class="text-luxury">
+                    Padahal buat aku, kamu itu <span class="highlight-pink">sangat berarti</span>. Aku ingin jadi orang yang lebih baik,
+                    lebih peka, dan lebih perhatian sama semua hal kecil tentang kamu.
+                </p>
+                <p class="text-luxury">
+                    Aku tidak mau cuma minta maaf. Aku juga mau memperbaiki semuanya pelan-pelan,
+                    dengan tindakan yang nyata.
+                </p>
+            </div>
 
-                <div class="textarea-wrap">
-                    <textarea id="curhatan" class="luxury-input" placeholder="Tulis isi hati kamu di sini yaa..."></textarea>
-                    <div class="textarea-meta">
-                        <span id="typing-status">Aku siap baca semuanya 💗</span>
-                        <span id="char-count">0/500</span>
-                    </div>
-                </div>
+            <button id="btn-next-2" class="btn-luxury-pink">
+                <span class="btn-content">Lanjut baca...</span>
+                <div class="btn-glow"></div>
+                <div class="btn-shimmer"></div>
+            </button>
+        </section>
 
-                <button id="btn-next-3" class="btn btn-primary spaced">
-                    <span>Kirim & Lanjut</span>
-                    <div class="btn-shine"></div>
+        <section class="scene hidden" id="scene-3">
+            <span class="emoji-3d icon-elegant">✍️</span>
+            <p class="subtitle-elegant">i want to listen</p>
+            <h2 class="luxury-heading">Keluarkan Semuanya</h2>
+
+            <p class="text-luxury">
+                Sebelum kamu memutuskan apa pun, tulis semua unek-unekmu di sini.
+                Aku mau dengerin semuanya dengan hati yang serius.
+            </p>
+
+            <div class="input-wrapper">
+                <textarea id="curhatan" class="luxury-input" placeholder=" "></textarea>
+                <div class="input-border-glow"></div>
+                <span class="floating-label" id="floating-label">Tulis isi hati kamu di sini yaa...</span>
+            </div>
+
+            <button id="btn-next-3" class="btn-luxury-pink">
+                <span class="btn-content">Kirim & Lanjut</span>
+                <div class="btn-glow"></div>
+                <div class="btn-shimmer"></div>
+            </button>
+        </section>
+
+        <section class="scene hidden" id="scene-4">
+            <span class="emoji-3d icon-elegant">🌸</span>
+            <p class="subtitle-elegant">final question</p>
+            <h2 class="luxury-heading">Jadi...</h2>
+
+            <p class="text-luxury">
+                Aku sudah minta maaf. Kamu juga sudah ngeluarin isi hatimu.
+                Sekarang aku cuma mau tanya satu hal yang paling penting...
+            </p>
+
+            <div class="question-highlight">
+                <span class="sparkle">✨</span>
+                <p class="highlight-text">Apakah kamu mau memaafkanku?</p>
+                <span class="sparkle">✨</span>
+            </div>
+
+            <div class="button-group" id="button-group">
+                <button id="btn-yes" class="btn-luxury-pink">
+                    <span class="btn-content">
+                        <span class="btn-icon">💞</span>
+                        <span class="btn-text">Iya, Aku Maafin</span>
+                    </span>
+                    <div class="btn-glow"></div>
+                    <div class="btn-shimmer"></div>
                 </button>
-            </section>
+                <button id="btn-no" class="btn-outline-pink">Gak 😤</button>
+            </div>
+        </section>
 
-            <!-- Scene 4 -->
-            <section class="scene hidden" id="scene-4">
-                <p class="mini-label">final question</p>
-                <h2 class="section-title">Jadi... 🥺</h2>
+        <section class="scene hidden" id="scene-5">
+            <div class="celebration-header">
+                <div class="hearts-celebration">
+                    <span class="heart-bounce" style="animation-delay: 0s">💖</span>
+                    <span class="heart-bounce" style="animation-delay: 0.2s">💝</span>
+                    <span class="heart-bounce" style="animation-delay: 0.4s">💗</span>
+                </div>
+                <p class="subtitle-elegant">thank you, my love</p>
+                <h1 class="luxury-title celebration-title">Merci Mon Amour</h1>
+            </div>
 
-                <p class="body-text centered">
-                    Aku sudah minta maaf. Kamu juga sudah ngeluarin isi hatimu.
-                    Sekarang aku cuma mau tanya satu hal yang paling penting...
+            <div class="quote-french">
+                <p class="french-text">"Je t'aime plus qu'hier, moins que demain."</p>
+                <p class="french-translation">(Aku mencintaimu lebih dari kemarin, tapi kurang dari esok hari)</p>
+            </div>
+
+            <div class="glass-card">
+                <p class="text-luxury">
+                    Terima kasih banyak ya sayang, karena sudah membuka hati dan mau memaafkanku.
+                    Aku benar-benar bersyukur punya kamu.
                 </p>
-
-                <div class="preview-card">
-                    <p class="preview-label">yang kamu tulis:</p>
-                    <p id="preview-curhat" class="preview-text">Belum ada isi curhatan.</p>
-                </div>
-
-                <p class="question-highlight">Apakah kamu mau memaafkanku?</p>
-
-                <div class="button-group" id="button-group">
-                    <button id="btn-yes" class="btn btn-primary">
-                        <span>Iya, Aku Maafin 💞</span>
-                        <div class="btn-shine"></div>
-                    </button>
-                    <button id="btn-no" class="btn btn-secondary">Gak 😤</button>
-                </div>
-
-                <p id="pleading-text" class="pleading-text">Aku bakal berusaha lebih baik, janji.</p>
-            </section>
-
-            <!-- Scene 5 -->
-            <section class="scene hidden" id="scene-5">
-                <div class="final-heart">💝</div>
-                <p class="mini-label">thank you, my love</p>
-                <h1 class="main-title final-title">Merci Mon Amour</h1>
-
-                <p class="hero-quote final-quote">
-                    "Je t'aime plus qu'hier, moins que demain."
+                <p class="text-luxury">
+                    Mulai sekarang aku mau lebih perhatian, lebih peka, dan lebih serius menjaga perasaan kamu.
                 </p>
+            </div>
 
-                <div class="final-card">
-                    <p class="body-text">
-                        Terima kasih banyak ya sayang, karena sudah membuka hati dan mau memaafkanku.
-                        Aku benar-benar bersyukur punya kamu.
-                    </p>
-                    <p class="body-text">
-                        Mulai sekarang aku mau lebih perhatian, lebih peka, dan lebih serius menjaga perasaan kamu.
-                    </p>
-                </div>
+            <div class="reward-card-luxury">
+                <div class="reward-shine"></div>
+                <div class="reward-icon">🎁</div>
+                <h3 class="reward-title">Hadiah buat kamu</h3>
+                <p class="reward-content">
+                    Nanti kita makan <span class="food-highlight">sop burtok, ayam richeese, dan es krim</span> yaaa.
+                    Aku yang traktir dengan penuh cinta!
+                </p>
+                <div class="food-emojis">🍲🍗🍦</div>
+            </div>
 
-                <div class="reward-card">
-                    <span class="reward-title">Hadiah buat kamu 🍓</span>
-                    <p>
-                        Nanti kita makan <b>sop burtok, ayam recheese, dan es krim</b> yaaa.
-                        Aku yang traktir dengan penuh cinta 🤍💗
-                    </p>
-                </div>
-
-                <button id="btn-replay" class="btn btn-secondary spaced">Baca dari awal</button>
-            </section>
-        </div>
+            <div style="margin-top: 30px;">
+                <button id="btn-replay" class="btn-outline-pink">Baca dari awal</button>
+            </div>
+        </section>
     </main>
 
     <script src="script.js"></script>
