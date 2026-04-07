@@ -10,151 +10,139 @@
 
 :root {
     --primary-pink: #ff4d79;
-    --deep-pink: #d81b60; /* Warna pink gelap untuk teks agar mudah dibaca */
+    --deep-pink: #d81b60; 
     --light-pink: #ffe6ea;
-    --white-glass: rgba(255, 255, 255, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.9);
-    
-    /* Variabel untuk background interaktif yang diatur oleh JS */
-    --mouse-x: 50%;
-    --mouse-y: 50%;
+    --white-glass: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.8);
+    --text-main: #4a4a4a;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-}
+html, body { height: 100%; width: 100%; }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: 'Poppins', sans-serif; /* Font Modern */
-    background-color: #fff0f3;
+    background-color: #fdf2f4; /* Warna dasar soft pastel */
     overflow: hidden;
     position: relative;
 }
 
-/* Background Interaktif yang mengikuti kursor/sentuhan */
-.bg-interactive {
+/* =========================================================
+   BACKGROUND CAHAYA BERGERAK (Aesthetic Blobs)
+========================================================= */
+.blob {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), #ffccd5 0%, #fff0f3 40%, #ffffff 100%);
-    transition: background 0.2s ease;
+    filter: blur(60px);
     z-index: 0;
+    opacity: 0.7;
+    border-radius: 50%;
+    animation: moveBlobs 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.master-container {
-    width: 90%;
-    max-width: 420px;
-    perspective: 1500px;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.shape1 { width: 350px; height: 350px; background: #ff758c; top: -10%; left: -10%; }
+.shape2 { width: 400px; height: 400px; background: #ffb3c6; bottom: -20%; right: -10%; animation-delay: -3s; }
+.shape3 { width: 300px; height: 300px; background: #ffccd5; top: 30%; left: 40%; animation-duration: 15s; }
+
+@keyframes moveBlobs {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, 50px) scale(1.1); }
+    100% { transform: translate(-40px, -20px) scale(0.9); }
 }
 
 /* =========================================================
-   GAYA KOTAK SCENE 
+   KOTAK UTAMA (Glassmorphism Effect Kaca)
 ========================================================= */
+.master-container {
+    width: 90%; max-width: 420px;
+    perspective: 1500px; z-index: 10;
+    display: flex; justify-content: center; align-items: center;
+}
+
 .scene {
     background-color: var(--white-glass);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 45px 30px;
-    border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(255, 77, 121, 0.15), inset 0 0 20px rgba(255,255,255,1);
+    border-radius: 35px; /* Lebih bulat */
+    box-shadow: 0 20px 40px rgba(255, 77, 121, 0.2), inset 0 0 15px rgba(255,255,255,0.9);
     text-align: center;
-    width: 100%;
-    position: absolute; 
-    border: 1px solid var(--glass-border);
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 100%; position: absolute; 
+    border: 1.5px solid var(--glass-border);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efek memantul sedikit saat ganti halaman */
     backface-visibility: hidden;
 }
 
 .visible { display: block; opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; position: relative;}
-.hidden { display: none; opacity: 0; transform: scale(0.95) translateY(20px); pointer-events: none; }
+.hidden { display: none; opacity: 0; transform: scale(0.8) translateY(30px); pointer-events: none; }
 
-#scene-1.visible {
-    animation: floatCard 6s ease-in-out infinite;
-}
+#scene-1.visible { animation: floatCard 6s ease-in-out infinite; }
 
 /* =========================================================
-   TYPOGRAPHY (Font Modern & Pink)
+   TYPOGRAPHY (Kombinasi 3 Font)
 ========================================================= */
+/* Judul pakai font tulisan tangan menyambung */
 .modern-script-title {
-    font-family: 'Great Vibes', cursive; 
+    font-family: 'Dancing Script', cursive; 
     color: var(--primary-pink);
-    font-size: 3rem; margin-bottom: 10px; 
-    text-shadow: 2px 2px 4px rgba(255, 77, 121, 0.2);
+    font-size: 3.5rem; margin-bottom: 5px; 
+    text-shadow: 2px 2px 5px rgba(255, 77, 121, 0.3);
+    line-height: 1.2;
 }
 
+/* Sub-Judul pakai font serif yang elegan (kayak majalah) */
 .scene-title { 
-    color: var(--primary-pink); 
+    font-family: 'Playfair Display', serif;
+    color: var(--deep-pink); 
     margin-bottom: 15px; 
-    font-weight: 700; font-size: 1.6rem; 
-    letter-spacing: -0.5px;
+    font-weight: 700; font-size: 1.8rem; 
 }
 
-/* Teks Utama: Menggunakan Poppins, ukuran pas, warna Deep Pink */
+/* Teks bacaan pakai font modern yang bulat manis */
 .modern-body-text { 
-    font-family: 'Poppins', sans-serif; 
-    color: var(--deep-pink); 
+    font-family: 'Quicksand', sans-serif; 
+    color: var(--text-main); 
     line-height: 1.6; 
-    font-size: 0.95rem; 
-    font-weight: 400;
+    font-size: 1.05rem; 
+    font-weight: 600;
     margin-bottom: 25px; 
 }
 
-.italic-accent {
-    font-style: italic;
-    font-weight: 500;
-    font-size: 1.05rem;
-}
-
-.subtitle-form { font-size: 0.9rem; margin-bottom: 15px; opacity: 0.9;}
-.instruction { color: #ff8fa3; font-size: 0.85rem; font-weight: 500; margin-bottom: 20px; }
-.french-quote {
-    font-family: 'Great Vibes', cursive; font-size: 2.2rem;
-    color: var(--primary-pink); margin-bottom: 15px;
-}
-.reward-text { font-size: 1rem; }
+.italic-accent { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; font-size: 1.15rem; color: var(--deep-pink); }
+.subtitle-form { font-size: 0.95rem; font-weight: 500; margin-bottom: 15px; opacity: 0.8;}
+.instruction { font-family: 'Quicksand', sans-serif; color: #ff8fa3; font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; }
+.french-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--primary-pink); margin-bottom: 15px; }
 
 .divider-line {
-    width: 60px; height: 4px; border-radius: 5px;
-    background: linear-gradient(90deg, transparent, var(--primary-pink), transparent);
-    margin: 0 auto 20px auto;
+    width: 80px; height: 3px; border-radius: 5px;
+    background: var(--primary-pink);
+    margin: 10px auto 20px auto;
+    opacity: 0.6;
 }
 
 /* =========================================================
    ICONS & FORM
 ========================================================= */
-.icon-wrapper { position: relative; display: inline-block; margin-bottom: 20px; }
-.heart-icon-main {
-    font-size: 4rem; filter: drop-shadow(0 8px 15px rgba(255, 77, 121, 0.4));
-    animation: pulseHeart 2s infinite;
-}
+.icon-wrapper { position: relative; display: inline-block; margin-bottom: 15px; }
+.heart-icon-main { font-size: 4.5rem; filter: drop-shadow(0 10px 15px rgba(255, 77, 121, 0.4)); animation: pulseHeart 2s infinite; }
 
 .modern-pulse-ring {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 75px; height: 75px; border-radius: 50%; border: 2px solid rgba(255, 77, 121, 0.5);
+    width: 80px; height: 80px; border-radius: 50%; border: 2px solid rgba(255, 77, 121, 0.6);
     animation: ringPulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 .modern-pulse-ring.delay { animation-delay: 1.25s; }
 
 .modern-textarea {
     width: 100%; height: 110px;
-    background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px);
-    border: 2px solid rgba(255, 77, 121, 0.3); border-radius: 15px; padding: 15px;
-    font-family: 'Poppins', sans-serif; font-size: 0.95rem; color: var(--deep-pink);
+    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 77, 121, 0.4); border-radius: 18px; padding: 15px;
+    font-family: 'Quicksand', sans-serif; font-size: 1rem; color: var(--deep-pink); font-weight: 600;
     resize: none; outline: none; transition: all 0.3s ease;
 }
-.modern-textarea:focus {
-    background: #ffffff; border-color: var(--primary-pink);
-    box-shadow: 0 0 15px rgba(255, 77, 121, 0.2);
-}
-.modern-textarea::placeholder { color: #ffb3c6; }
+.modern-textarea:focus { background: #ffffff; border-color: var(--primary-pink); box-shadow: 0 0 15px rgba(255, 77, 121, 0.2); }
+.modern-textarea::placeholder { color: #ffb3c6; font-weight: 500; }
 
 /* =========================================================
    BUTTONS
@@ -162,40 +150,32 @@ body {
 .btn-modern-glass {
     background: linear-gradient(135deg, var(--primary-pink), #ff758c);
     border: none; color: white; 
-    padding: 14px 35px; font-size: 1rem; font-weight: 600; font-family: 'Poppins', sans-serif;
-    border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 77, 121, 0.3);
+    padding: 14px 35px; font-size: 1.05rem; font-weight: 700; font-family: 'Quicksand', sans-serif;
+    border-radius: 50px; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 77, 121, 0.4);
     position: relative; overflow: hidden; transition: all 0.3s ease; width: 100%; max-width: 250px;
 }
-.btn-small { padding: 12px 25px; font-size: 0.95rem; }
-.btn-modern-glass:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255, 77, 121, 0.4); }
+.btn-small { padding: 12px 25px; font-size: 1rem; }
+.btn-modern-glass:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 77, 121, 0.5); }
 .btn-modern-glass:active { transform: scale(0.95); }
 
-.buttons { display: flex; flex-direction: column; gap: 12px; position: relative; align-items: center; }
+.buttons { display: flex; flex-direction: column; gap: 12px; align-items: center; }
 #btn-yes, #btn-no {
-    font-family: 'Poppins', sans-serif; padding: 14px 20px; font-size: 1rem; font-weight: 600;
-    border: none; border-radius: 50px; cursor: pointer; width: 100%; max-width: 250px;
-    transition: all 0.3s ease;
+    font-family: 'Quicksand', sans-serif; padding: 14px 20px; font-size: 1.05rem; font-weight: 700;
+    border: none; border-radius: 50px; cursor: pointer; width: 100%; max-width: 250px; transition: all 0.3s ease;
 }
-#btn-yes { background: linear-gradient(135deg, #ff4d79, #ff758c); color: white; box-shadow: 0 8px 15px rgba(255, 77, 121, 0.3); }
+#btn-yes { background: linear-gradient(135deg, #ff4d79, #ff758c); color: white; box-shadow: 0 8px 15px rgba(255, 77, 121, 0.4); }
 #btn-yes:active { transform: scale(0.95); }
-#btn-no { background-color: #ffe6ea; color: var(--deep-pink); border: 1px solid #ffb3c6; }
+#btn-no { background-color: rgba(255, 230, 234, 0.8); color: var(--deep-pink); border: 2px solid #ffb3c6; }
 #btn-no:active { background-color: #ffccd5; }
 
 /* =========================================================
-   ANIMASI DEKORASI
+   ANIMASI DEKORASI (Floating Elements & Click Bursts)
 ========================================================= */
-.bg-decorations { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; overflow: hidden;}
-.floating-item {
-    position: absolute; pointer-events: none;
-    animation: floatUp infinite linear; z-index: 0;
-    filter: drop-shadow(0 5px 5px rgba(255, 77, 121, 0.2));
-}
-.click-heart {
-    position: absolute; pointer-events: none; color: #ff4d79; font-size: 1.2rem;
-    animation: popOut 0.8s ease-out forwards; z-index: 9999;
-}
+.bg-decorations { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; overflow: hidden;}
+.floating-item { position: absolute; pointer-events: none; animation: floatUp infinite linear; z-index: 5; filter: drop-shadow(0 5px 5px rgba(255, 77, 121, 0.2)); }
+.click-heart { position: absolute; pointer-events: none; font-size: 1.5rem; animation: popOut 0.8s ease-out forwards; z-index: 9999; }
 
-@keyframes floatCard { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+@keyframes floatCard { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
 @keyframes pulseHeart { 0%, 30%, 60%, 100% { transform: scale(1); } 15%, 45% { transform: scale(1.15); } }
 @keyframes ringPulse { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
 @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10%, 90% { opacity: var(--op); } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; } }
@@ -203,5 +183,5 @@ body {
 
 @media (max-width: 380px) {
     .scene { padding: 35px 20px; }
-    .modern-script-title { font-size: 2.5rem; }
+    .modern-script-title { font-size: 3rem; }
 }

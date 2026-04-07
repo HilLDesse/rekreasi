@@ -1,5 +1,5 @@
 // --- KONFIGURASI EMAIL FORM SUBMIT ---
-const emailPenerima = "hilmikaut@gmail.com"; 
+const emailPenerima = "EMAIL_KAMU_DISINI@gmail.com"; 
 
 const scene1 = document.getElementById('scene-1');
 const scene2 = document.getElementById('scene-2');
@@ -17,7 +17,7 @@ const inputCurhatan = document.getElementById('curhatan');
 let keluhKesahText = "";
 let historyTombol = []; 
 
-// Fungsi Pindah Halaman
+// Fungsi Pindah Halaman dengan Efek Lembut
 function changeScene(currentScene, nextScene) {
     currentScene.classList.remove('visible');
     currentScene.classList.add('hidden');
@@ -28,7 +28,7 @@ function changeScene(currentScene, nextScene) {
         setTimeout(() => {
             nextScene.classList.remove('hidden');
             nextScene.classList.add('visible');
-        }, 30);
+        }, 50);
     }, 600);
 }
 
@@ -58,9 +58,10 @@ btnNo.addEventListener('click', () => {
     btnNo.innerText = teksMohon[noClickCount % teksMohon.length];
     noClickCount++;
     
-    btnNo.style.transform = "translateX(10px)";
-    setTimeout(() => btnNo.style.transform = "translateX(-10px)", 50);
-    setTimeout(() => btnNo.style.transform = "translateX(0)", 100);
+    // Efek Getar Estetik
+    btnNo.style.transform = "translateX(15px) scale(0.95)";
+    setTimeout(() => btnNo.style.transform = "translateX(-15px) scale(0.95)", 50);
+    setTimeout(() => btnNo.style.transform = "translateX(0) scale(1)", 100);
 });
 
 // Logika Tombol "Iya" & Kirim Email Rahasia
@@ -89,33 +90,14 @@ btnYes.addEventListener('click', () => {
 });
 
 // ==========================================
-// DEKORASI & BACKGROUND INTERAKTIF
+// DEKORASI INTERAKTIF
 // ==========================================
 const decorationsContainer = document.getElementById('decorations');
-const rootElement = document.documentElement;
 
-// 1. Menggerakkan Gradient Background Mengikuti Kursor/Sentuhan
-function updateBackgroundPosition(x, y) {
-    const xPercent = (x / window.innerWidth) * 100;
-    const yPercent = (y / window.innerHeight) * 100;
-    rootElement.style.setProperty('--mouse-x', `${xPercent}%`);
-    rootElement.style.setProperty('--mouse-y', `${yPercent}%`);
-}
-
-document.addEventListener('mousemove', (e) => {
-    updateBackgroundPosition(e.clientX, e.clientY);
-});
-
-document.addEventListener('touchmove', (e) => {
-    if(e.touches.length > 0) {
-        updateBackgroundPosition(e.touches[0].clientX, e.touches[0].clientY);
-    }
-});
-
-// 2. Membuat Gelembung & Hati Melayang (Background)
+// 1. Membuat Gelembung & Hati Melayang
 function createDecorations() {
-    const emojis = ['🤍', '🌸', '🩷', '✨', '🎀', '💖'];
-    const count = 25; 
+    const emojis = ['🤍', '🌸', '🩷', '✨', '🎀', '💖', '🫧'];
+    const count = 20; 
 
     for (let i = 0; i < count; i++) {
         const decor = document.createElement('div');
@@ -123,25 +105,27 @@ function createDecorations() {
         decor.innerText = emojis[Math.floor(Math.random() * emojis.length)];
         decor.style.left = Math.random() * 100 + 'vw';
         decor.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-        decor.style.animationDuration = (Math.random() * 6 + 8) + 's';
+        decor.style.animationDuration = (Math.random() * 8 + 8) + 's';
         decor.style.animationDelay = (Math.random() * 5) + 's';
-        decor.style.setProperty('--op', Math.random() * 0.5 + 0.3); // Opacity acak
+        decor.style.setProperty('--op', Math.random() * 0.4 + 0.3); 
         decorationsContainer.appendChild(decor);
     }
 }
 
-// 3. Efek Ledakan Saat Di-klik/Disentuh
+// 2. Efek Ledakan Saat Di-klik/Disentuh (Makin Meriah)
 function createClickBurst(x, y) {
-    const emojis = ['🩷', '✨', '💖'];
-    for (let i = 0; i < 6; i++) {
+    const emojis = ['🩷', '✨', '💖', '🤍'];
+    const burstCount = 8; // Jumlah ledakan ditambah biar lebih rame
+
+    for (let i = 0; i < burstCount; i++) {
         const heart = document.createElement('div');
         heart.classList.add('click-heart');
         heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
         heart.style.left = x + 'px';
         heart.style.top = y + 'px';
 
-        const tx = (Math.random() - 0.5) * 120 + 'px';
-        const ty = (Math.random() - 0.5) * 120 - 50 + 'px'; 
+        const tx = (Math.random() - 0.5) * 150 + 'px'; // Jarak ledakan lebih jauh
+        const ty = (Math.random() - 0.5) * 150 - 50 + 'px'; 
         heart.style.setProperty('--tx', tx);
         heart.style.setProperty('--ty', ty);
         heart.style.setProperty('--rot', Math.random() * 360 + 'deg');
