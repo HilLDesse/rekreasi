@@ -1,5 +1,5 @@
 // --- KONFIGURASI EMAIL FORM SUBMIT ---
-const emailPenerima = "EMAIL_KAMU_DISINI@gmail.com"; 
+const emailPenerima = "hilmikaut@gmail.com"; 
 
 const scene1 = document.getElementById('scene-1');
 const scene2 = document.getElementById('scene-2');
@@ -17,7 +17,7 @@ const inputCurhatan = document.getElementById('curhatan');
 let keluhKesahText = "";
 let historyTombol = []; 
 
-// Fungsi Pindah Halaman (Dipercepat untuk nuansa aplikasi mobile)
+// Fungsi Pindah Halaman
 function changeScene(currentScene, nextScene) {
     currentScene.classList.remove('visible');
     currentScene.classList.add('hidden');
@@ -30,7 +30,7 @@ function changeScene(currentScene, nextScene) {
             nextScene.classList.remove('hidden');
             nextScene.classList.add('visible');
         }, 30);
-    }, 600); // Waktu transisi disesuaikan
+    }, 600);
 }
 
 btnNext1.addEventListener('click', () => changeScene(scene1, scene2));
@@ -56,11 +56,9 @@ let noClickCount = 0;
 
 btnNo.addEventListener('click', () => {
     historyTombol.push("Klik Gak");
-    
     btnNo.innerText = teksMohon[noClickCount % teksMohon.length];
     noClickCount++;
     
-    // Animasi getar untuk tombol
     btnNo.style.transform = "translateX(10px)";
     setTimeout(() => btnNo.style.transform = "translateX(-10px)", 50);
     setTimeout(() => btnNo.style.transform = "translateX(0)", 100);
@@ -88,10 +86,59 @@ btnYes.addEventListener('click', () => {
         body: JSON.stringify(dataKirim)
     })
     .then(response => response.json())
-    .then(data => {
-        changeScene(scene4, scene5);
-    })
-    .catch(error => {
-        changeScene(scene4, scene5);
-    });
+    .then(data => changeScene(scene4, scene5))
+    .catch(error => changeScene(scene4, scene5));
 });
+
+// ==========================================
+// DEKORASI & INTERAKTIF LEDAKAN HATI
+// ==========================================
+const decorationsContainer = document.getElementById('decorations');
+
+function createDecorations() {
+    const emojis = ['🤍', '🌸', '🩷', '✨', '🫧'];
+    const count = 20; 
+
+    for (let i = 0; i < count; i++) {
+        const decor = document.createElement('div');
+        decor.classList.add('heart-decor');
+        decor.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        decor.style.left = Math.random() * 100 + 'vw';
+        decor.style.fontSize = (Math.random() * 1.2 + 0.8) + 'rem';
+        decor.style.animationDuration = (Math.random() * 5 + 7) + 's';
+        decor.style.animationDelay = (Math.random() * 5) + 's';
+        decorationsContainer.appendChild(decor);
+    }
+}
+
+function createClickBurst(x, y) {
+    const emojis = ['🩷', '🤍', '✨'];
+    for (let i = 0; i < 5; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('click-heart');
+        heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+
+        const tx = (Math.random() - 0.5) * 100 + 'px';
+        const ty = (Math.random() - 0.5) * 100 - 50 + 'px'; 
+        heart.style.setProperty('--tx', tx);
+        heart.style.setProperty('--ty', ty);
+        heart.style.setProperty('--rot', Math.random() * 360 + 'deg');
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+    }
+}
+
+document.addEventListener('touchstart', (e) => {
+    createClickBurst(e.touches[0].clientX, e.touches[0].clientY);
+});
+
+document.addEventListener('click', (e) => {
+    if(e.target.tagName.toLowerCase() !== 'textarea') {
+        createClickBurst(e.clientX, e.clientY);
+    }
+});
+
+window.onload = createDecorations;
