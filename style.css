@@ -1,5 +1,5 @@
 /* =========================================================
-   RESET & PENGATURAN TENGAH (CENTERING)
+   RESET & PENGATURAN TENGAH
 ========================================================= */
 * { 
     margin: 0; 
@@ -9,10 +9,15 @@
 }
 
 :root {
-    --primary-pink: #ff6b8b;
-    --white-glass: rgba(255, 255, 255, 0.65);
+    --primary-pink: #ff4d79;
+    --deep-pink: #d81b60; /* Warna pink gelap untuk teks agar mudah dibaca */
+    --light-pink: #ffe6ea;
+    --white-glass: rgba(255, 255, 255, 0.75);
     --glass-border: rgba(255, 255, 255, 0.9);
-    --text-dark: #4a4a4a;
+    
+    /* Variabel untuk background interaktif yang diatur oleh JS */
+    --mouse-x: 50%;
+    --mouse-y: 50%;
 }
 
 html, body {
@@ -21,27 +26,30 @@ html, body {
 }
 
 body {
-    /* Ini yang membuat posisinya di tengah persis */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    
-    font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(135deg, #ffffff 0%, #fff0f3 50%, #ffd6e0 100%);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    font-family: 'Poppins', sans-serif; /* Font Modern */
+    background-color: #fff0f3;
     overflow: hidden;
     position: relative;
-    color: var(--text-dark);
+}
+
+/* Background Interaktif yang mengikuti kursor/sentuhan */
+.bg-interactive {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), #ffccd5 0%, #fff0f3 40%, #ffffff 100%);
+    transition: background 0.2s ease;
+    z-index: 0;
 }
 
 .master-container {
     width: 90%;
-    max-width: 450px;
+    max-width: 420px;
     perspective: 1500px;
     z-index: 10;
-    /* Tambahan agar tidak menempel ke bawah */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,10 +64,10 @@ body {
     -webkit-backdrop-filter: blur(25px);
     padding: 45px 30px;
     border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(255, 107, 139, 0.15), inset 0 0 15px rgba(255,255,255,0.8);
+    box-shadow: 0 15px 35px rgba(255, 77, 121, 0.15), inset 0 0 20px rgba(255,255,255,1);
     text-align: center;
     width: 100%;
-    position: absolute; /* Penting untuk transisi menumpuk */
+    position: absolute; 
     border: 1px solid var(--glass-border);
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     backface-visibility: hidden;
@@ -73,41 +81,50 @@ body {
 }
 
 /* =========================================================
-   TYPOGRAPHY
+   TYPOGRAPHY (Font Modern & Pink)
 ========================================================= */
 .modern-script-title {
-    font-family: 'Great Vibes', cursive; color: var(--primary-pink);
-    font-size: 2.8rem; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    font-family: 'Great Vibes', cursive; 
+    color: var(--primary-pink);
+    font-size: 3rem; margin-bottom: 10px; 
+    text-shadow: 2px 2px 4px rgba(255, 77, 121, 0.2);
 }
 
 .scene-title { 
-    color: var(--primary-pink); margin-bottom: 15px; 
+    color: var(--primary-pink); 
+    margin-bottom: 15px; 
     font-weight: 700; font-size: 1.6rem; 
+    letter-spacing: -0.5px;
 }
 
-.darling-message {
-    color: var(--primary-pink); font-family: 'Playfair Display', serif;
-    font-size: 1.15rem; font-weight: 600; font-style: italic; 
-    line-height: 1.5; margin-bottom: 25px; padding: 0 10px;
+/* Teks Utama: Menggunakan Poppins, ukuran pas, warna Deep Pink */
+.modern-body-text { 
+    font-family: 'Poppins', sans-serif; 
+    color: var(--deep-pink); 
+    line-height: 1.6; 
+    font-size: 0.95rem; 
+    font-weight: 400;
+    margin-bottom: 25px; 
 }
 
-.modern-serif-text { 
-    font-family: 'Playfair Display', serif; color: #555; 
-    line-height: 1.6; font-size: 1.05rem; margin-bottom: 25px; 
+.italic-accent {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.05rem;
 }
 
-.subtitle-form { font-size: 0.95rem; margin-bottom: 15px; }
-.instruction { color: #888; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; }
+.subtitle-form { font-size: 0.9rem; margin-bottom: 15px; opacity: 0.9;}
+.instruction { color: #ff8fa3; font-size: 0.85rem; font-weight: 500; margin-bottom: 20px; }
 .french-quote {
-    font-family: 'Great Vibes', cursive; font-size: 2rem;
+    font-family: 'Great Vibes', cursive; font-size: 2.2rem;
     color: var(--primary-pink); margin-bottom: 15px;
 }
-.reward-text { font-size: 1.05rem; color: #444; }
+.reward-text { font-size: 1rem; }
 
 .divider-line {
-    width: 60px; height: 3px; border-radius: 5px;
+    width: 60px; height: 4px; border-radius: 5px;
     background: linear-gradient(90deg, transparent, var(--primary-pink), transparent);
-    margin: 0 auto 15px auto;
+    margin: 0 auto 20px auto;
 }
 
 /* =========================================================
@@ -115,67 +132,76 @@ body {
 ========================================================= */
 .icon-wrapper { position: relative; display: inline-block; margin-bottom: 20px; }
 .heart-icon-main {
-    font-size: 4rem; filter: drop-shadow(0 8px 12px rgba(255, 107, 139, 0.3));
+    font-size: 4rem; filter: drop-shadow(0 8px 15px rgba(255, 77, 121, 0.4));
     animation: pulseHeart 2s infinite;
 }
 
+.modern-pulse-ring {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 75px; height: 75px; border-radius: 50%; border: 2px solid rgba(255, 77, 121, 0.5);
+    animation: ringPulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+.modern-pulse-ring.delay { animation-delay: 1.25s; }
+
 .modern-textarea {
     width: 100%; height: 110px;
-    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 107, 139, 0.4); border-radius: 15px; padding: 15px;
-    font-family: 'Quicksand', sans-serif; font-size: 0.95rem; color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 77, 121, 0.3); border-radius: 15px; padding: 15px;
+    font-family: 'Poppins', sans-serif; font-size: 0.95rem; color: var(--deep-pink);
     resize: none; outline: none; transition: all 0.3s ease;
 }
 .modern-textarea:focus {
     background: #ffffff; border-color: var(--primary-pink);
-    box-shadow: 0 0 10px rgba(255, 107, 139, 0.2);
+    box-shadow: 0 0 15px rgba(255, 77, 121, 0.2);
 }
+.modern-textarea::placeholder { color: #ffb3c6; }
 
 /* =========================================================
    BUTTONS
 ========================================================= */
 .btn-modern-glass {
-    background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border); color: var(--primary-pink); 
-    padding: 15px 35px; font-size: 1rem; font-weight: 700; font-family: 'Quicksand', sans-serif;
-    border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 107, 139, 0.15);
+    background: linear-gradient(135deg, var(--primary-pink), #ff758c);
+    border: none; color: white; 
+    padding: 14px 35px; font-size: 1rem; font-weight: 600; font-family: 'Poppins', sans-serif;
+    border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 77, 121, 0.3);
     position: relative; overflow: hidden; transition: all 0.3s ease; width: 100%; max-width: 250px;
 }
 .btn-small { padding: 12px 25px; font-size: 0.95rem; }
+.btn-modern-glass:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255, 77, 121, 0.4); }
 .btn-modern-glass:active { transform: scale(0.95); }
 
 .buttons { display: flex; flex-direction: column; gap: 12px; position: relative; align-items: center; }
 #btn-yes, #btn-no {
-    font-family: 'Quicksand', sans-serif; padding: 14px 20px; font-size: 1rem; font-weight: 700;
+    font-family: 'Poppins', sans-serif; padding: 14px 20px; font-size: 1rem; font-weight: 600;
     border: none; border-radius: 50px; cursor: pointer; width: 100%; max-width: 250px;
     transition: all 0.3s ease;
 }
-#btn-yes { background-color: var(--primary-pink); color: white; box-shadow: 0 8px 15px rgba(255, 107, 139, 0.3); }
+#btn-yes { background: linear-gradient(135deg, #ff4d79, #ff758c); color: white; box-shadow: 0 8px 15px rgba(255, 77, 121, 0.3); }
 #btn-yes:active { transform: scale(0.95); }
-#btn-no { background-color: #f1f2f6; color: var(--text-dark); border: 1px solid #dfe4ea; }
-#btn-no:active { background-color: #e2e5ec; }
+#btn-no { background-color: #ffe6ea; color: var(--deep-pink); border: 1px solid #ffb3c6; }
+#btn-no:active { background-color: #ffccd5; }
 
 /* =========================================================
    ANIMASI DEKORASI
 ========================================================= */
 .bg-decorations { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; overflow: hidden;}
-.heart-decor {
-    position: absolute; color: rgba(255, 107, 139, 0.5); pointer-events: none;
-    animation: floatUp 8s infinite linear; z-index: 0;
+.floating-item {
+    position: absolute; pointer-events: none;
+    animation: floatUp infinite linear; z-index: 0;
+    filter: drop-shadow(0 5px 5px rgba(255, 77, 121, 0.2));
 }
 .click-heart {
-    position: absolute; pointer-events: none; color: #ff6b8b; font-size: 1.2rem;
-    animation: popOut 1s ease-out forwards; z-index: 9999;
+    position: absolute; pointer-events: none; color: #ff4d79; font-size: 1.2rem;
+    animation: popOut 0.8s ease-out forwards; z-index: 9999;
 }
 
-@keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-@keyframes floatCard { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
-@keyframes pulseHeart { 0%, 30%, 60%, 100% { transform: scale(1); } 15%, 45% { transform: scale(1.1); } }
-@keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10%, 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; } }
+@keyframes floatCard { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+@keyframes pulseHeart { 0%, 30%, 60%, 100% { transform: scale(1); } 15%, 45% { transform: scale(1.15); } }
+@keyframes ringPulse { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+@keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10%, 90% { opacity: var(--op); } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; } }
 @keyframes popOut { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); opacity: 0; } }
 
-/* RESPONSIVE UNTUK HP KECIL */
 @media (max-width: 380px) {
     .scene { padding: 35px 20px; }
-    .modern-script-title { font-size: 2.4rem; }
+    .modern-script-title { font-size: 2.5rem; }
 }

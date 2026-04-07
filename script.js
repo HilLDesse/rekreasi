@@ -21,7 +21,6 @@ let historyTombol = [];
 function changeScene(currentScene, nextScene) {
     currentScene.classList.remove('visible');
     currentScene.classList.add('hidden');
-    
     nextScene.style.display = 'block';
     
     setTimeout(() => {
@@ -44,13 +43,13 @@ btnNext3.addEventListener('click', () => {
     changeScene(scene3, scene4);
 });
 
-// Logika Tombol "Gak" (Berubah teks, responsif sentuh)
+// Logika Tombol "Gak"
 const teksMohon = [
     "Pliss maafin aku 🥺", 
     "Beneran gak mau? 😭", 
     "Ayolah sayang... 🥹", 
     "Jangan ngambek lagi dong 🥲",
-    "Aku mohon banget... 💔"
+    "Aku mohon banget... 🎀"
 ];
 let noClickCount = 0;
 
@@ -67,7 +66,6 @@ btnNo.addEventListener('click', () => {
 // Logika Tombol "Iya" & Kirim Email Rahasia
 btnYes.addEventListener('click', () => {
     historyTombol.push("Akhirnya Klik Iya ❤️");
-    
     btnYes.innerText = "Tunggu sebentar... ⏳";
     btnYes.disabled = true;
     btnNo.style.display = 'none'; 
@@ -91,43 +89,65 @@ btnYes.addEventListener('click', () => {
 });
 
 // ==========================================
-// DEKORASI & INTERAKTIF LEDAKAN HATI
+// DEKORASI & BACKGROUND INTERAKTIF
 // ==========================================
 const decorationsContainer = document.getElementById('decorations');
+const rootElement = document.documentElement;
 
+// 1. Menggerakkan Gradient Background Mengikuti Kursor/Sentuhan
+function updateBackgroundPosition(x, y) {
+    const xPercent = (x / window.innerWidth) * 100;
+    const yPercent = (y / window.innerHeight) * 100;
+    rootElement.style.setProperty('--mouse-x', `${xPercent}%`);
+    rootElement.style.setProperty('--mouse-y', `${yPercent}%`);
+}
+
+document.addEventListener('mousemove', (e) => {
+    updateBackgroundPosition(e.clientX, e.clientY);
+});
+
+document.addEventListener('touchmove', (e) => {
+    if(e.touches.length > 0) {
+        updateBackgroundPosition(e.touches[0].clientX, e.touches[0].clientY);
+    }
+});
+
+// 2. Membuat Gelembung & Hati Melayang (Background)
 function createDecorations() {
-    const emojis = ['🤍', '🌸', '🩷', '✨', '🫧'];
-    const count = 20; 
+    const emojis = ['🤍', '🌸', '🩷', '✨', '🎀', '💖'];
+    const count = 25; 
 
     for (let i = 0; i < count; i++) {
         const decor = document.createElement('div');
-        decor.classList.add('heart-decor');
+        decor.classList.add('floating-item');
         decor.innerText = emojis[Math.floor(Math.random() * emojis.length)];
         decor.style.left = Math.random() * 100 + 'vw';
-        decor.style.fontSize = (Math.random() * 1.2 + 0.8) + 'rem';
-        decor.style.animationDuration = (Math.random() * 5 + 7) + 's';
+        decor.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+        decor.style.animationDuration = (Math.random() * 6 + 8) + 's';
         decor.style.animationDelay = (Math.random() * 5) + 's';
+        decor.style.setProperty('--op', Math.random() * 0.5 + 0.3); // Opacity acak
         decorationsContainer.appendChild(decor);
     }
 }
 
+// 3. Efek Ledakan Saat Di-klik/Disentuh
 function createClickBurst(x, y) {
-    const emojis = ['🩷', '🤍', '✨'];
-    for (let i = 0; i < 5; i++) {
+    const emojis = ['🩷', '✨', '💖'];
+    for (let i = 0; i < 6; i++) {
         const heart = document.createElement('div');
         heart.classList.add('click-heart');
         heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
         heart.style.left = x + 'px';
         heart.style.top = y + 'px';
 
-        const tx = (Math.random() - 0.5) * 100 + 'px';
-        const ty = (Math.random() - 0.5) * 100 - 50 + 'px'; 
+        const tx = (Math.random() - 0.5) * 120 + 'px';
+        const ty = (Math.random() - 0.5) * 120 - 50 + 'px'; 
         heart.style.setProperty('--tx', tx);
         heart.style.setProperty('--ty', ty);
         heart.style.setProperty('--rot', Math.random() * 360 + 'deg');
 
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 1000);
+        setTimeout(() => heart.remove(), 800);
     }
 }
 
@@ -136,7 +156,7 @@ document.addEventListener('touchstart', (e) => {
 });
 
 document.addEventListener('click', (e) => {
-    if(e.target.tagName.toLowerCase() !== 'textarea') {
+    if(e.target.tagName.toLowerCase() !== 'textarea' && e.target.tagName.toLowerCase() !== 'button') {
         createClickBurst(e.clientX, e.clientY);
     }
 });
