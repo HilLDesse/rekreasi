@@ -1,212 +1,1140 @@
 /* =========================================================
-   RESET & PENGATURAN DASAR
+   LUXURY PINK & WHITE THEME - PREMIUM ROMANTIC DESIGN
+   Sophisticated color palette with advanced animations
 ========================================================= */
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    -webkit-tap-highlight-color: transparent; 
+}
 
 :root {
-    --gold-light: #FFD700;
-    --gold-dark: #B8860B;
-    --rose-gold: #b76e79;
-    --neon-pink: #ff1493;
-    --bg-dark: #0b0914;
-    --card-bg: rgba(20, 15, 30, 0.4);
-    --text-light: #F8F8FF;
-    --text-muted: #D8BFD8;
+    /* Pink Palette */
+    --pink-primary: #FF69B4;
+    --pink-light: #FFB6C1;
+    --pink-blush: #FFC0CB;
+    --pink-pale: #FFE4E9;
+    --pink-deep: #FF1493;
+    --pink-rose: #FF85A2;
+    
+    /* White & Neutral */
+    --white-pure: #FFFFFF;
+    --white-snow: #FFFAFA;
+    --white-cream: #FFF5F7;
+    --gray-light: #F8F8F8;
+    --gray-soft: #E8E8E8;
+    --charcoal: #2D2D2D;
+    
+    /* Accent Colors */
+    --rose-gold: #E0B0A5;
+    --champagne: #F4E4C1;
+    --lavender: #E6E6FA;
+    
+    /* Glass Morphism */
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    
+    /* Shadows */
+    --shadow-soft: 0 10px 40px rgba(255, 105, 180, 0.15);
+    --shadow-medium: 0 20px 60px rgba(255, 105, 180, 0.25);
+    --shadow-strong: 0 30px 80px rgba(255, 105, 180, 0.35);
 }
 
-html, body { height: 100%; width: 100%; overflow: hidden; background-color: var(--bg-dark); }
+html, body { 
+    height: 100%; 
+    width: 100%; 
+    overflow: hidden; 
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
 body {
-    display: flex; justify-content: center; align-items: center; 
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text-light);
-    /* Latar belakang radial gelap seperti malam di dongeng */
-    background: radial-gradient(ellipse at bottom, #2d1637 0%, #0b0914 100%);
-    position: relative; perspective: 1000px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    color: var(--charcoal);
+    /* Elegant gradient background */
+    background: linear-gradient(135deg, 
+        #FFF5F7 0%, 
+        #FFE4E9 25%, 
+        #FFC0CB 50%, 
+        #FFB6C1 75%, 
+        #FF85A2 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+    perspective: 1500px;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 /* =========================================================
-   LATAR BELAKANG DINAMIS (Bintang & Kunang-kunang)
+   ANIMATED BACKGROUND ELEMENTS
 ========================================================= */
-#night-sky, #fireflies-container, #interactive-particles {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 1;
+
+/* Floating Hearts Background */
+#floating-hearts-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
 }
 
-/* Bintang CSS */
-.star {
-    position: absolute; background-color: white; border-radius: 50%;
-    animation: twinkle infinite alternate;
+.bg-heart {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0;
+    animation: floatHeart 12s infinite ease-in-out;
 }
 
-@keyframes twinkle {
-    0% { opacity: 0.2; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 5px white; }
+@keyframes floatHeart {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-20vh) rotate(360deg) scale(1.5);
+        opacity: 0;
+    }
 }
 
-/* Kunang-kunang CSS */
-.firefly {
-    position: absolute; width: 6px; height: 6px;
-    background-color: var(--rose-gold); border-radius: 50%;
-    box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.6);
-    opacity: 0; animation: floatParticle 8s infinite ease-in-out;
+/* Sparkles */
+#sparkles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
 }
 
-@keyframes floatParticle {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.8; }
-    100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: sparkleFloat 3s infinite ease-in-out;
+}
+
+@keyframes sparkleFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-30px) scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* Gradient Orbs */
+#gradient-orbs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px);
+    opacity: 0.4;
+}
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    animation: orbFloat 20s infinite ease-in-out;
+}
+
+@keyframes orbFloat {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(50px, -50px) scale(1.2);
+    }
+    66% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
 }
 
 /* =========================================================
-   KOTAK KACA LUXURY 3D
+   PROGRESS INDICATOR
 ========================================================= */
-.master-container { width: 90%; max-width: 450px; z-index: 10; position: relative; }
+
+.progress-bar-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--pink-primary), var(--pink-deep));
+    border-radius: 10px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+}
+
+.progress-dots {
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: var(--pink-primary);
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    transform: scale(1.3);
+}
+
+/* =========================================================
+   MAIN CONTAINER & GLASS CARD
+========================================================= */
+
+.master-container { 
+    width: 90%; 
+    max-width: 500px; 
+    z-index: 10; 
+    position: relative; 
+}
 
 .scene {
-    background: var(--card-bg);
-    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-    padding: 50px 35px; border-radius: 30px;
-    /* Efek cahaya neon mewah di pinggiran kartu */
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 60px 40px;
+    border-radius: 35px;
     box-shadow: 
-        0 20px 50px rgba(0,0,0,0.8), 
-        inset 0 1px 1px rgba(255, 255, 255, 0.3),
-        inset 0 -1px 1px rgba(255, 255, 255, 0.1),
-        0 0 30px rgba(183, 110, 121, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center; width: 100%; position: absolute; top: 50%; left: 50%;
+        var(--shadow-medium),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 2px rgba(255, 182, 193, 0.3);
+    border: 2px solid var(--glass-border);
+    border-top: 2px solid rgba(255, 255, 255, 0.6);
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.visible { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1) translateY(0); }
-.hidden { opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.9) translateY(40px); }
-
-/* Cahaya orb di belakang kartu pembuka */
-.glowing-orb-center {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 200px; height: 200px; background: radial-gradient(circle, rgba(183,110,121,0.4) 0%, transparent 70%);
-    z-index: -1; filter: blur(30px); animation: pulseOrb 4s infinite alternate;
+.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1) translateY(0) rotateY(0deg);
 }
 
-@keyframes pulseOrb { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.3); } }
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.85) translateY(60px) rotateY(15deg);
+}
+
+/* Glass Card Component */
+.glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 15px 35px rgba(255, 105, 180, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    margin: 25px 0;
+}
 
 /* =========================================================
-   TYPOGRAPHY PREMIUM
+   TYPOGRAPHY - ELEGANT & REFINED
 ========================================================= */
+
 .luxury-title {
-    font-family: 'Great Vibes', cursive; color: var(--rose-gold);
-    font-size: 4.2rem; font-weight: 400; line-height: 1.1; margin-bottom: 10px; 
-    text-shadow: 0 0 20px rgba(183, 110, 121, 0.6), 0 0 40px rgba(183, 110, 121, 0.4);
+    font-family: 'Sacramento', cursive;
+    color: var(--pink-deep);
+    font-size: 5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    text-shadow: 
+        0 2px 10px rgba(255, 20, 147, 0.3),
+        0 0 40px rgba(255, 105, 180, 0.2);
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 2px 10px rgba(255, 20, 147, 0.3),
+            0 0 40px rgba(255, 105, 180, 0.2);
+    }
+    50% {
+        text-shadow: 
+            0 2px 15px rgba(255, 20, 147, 0.5),
+            0 0 60px rgba(255, 105, 180, 0.4);
+    }
+}
+
+.subtitle-elegant {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--pink-primary);
+    letter-spacing: 2px;
+    margin-bottom: 30px;
 }
 
 .luxury-heading {
-    font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; 
-    color: #fff; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    background: linear-gradient(to right, #fff, var(--rose-gold), #fff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink-primary), var(--pink-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    text-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+}
+
+.luxury-heading-large {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
 }
 
 .text-luxury {
-    font-size: 1rem; line-height: 1.7; color: var(--text-muted);
-    margin-bottom: 20px; font-weight: 400; letter-spacing: 0.5px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+    font-weight: 400;
 }
 
-.highlight-gold { color: var(--rose-gold); font-weight: 600; text-shadow: 0 0 10px rgba(183,110,121,0.5); }
+.subtitle-text {
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.first-letter {
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--pink-primary);
+    float: left;
+    line-height: 1;
+    margin-right: 8px;
+    margin-top: 5px;
+}
+
+/* Quote Box */
+.quote-box {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 228, 233, 0.3));
+    padding: 25px 30px;
+    border-radius: 20px;
+    border-left: 4px solid var(--pink-primary);
+    margin: 25px 0;
+}
+
+.quote-icon {
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    font-size: 4rem;
+    color: var(--pink-light);
+    opacity: 0.3;
+    font-family: Georgia, serif;
+}
+
+.quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--charcoal);
+    position: relative;
+    z-index: 1;
+}
+
+.highlight-pink {
+    color: var(--pink-deep);
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--pink-pale), transparent);
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+
+/* =========================================================
+   SCENE-SPECIFIC ELEMENTS
+========================================================= */
+
+/* Scene 1: Love Letter */
+.love-letter-seal {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.wax-seal {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--pink-primary), var(--pink-deep));
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 10px 30px rgba(255, 20, 147, 0.4),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+    animation: sealRotate 4s ease-in-out infinite;
+    position: relative;
+}
+
+.wax-seal::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px dashed rgba(255, 255, 255, 0.3);
+    animation: sealRotate 6s linear infinite reverse;
+}
+
+@keyframes sealRotate {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+}
+
+.seal-heart {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+}
+
+.floating-hearts-local {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    pointer-events: none;
+}
+
+.heart-float {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.6;
+    animation: heartLocalFloat 4s ease-in-out infinite;
+}
+
+.heart-float:nth-child(1) {
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.heart-float:nth-child(2) {
+    left: 50%;
+    animation-delay: 1.3s;
+}
+
+.heart-float:nth-child(3) {
+    left: 80%;
+    animation-delay: 2.6s;
+}
+
+@keyframes heartLocalFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+/* Typing Effect */
+.typing-container {
+    min-height: 80px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
 
 .luxury-quote {
-    font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 400; font-style: italic;
-    color: #fff; opacity: 0.9; min-height: 60px; /* Space untuk efek typing */
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--charcoal);
+    display: inline;
 }
 
-.instruction-glow {
-    font-size: 0.8rem; font-weight: 600; color: var(--rose-gold); letter-spacing: 2px;
-    text-transform: uppercase; margin-bottom: 15px; animation: textGlow 2s infinite alternate;
+.cursor-blink {
+    font-size: 1.5rem;
+    color: var(--pink-primary);
+    animation: blink 1s infinite;
 }
-@keyframes textGlow { 0% { opacity: 0.5; text-shadow: 0 0 5px transparent;} 100% { opacity: 1; text-shadow: 0 0 15px var(--rose-gold);} }
 
-.hidden-fade { opacity: 0; transition: opacity 1.5s ease; }
-.show-fade { opacity: 1; }
-
-.reward-card-luxury {
-    position: relative; background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(183, 110, 121, 0.4); border-radius: 20px; padding: 25px 20px;
-    font-weight: 400; color: #fff; font-size: 1rem; line-height: 1.6;
-    box-shadow: inset 0 0 20px rgba(183, 110, 121, 0.1); overflow: hidden;
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
 }
-.reward-card-luxury b { color: var(--rose-gold); font-size: 1.1rem;}
+
+/* Scene Headers */
+.scene-header {
+    margin-bottom: 30px;
+}
+
+.icon-elegant {
+    margin-bottom: 15px;
+}
+
+.emoji-3d {
+    font-size: 4rem;
+    display: inline-block;
+    filter: drop-shadow(0 5px 15px rgba(255, 105, 180, 0.4));
+    animation: float3D 3s ease-in-out infinite;
+}
+
+@keyframes float3D {
+    0%, 100% {
+        transform: translateY(0) rotateY(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotateY(10deg);
+    }
+}
+
+.pulse-heart .emoji-3d {
+    animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.2);
+    }
+    28% {
+        transform: scale(1);
+    }
+    42% {
+        transform: scale(1.2);
+    }
+    56% {
+        transform: scale(1);
+    }
+}
+
+.divider-elegant {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--pink-primary), transparent);
+    margin: 20px auto;
+    border-radius: 10px;
+}
+
+/* Question Highlight */
+.question-highlight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.question-highlight .sparkle {
+    font-size: 1.5rem;
+    animation: sparkleRotate 2s linear infinite;
+}
+
+@keyframes sparkleRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.highlight-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--pink-deep);
+}
 
 /* =========================================================
-   ELEMENTS & INPUTS
+   INPUT FIELD - LUXURY DESIGN
 ========================================================= */
-.icon-pulse-container { position: relative; margin-bottom: 15px; display: inline-block; }
-.heart-icon-luxury { font-size: 4rem; filter: drop-shadow(0 0 20px rgba(255, 20, 147, 0.6)); animation: floatHeart 4s ease-in-out infinite; }
+
+.input-wrapper {
+    position: relative;
+    margin: 30px 0;
+}
 
 .luxury-input {
-    width: 100%; height: 120px; background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(183, 110, 121, 0.4); border-radius: 15px; padding: 18px;
-    font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #fff;
-    resize: none; outline: none; transition: all 0.3s ease;
-    box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+    width: 100%;
+    height: 140px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 182, 193, 0.4);
+    border-radius: 20px;
+    padding: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--charcoal);
+    resize: none;
+    outline: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-.luxury-input:focus { border-color: var(--rose-gold); background: rgba(20, 15, 30, 0.8); box-shadow: 0 0 20px rgba(183, 110, 121, 0.2), inset 0 5px 10px rgba(0,0,0,0.5); }
-.luxury-input::placeholder { color: rgba(255,255,255,0.3); }
+
+.luxury-input:focus {
+    border-color: var(--pink-primary);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 
+        0 0 0 4px rgba(255, 105, 180, 0.1),
+        inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
+}
+
+.luxury-input:focus + .input-border-glow {
+    opacity: 1;
+}
+
+.input-border-glow {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--pink-light), var(--pink-primary));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(8px);
+}
+
+.floating-label {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1rem;
+    color: #999;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.luxury-input:focus ~ .floating-label,
+.luxury-input:not(:placeholder-shown) ~ .floating-label {
+    top: -12px;
+    left: 15px;
+    font-size: 0.85rem;
+    color: var(--pink-primary);
+    background: white;
+    padding: 0 8px;
+}
 
 /* =========================================================
-   TOMBOL LUXURY (Efek Kaca Emas & Shimmer)
+   BUTTONS - PREMIUM DESIGN
 ========================================================= */
-.btn-luxury {
-    position: relative; width: 100%; max-width: 260px; padding: 16px;
-    background: linear-gradient(135deg, rgba(183,110,121,0.8), rgba(255,20,147,0.5));
-    border: 1px solid rgba(255,255,255,0.4); border-radius: 50px; cursor: pointer;
-    color: #fff; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 1px;
-    box-shadow: 0 10px 30px rgba(183, 110, 121, 0.4), inset 0 2px 0 rgba(255,255,255,0.4);
-    overflow: hidden; display: block; margin: 0 auto; transition: all 0.3s ease;
-}
-.btn-luxury span { position: relative; z-index: 2; }
-.btn-luxury:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(183, 110, 121, 0.6), inset 0 2px 0 rgba(255,255,255,0.6); }
-.btn-luxury:active { transform: translateY(2px) scale(0.95); }
 
-/* Efek kilat pada tombol */
-.shimmer {
-    position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    transform: skewX(-20deg); animation: shimmerSweep 3s infinite; z-index: 1;
+.btn-luxury-pink {
+    position: relative;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, var(--pink-primary), var(--pink-deep));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    overflow: hidden;
+    display: inline-block;
+    margin: 10px auto;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 10px 30px rgba(255, 105, 180, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
-@keyframes shimmerSweep { 0% { left: -150%; } 50%, 100% { left: 200%; } }
 
-.btn-outline-luxury {
-    background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2);
-    color: var(--text-muted); width: 100%; max-width: 260px; padding: 14px;
-    border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 500;
-    cursor: pointer; transition: all 0.3s ease; margin: 0 auto;
+.btn-luxury-pink:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 
+        0 15px 40px rgba(255, 20, 147, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
-.btn-outline-luxury:active { background: rgba(183, 110, 121, 0.2); border-color: var(--rose-gold); }
 
-.button-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-top: 15px;}
+.btn-luxury-pink:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+}
+
+.btn-shimmer {
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: skewX(-20deg);
+    animation: shimmerMove 3s infinite;
+    z-index: 1;
+}
+
+@keyframes shimmerMove {
+    0% {
+        left: -150%;
+    }
+    50%, 100% {
+        left: 150%;
+    }
+}
+
+.btn-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: 0;
+}
+
+.btn-luxury-pink:hover .btn-glow {
+    width: 120%;
+    height: 300%;
+}
+
+.btn-outline-pink {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--pink-light);
+    color: var(--pink-deep);
+    padding: 14px 35px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px auto;
+}
+
+.btn-outline-pink:hover {
+    background: rgba(255, 182, 193, 0.3);
+    border-color: var(--pink-primary);
+    transform: translateY(-2px);
+}
+
+.btn-outline-pink:active {
+    background: rgba(255, 105, 180, 0.2);
+    transform: scale(0.95);
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 25px;
+}
 
 /* =========================================================
-   ANIMASI KEYFRAMES
+   CELEBRATION ELEMENTS (Scene 5)
 ========================================================= */
-@keyframes floatHeart { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-@keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } }
 
-/* Fisika Partikel Jatuh */
+.celebration-header {
+    margin-bottom: 30px;
+}
+
+.hearts-celebration {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.heart-bounce {
+    font-size: 3rem;
+    display: inline-block;
+    animation: bounceHeart 1s ease-in-out infinite;
+}
+
+@keyframes bounceHeart {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-15px) scale(1.2);
+    }
+}
+
+.celebration-title {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.quote-french {
+    margin: 20px 0;
+}
+
+.french-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--pink-deep);
+    margin-bottom: 8px;
+}
+
+.french-translation {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Reward Card */
+.reward-card-luxury {
+    position: relative;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.4), 
+        rgba(255, 228, 233, 0.4));
+    border: 2px solid rgba(255, 182, 193, 0.5);
+    border-radius: 25px;
+    padding: 35px 30px;
+    margin-top: 30px;
+    overflow: hidden;
+    box-shadow: 
+        0 15px 40px rgba(255, 105, 180, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.reward-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: giftShake 2s ease-in-out infinite;
+}
+
+@keyframes giftShake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+.reward-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--pink-deep);
+    margin-bottom: 15px;
+}
+
+.reward-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+}
+
+.food-highlight {
+    background: linear-gradient(135deg, var(--pink-pale), var(--pink-light));
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--pink-deep);
+}
+
+.food-emojis {
+    font-size: 2rem;
+    margin-top: 15px;
+    letter-spacing: 10px;
+}
+
+.reward-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 60%
+    );
+    animation: shineMove 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shineMove {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* =========================================================
+   CONFETTI EFFECT
+========================================================= */
+
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -20px;
+    animation: confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(120vh) rotate(720deg);
+        opacity: 0.3;
+    }
+}
+
+/* =========================================================
+   INTERACTIVE PARTICLES
+========================================================= */
+
+#interactive-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
 .magic-particle {
-    position: absolute; pointer-events: none; font-size: 1.2rem;
-    animation: explodeFall 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-@keyframes explodeFall {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-    50% { transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(var(--rot)); opacity: 1; }
-    100% { transform: translate(var(--tx), calc(var(--ty) + 150px)) scale(0) rotate(calc(var(--rot) + 45deg)); opacity: 0; }
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.5rem;
+    animation: particleExplode 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-@media (max-width: 400px) {
-    .scene { padding: 40px 25px; }
-    .luxury-title { font-size: 3.5rem; }
-    .luxury-heading { font-size: 1.6rem; }
+@keyframes particleExplode {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot));
+        opacity: 1;
+    }
+    100% {
+        transform: translate(
+            calc(var(--tx) * 1.2), 
+            calc(var(--ty) + 100px)
+        ) scale(0) rotate(calc(var(--rot) + 180deg));
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   INSTRUCTION ANIMATIONS
+========================================================= */
+
+.instruction-shimmer {
+    margin-bottom: 20px;
+}
+
+.shimmer-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--pink-primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+    animation: textShimmer 2s ease-in-out infinite;
+}
+
+@keyframes textShimmer {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.arrow-bounce {
+    font-size: 1.5rem;
+    color: var(--pink-primary);
+    animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+.hidden-fade {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.show-fade {
+    opacity: 1;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 500px) {
+    .scene {
+        padding: 45px 30px;
+        border-radius: 30px;
+    }
+    
+    .luxury-title {
+        font-size: 4rem;
+    }
+    
+    .luxury-heading {
+        font-size: 2rem;
+    }
+    
+    .luxury-heading-large {
+        font-size: 2.8rem;
+    }
+    
+    .text-luxury {
+        font-size: 1rem;
+    }
+    
+    .btn-luxury-pink {
+        padding: 16px 30px;
+        font-size: 1rem;
+    }
+    
+    .progress-bar-container {
+        top: 20px;
+    }
+    
+    .progress-bar {
+        width: 150px;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .luxury-title {
+        font-size: 3.5rem;
+    }
+    
+    .scene {
+        padding: 40px 25px;
+    }
 }
