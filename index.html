@@ -3,105 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Untukmu, Kesayanganku 🌌❤️</title>
+    <title>Untukmu, Kesayanganku 🌸</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-    <div id="night-sky"></div>
-    <div id="fireflies-container"></div>
+    <div id="bokeh-container"></div>
 
     <div id="interactive-particles"></div>
 
     <div class="master-container">
         
         <div class="scene visible" id="scene-1">
-            <div class="glowing-orb-center"></div>
             <div class="icon-pulse-container">
-                <div class="heart-icon-luxury">💖</div>
+                <div class="heart-icon-pink">🩷</div>
+                <div class="pulse-ring"></div>
             </div>
             
-            <h1 class="luxury-title">Untuk Kesayanganku</h1>
+            <h1 class="pinky-title">Untuk Kesayanganku</h1>
             
             <div class="typing-container">
-                <p id="typing-text" class="luxury-quote"></p>
+                <p id="typing-text" class="pinky-quote"></p>
             </div>
             
             <div class="action-area hidden-fade" id="action-area-1">
-                <p class="instruction-glow">Sentuh tombol di bawah ini ✨</p>
-                <button id="btn-next-1" class="btn-luxury">
-                    <span>Buka Pesan Ini</span>
-                    <div class="shimmer"></div>
+                <p class="instruction-text">Sentuh tombol di bawah ini ✨</p>
+                <button id="btn-next-1" class="btn-pink">
+                    Buka Pesan Ini
                 </button>
             </div>
         </div>
 
         <div class="scene hidden" id="scene-2">
-            <h1 class="luxury-heading">Maafin Aku Ya? 🥺</h1>
-            <p class="text-luxury">
-                Sayang... Aku benar-benar minta maaf karena sudah melupakan hal-hal penting tentang kamu. 
+            <h1 class="pinky-heading">Maafin Aku Ya? 🥺</h1>
+            <p class="text-body">
+                Sayang... Aku benar-benar minta maaf ya karena udah ngelupain hal-hal penting tentang kamu. 
                 Aku sadar kebodohanku ini pasti bikin kamu sedih dan merasa tidak dihargai. 
             </p>
-            <p class="text-luxury">
+            <p class="text-body">
                 Aku berjanji akan lebih memperhatikanmu dan mengingat semua detail kecil tentang kita. Kamu sangat berharga buatku.
             </p>
-            <button id="btn-next-2" class="btn-luxury" style="margin-top: 25px;">
-                <span>Lanjut baca...</span>
-                <div class="shimmer"></div>
+            <button id="btn-next-2" class="btn-pink" style="margin-top: 1rem;">
+                Lanjut baca...
             </button>
         </div>
 
         <div class="scene hidden" id="scene-3">
-            <h1 class="luxury-heading">Keluarkan Semuanya</h1>
-            <p class="text-luxury subtitle">
-                Sebelum kamu memutuskan untuk memaafkanku, keluarkan semua unek-unekmu di sini. 
-                Tulis semuanya sayang, aku akan membacanya dengan sepenuh hati.
+            <h1 class="pinky-heading">Keluarkan Semuanya</h1>
+            <p class="text-body" style="font-size: 0.9rem; margin-bottom: 1rem;">
+                Sebelum kamu memutuskan untuk memaafkanku, keluarkan semua unek-unekmu di sini ya. 
+                Tulis semuanya sayang, aku akan membacanya.
             </p>
             
-            <textarea id="curhatan" class="luxury-input" placeholder="Tulis perasaanmu di sini..."></textarea>
+            <textarea id="curhatan" class="pinky-input" placeholder="Ketik perasaanmu di sini..."></textarea>
             
-            <button id="btn-next-3" class="btn-luxury" style="margin-top: 25px;">
-                <span>Kirim & Lanjut</span>
-                <div class="shimmer"></div>
+            <button id="btn-next-3" class="btn-pink" style="margin-top: 1rem;">
+                Kirim & Lanjut
             </button>
         </div>
 
         <div class="scene hidden" id="scene-4">
-            <h1 class="luxury-heading" style="font-size: 2.5rem;">Jadi... 🥺</h1>
-            <p class="text-luxury">
+            <h1 class="pinky-heading" style="font-size: 2.2rem;">Jadi... 🥺</h1>
+            <p class="text-body">
                 Setelah membaca semua permintaan maafku dan mengeluarkan keluh kesahmu... <br><br>
-                <b class="highlight-gold">Apakah kamu mau memaafkanku?</b>
+                <b style="color: var(--pink-dark); font-size: 1.1rem;">Apakah kamu mau memaafkanku?</b>
             </p>
             
             <div class="button-group">
-                <button id="btn-yes" class="btn-luxury">
-                    <span>Iya, Aku Maafin</span>
-                    <div class="shimmer"></div>
-                </button>
-                <button id="btn-no" class="btn-outline-luxury">Gak!</button>
+                <button id="btn-yes" class="btn-pink">Iya, Aku Maafin</button>
+                <button id="btn-no" class="btn-outline">Gak!</button>
             </div>
         </div>
 
         <div class="scene hidden" id="scene-5">
-            <div class="icon-pulse-container" style="margin-bottom: 10px;">
-                <div class="heart-icon-luxury" style="font-size: 4.5rem; animation: heartbeat 1.5s infinite;">💝</div>
+            <div class="icon-pulse-container" style="margin-bottom: 0.5rem;">
+                <div class="heart-icon-pink" style="font-size: 4rem;">💖</div>
             </div>
-            <h1 class="luxury-title" style="font-size: 3.8rem; margin-bottom: 5px;">Merci Mon Amour</h1>
+            <h1 class="pinky-title" style="font-size: 3.5rem;">Merci Mon Amour</h1>
             
-            <p class="luxury-quote" style="margin-bottom: 25px; font-size: 1.2rem;">
+            <p class="pinky-quote" style="margin-bottom: 1.5rem; font-size: 1.1rem;">
                 "Je t'aime plus qu'hier, moins que demain."
             </p>
             
-            <p class="text-luxury">
-                Terima kasih banyak ya sayang sudah mau memaafkanku. Aku sayang banget sama kamu!<br>
+            <p class="text-body">
+                Makasih banyak ya sayang sudah mau memaafkanku. Aku sayang banget sama kamu!<br>
             </p>
-            <div class="reward-card-luxury">
-                <div class="reward-glow"></div>
+            <div class="reward-card">
                 Sebagai gantinya, nanti kita makan <b>sop burtok, ayam recheese, dan eskrim</b> yaaa! 🍜🍗🍦
             </div>
         </div>
