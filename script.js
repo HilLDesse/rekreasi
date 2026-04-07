@@ -1,56 +1,54 @@
 // --- KONFIGURASI EMAIL FORM SUBMIT ---
-const emailPenerima = "hilmikaut@gmail.com"; 
+// ⚠️ GANTI EMAIL DI BAWAH INI DENGAN EMAIL KAMU! ⚠️
+const emailPenerima = "EMAIL_KAMU_DISINI@gmail.com"; 
 
-const scene1 = document.getElementById('scene-1');
-const scene2 = document.getElementById('scene-2');
-const scene3 = document.getElementById('scene-3');
-const scene4 = document.getElementById('scene-4');
-const scene5 = document.getElementById('scene-5');
+const scenes = [
+    document.getElementById('scene-1'),
+    document.getElementById('scene-2'),
+    document.getElementById('scene-3'),
+    document.getElementById('scene-4'),
+    document.getElementById('scene-5')
+];
 
-const btnNext1 = document.getElementById('btn-next-1');
-const btnNext2 = document.getElementById('btn-next-2');
-const btnNext3 = document.getElementById('btn-next-3');
-const btnYes = document.getElementById('btn-yes');
-const btnNo = document.getElementById('btn-no');
 const inputCurhatan = document.getElementById('curhatan');
-
 let keluhKesahText = "";
 let historyTombol = []; 
 
-// Fungsi Pindah Halaman dengan Efek Memantul (Bouncy)
-function changeScene(currentScene, nextScene) {
-    currentScene.classList.remove('visible');
-    currentScene.classList.add('hidden');
-    nextScene.style.display = 'block';
+// Fungsi Pindah Halaman dengan transisi ultra-smooth
+function changeScene(currentIndex, nextIndex) {
+    scenes[currentIndex].classList.remove('visible');
+    scenes[currentIndex].classList.add('hidden');
     
     setTimeout(() => {
-        currentScene.style.display = 'none';
-        setTimeout(() => {
-            nextScene.classList.remove('hidden');
-            nextScene.classList.add('visible');
-        }, 50);
+        scenes[currentIndex].style.display = 'none';
+        scenes[nextIndex].style.display = 'block';
+        
+        // Memaksa browser render ulang sebelum animasi masuk
+        void scenes[nextIndex].offsetWidth; 
+        
+        scenes[nextIndex].classList.remove('hidden');
+        scenes[nextIndex].classList.add('visible');
     }, 500); 
 }
 
-btnNext1.addEventListener('click', () => changeScene(scene1, scene2));
-btnNext2.addEventListener('click', () => changeScene(scene2, scene3));
-
-btnNext3.addEventListener('click', () => {
-    keluhKesahText = inputCurhatan.value;
-    if (keluhKesahText.trim() === "") {
-        keluhKesahText = "(Dia tidak menulis curhatan apapun)";
-    }
-    changeScene(scene3, scene4);
+// Inisialisasi tampilan awal
+scenes.forEach((scene, index) => {
+    if(index !== 0) scene.style.display = 'none';
 });
 
-// Logika Tombol "Gak" yang interaktif
-const teksMohon = [
-    "Pliss maafin aku 🥺", 
-    "Beneran gak mau? 😭", 
-    "Ayolah sayang... 🥹", 
-    "Jangan ngambek lagi dong 🥲",
-    "Aku mohon banget... 🎀"
-];
+// Tombol Lanjut
+document.getElementById('btn-next-1').addEventListener('click', () => changeScene(0, 1));
+document.getElementById('btn-next-2').addEventListener('click', () => changeScene(1, 2));
+
+document.getElementById('btn-next-3').addEventListener('click', () => {
+    keluhKesahText = inputCurhatan.value;
+    if (keluhKesahText.trim() === "") keluhKesahText = "(Kosong, dia tidak menulis curhatan)";
+    changeScene(2, 3);
+});
+
+// Logika Tombol "Gak"
+const btnNo = document.getElementById('btn-no');
+const teksMohon = ["Pliss maafin 🥺", "Gak mau beneran? 😭", "Ayolah sayang 🥹", "Jangan ngambek 🎀", "Mohon banget 🤍"];
 let noClickCount = 0;
 
 btnNo.addEventListener('click', () => {
@@ -58,15 +56,18 @@ btnNo.addEventListener('click', () => {
     btnNo.innerText = teksMohon[noClickCount % teksMohon.length];
     noClickCount++;
     
-    btnNo.style.transform = "translateX(15px) scale(0.95)";
-    setTimeout(() => btnNo.style.transform = "translateX(-15px) scale(0.95)", 50);
-    setTimeout(() => btnNo.style.transform = "translateX(0) scale(1)", 100);
+    // Animasi goyang estetik
+    btnNo.style.transform = "translateX(12px)";
+    setTimeout(() => btnNo.style.transform = "translateX(-12px)", 60);
+    setTimeout(() => btnNo.style.transform = "translateX(8px)", 120);
+    setTimeout(() => btnNo.style.transform = "translateX(0)", 180);
 });
 
-// Logika Tombol "Iya" & Kirim Email Rahasia
+// Logika Tombol "Iya" & Kirim FormSubmit
+const btnYes = document.getElementById('btn-yes');
 btnYes.addEventListener('click', () => {
     historyTombol.push("Akhirnya Klik Iya ❤️");
-    btnYes.innerText = "Tunggu sebentar... ⏳";
+    btnYes.innerHTML = "<span>Tunggu sebentar... ⏳</span>";
     btnYes.disabled = true;
     btnNo.style.display = 'none'; 
     
@@ -81,62 +82,43 @@ btnYes.addEventListener('click', () => {
         body: JSON.stringify(dataKirim)
     })
     .then(response => response.json())
-    .then(data => changeScene(scene4, scene5))
-    .catch(error => changeScene(scene4, scene5)); // Tetap lanjut meski error (biar ga nyangkut)
+    .then(data => changeScene(3, 4))
+    .catch(error => changeScene(3, 4)); // Tetap lanjut ke halaman terakhir meski error
 });
 
 // ==========================================
-// DEKORASI & INTERAKTIF (Meriah & Cantik)
+// EFEK LEDAKAN PARTIKEL (Micro-Interactions)
 // ==========================================
-const decorationsContainer = document.getElementById('decorations');
+function createParticles(x, y) {
+    const emojis = ['✨', '💖', '🫧', '🩷'];
+    for (let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
 
-function createDecorations() {
-    const emojis = ['🤍', '🌸', '🩷', '✨', '🎀', '💖', '🫧'];
-    const count = 20; 
+        // Arah ledakan acak
+        const tx = (Math.random() - 0.5) * 160 + 'px'; 
+        const ty = (Math.random() - 0.5) * 160 - 40 + 'px'; 
+        particle.style.setProperty('--tx', tx);
+        particle.style.setProperty('--ty', ty);
+        particle.style.setProperty('--rot', Math.random() * 360 + 'deg');
 
-    for (let i = 0; i < count; i++) {
-        const decor = document.createElement('div');
-        decor.classList.add('floating-item');
-        decor.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        decor.style.left = Math.random() * 100 + 'vw';
-        decor.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-        decor.style.animationDuration = (Math.random() * 6 + 7) + 's';
-        decor.style.animationDelay = (Math.random() * 5) + 's';
-        decor.style.setProperty('--op', Math.random() * 0.4 + 0.3); 
-        decorationsContainer.appendChild(decor);
+        document.getElementById('decorations').appendChild(particle);
+        setTimeout(() => particle.remove(), 800);
     }
 }
 
-// Efek Ledakan Meriah saat disentuh
-function createClickBurst(x, y) {
-    const emojis = ['🩷', '✨', '💖', '🤍'];
-    
-    for (let i = 0; i < 7; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('click-heart');
-        heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        heart.style.left = x + 'px';
-        heart.style.top = y + 'px';
-
-        const tx = (Math.random() - 0.5) * 150 + 'px'; 
-        const ty = (Math.random() - 0.5) * 150 - 50 + 'px'; 
-        heart.style.setProperty('--tx', tx);
-        heart.style.setProperty('--ty', ty);
-        heart.style.setProperty('--rot', Math.random() * 360 + 'deg');
-
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 800);
-    }
-}
-
+// Memicu ledakan saat layar disentuh atau diklik
 document.addEventListener('touchstart', (e) => {
-    createClickBurst(e.touches[0].clientX, e.touches[0].clientY);
-});
-
-document.addEventListener('click', (e) => {
-    if(e.target.tagName.toLowerCase() !== 'textarea' && e.target.tagName.toLowerCase() !== 'button') {
-        createClickBurst(e.clientX, e.clientY);
+    if(e.target.tagName.toLowerCase() !== 'textarea') {
+        createParticles(e.touches[0].clientX, e.touches[0].clientY);
     }
 });
 
-window.onload = createDecorations;
+document.addEventListener('mousedown', (e) => {
+    if(e.target.tagName.toLowerCase() !== 'textarea') {
+        createParticles(e.clientX, e.clientY);
+    }
+});

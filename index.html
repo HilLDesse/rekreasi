@@ -3,105 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sebuah Pesan Tulus Untukmu ❤️</title>
+    <title>Pesan Untuk Kesayanganku ❤️</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-    <div class="blob-container">
-        <div class="blob shape1"></div>
-        <div class="blob shape2"></div>
-        <div class="blob shape3"></div>
+    <div class="mesh-bg">
+        <div class="color-orb orb-1"></div>
+        <div class="color-orb orb-2"></div>
+        <div class="color-orb orb-3"></div>
     </div>
 
-    <div class="bg-decorations" id="decorations"></div>
+    <div id="decorations"></div>
 
     <div class="master-container">
         
         <div class="scene visible" id="scene-1">
-            <div class="cover-content">
-                <div class="icon-wrapper">
-                    <div class="heart-icon-main">🩷</div>
-                    <div class="modern-pulse-ring"></div>
-                    <div class="modern-pulse-ring delay"></div>
-                </div>
-                
-                <h1 class="aesthetic-title">Untuk Kesayanganku...</h1>
-                
-                <div class="divider-line"></div>
-                
-                <p class="modern-quote">
-                    "With this message, I hope you can forgive me, Darling."
-                </p>
-                
-                <p class="instruction">
-                    Sentuh tombol di bawah ini 🥺
-                </p>
-                
-                <button id="btn-next-1" class="btn-premium">
-                    Buka Pesan Ini
+            <div class="icon-pulse-container">
+                <div class="heart-icon-3d">💖</div>
+                <div class="pulse-ring"></div>
+            </div>
+            
+            <h1 class="romantic-title">Untuk Kesayanganku...</h1>
+            
+            <p class="modern-quote">
+                "With this message, I hope you can forgive me, Darling."
+            </p>
+            
+            <div class="action-area">
+                <p class="instruction-text">Sentuh tombol di bawah ini 🥺</p>
+                <button id="btn-next-1" class="btn-glow">
+                    <span>Buka Pesan Ini</span>
                 </button>
             </div>
         </div>
 
         <div class="scene hidden" id="scene-2">
-            <h1 class="aesthetic-title" style="font-size: 2.8rem;">Maafin Aku Ya? 🥺</h1>
-            <p class="neat-body-text">
+            <h1 class="heading-modern">Maafin Aku Ya? 🥺</h1>
+            <p class="text-modern">
                 Sayang... Aku bener-bener minta maaf ya karena udah ngelupain hal-hal penting tentang kamu. 
                 Aku sadar banget kebodohanku ini pasti bikin kamu sedih dan ngerasa gak dihargai. 
             </p>
-            <p class="neat-body-text">
-                Aku janji bakal lebih merhatiin kamu dan mengingat semua detail kecil tentang kita.
+            <p class="text-modern">
+                Aku janji bakal lebih merhatiin kamu dan mengingat semua detail kecil tentang kita ke depannya.
             </p>
-            <button id="btn-next-2" class="btn-premium btn-small" style="margin-top: 15px;">
-                Lanjut baca...
+            <button id="btn-next-2" class="btn-glow" style="margin-top: 20px;">
+                <span>Lanjut baca...</span>
             </button>
         </div>
 
         <div class="scene hidden" id="scene-3">
-            <h1 class="aesthetic-title" style="font-size: 2.5rem;">Keluarkan Semuanya...</h1>
-            <p class="neat-body-text" style="font-size: 0.9rem; margin-bottom: 20px;">
+            <h1 class="heading-modern">Keluarkan Semuanya</h1>
+            <p class="text-modern subtitle">
                 Sebelum kamu mutusin buat maafin aku, kamu boleh keluarin semua unek-unek kamu di sini. 
-                Tulis aja semuanya sayang, aku bakal baca dan resapi.
+                Tulis aja semuanya, aku bakal baca 🥺
             </p>
             
-            <textarea id="curhatan" class="premium-textarea" placeholder="Tulis keluh kesahmu di sini... (aku bakal baca kok 🥺)"></textarea>
+            <textarea id="curhatan" class="modern-input" placeholder="Ketik perasaanmu di sini..."></textarea>
             
-            <button id="btn-next-3" class="btn-premium btn-small" style="margin-top: 20px;">
-                Kirim & Lanjut
+            <button id="btn-next-3" class="btn-glow" style="margin-top: 20px;">
+                <span>Kirim & Lanjut</span>
             </button>
         </div>
 
         <div class="scene hidden" id="scene-4">
-            <h1 class="aesthetic-title" style="font-size: 3rem;">Jadi... 🥺</h1>
-            <p class="neat-body-text">
+            <h1 class="heading-modern">Jadi... 🥺</h1>
+            <p class="text-modern">
                 Setelah baca semua perminta maafanku dan ngeluarin unek-unek kamu... <br><br>
                 <b>Kamu mau kan maafin aku?</b>
             </p>
             
-            <div class="buttons">
-                <button id="btn-yes" class="btn-premium">Iya, Aku Maafin</button>
-                <button id="btn-no" class="btn-outline">Gak!</button>
+            <div class="button-group">
+                <button id="btn-yes" class="btn-glow"><span>Iya, Aku Maafin</span></button>
+                <button id="btn-no" class="btn-ghost">Gak!</button>
             </div>
         </div>
 
         <div class="scene hidden" id="scene-5">
-            <div class="heart-icon-main" style="margin-bottom: 10px; font-size: 3.5rem;">💖</div>
-            <h1 class="aesthetic-title">Merci Mon Amour!</h1>
+            <div class="heart-icon-3d" style="font-size: 4.5rem; margin-bottom: 10px;">💝</div>
+            <h1 class="romantic-title" style="font-size: 3.5rem;">Merci Mon Amour!</h1>
             
-            <p class="modern-quote" style="margin-bottom: 20px;">
+            <p class="modern-quote" style="margin-bottom: 25px;">
                 "Je t'aime plus qu'hier, moins que demain."
             </p>
             
-            <p class="neat-body-text">
-                Makasih banyak ya sayang udah mau maafin aku. Aku sayang banget sama kamu!<br><br>
-                <span class="reward-box">Nanti kita makan sop burtok, ayam recheese, dan eskrim yaaa! 🍜🍗🍦</span>
+            <p class="text-modern">
+                Makasih banyak ya sayang udah mau maafin aku. Aku sayang banget sama kamu!
             </p>
+            <div class="reward-card">
+                Nanti kita makan sop burtok, ayam recheese, dan eskrim yaaa! 🍜🍗🍦
+            </div>
         </div>
 
     </div>
