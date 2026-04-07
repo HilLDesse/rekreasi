@@ -1,7 +1,7 @@
 // ==============================
 // KONFIGURASI
 // ==============================
-const emailPenerima = "@gmail.com"; // ganti dengan email kamu
+const emailPenerima = "hilmikaut@gmail.com"; // ganti dengan email kamu
 const textToType = "Aku bikin pesan ini khusus buat kamu. Semoga setelah baca semuanya, hati kamu bisa sedikit lebih lembut buat aku. 💗";
 
 const scenes = [
