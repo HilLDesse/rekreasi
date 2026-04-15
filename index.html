@@ -1,192 +1,848 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Untukmu, Kesayanganku 💗</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ringkasan Rekreasi dan Olahraga Air</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --card: #ffffff;
+      --ink: #17324d;
+      --muted: #5f7488;
+      --line: #d8e2ec;
+      --accent: #0077b6;
+      --accent-2: #00b4d8;
+      --soft: #eaf7fb;
+      --warn: #fff4d6;
+      --danger: #ffe4e6;
+      --ok: #e8fff1;
+      --shadow: 0 12px 30px rgba(20, 50, 77, 0.08);
+      --radius: 18px;
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700;900&family=Sacramento&display=swap" rel="stylesheet" />
+    * { box-sizing: border-box; }
 
-    <link rel="stylesheet" href="style.css" />
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef7fb 0%, #f8fbfd 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0a4f7a 0%, #0077b6 55%, #00b4d8 100%);
+      color: white;
+      padding: 56px 20px 38px;
+    }
+
+    .hero-inner,
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 1.12;
+    }
+
+    .subtitle {
+      max-width: 850px;
+      font-size: 17px;
+      opacity: 0.95;
+      margin: 0;
+    }
+
+    .top-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .top-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .top-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-inner a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f1f7fb;
+      border: 1px solid #dceaf3;
+    }
+
+    .nav-inner a:hover { background: #e7f4fb; }
+
+    .container {
+      padding: 28px 20px 60px;
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 28px;
+    }
+
+    .section-desc {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      background: var(--soft);
+      border: 1px solid #cae9f3;
+      color: #0c618e;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .mini-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+
+    li { margin-bottom: 6px; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .compare .box {
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .compare .left { background: #f8fcff; }
+    .compare .right { background: #f8fbff; }
+
+    .info {
+      border-left: 5px solid var(--accent);
+      background: #f7fcff;
+      padding: 16px 18px;
+      border-radius: 12px;
+    }
+
+    .highlight {
+      background: linear-gradient(180deg, #f8fdff 0%, #eff9fd 100%);
+      border: 1px solid #d2eef8;
+    }
+
+    .warn { background: var(--warn); border: 1px solid #f2df9d; }
+    .danger { background: var(--danger); border: 1px solid #f6c2cb; }
+    .ok { background: var(--ok); border: 1px solid #bde8ca; }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .num {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      font-weight: 700;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      padding: 0 16px;
+    }
+
+    details + details { margin-top: 12px; }
+
+    summary {
+      cursor: pointer;
+      padding: 16px 0;
+      font-weight: 700;
+    }
+
+    details .content {
+      padding: 0 0 16px;
+      color: var(--ink);
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .top-grid,
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .compare {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-grid,
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .compare {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .nav-inner {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="gradient-orbs"></div>
-    <div id="floating-hearts-bg"></div>
-    <div id="sparkles-container"></div>
-    <div id="confetti-container"></div>
-    <div id="interactive-particles"></div>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">Ringkasan Ujian • Rekreasi dan Olahraga Air</div>
+      <h1>Ringkasan Materi Rekreasi dan Olahraga Air</h1>
+      <p class="subtitle">
+        Disusun lebih jelas, terstruktur, dan mudah dipahami dari materi yang kamu unggah. Fokus utama halaman ini adalah membantu belajar cepat, memahami konsep inti, dan mempermudah hafalan menjelang ujian.
+      </p>
 
-    <main class="master-container">
-        <div class="progress-bar-container">
-            <div class="progress-bar"></div>
-            <div class="progress-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
+      <div class="top-grid">
+        <div class="top-card">
+          <strong>Konsep Dasar</strong>
+          Bedakan rekreasi air dan olahraga air.
         </div>
+        <div class="top-card">
+          <strong>Kondisi Alam</strong>
+          Pahami kecocokan aktivitas dengan lokasi.
+        </div>
+        <div class="top-card">
+          <strong>Operator & Safety</strong>
+          Fokus pada kepemanduan, SOP, dan keselamatan.
+        </div>
+        <div class="top-card">
+          <strong>Ekowisata</strong>
+          Ingat unsur pengembangan produk dan keberlanjutan.
+        </div>
+      </div>
+    </div>
+  </header>
 
-        <section class="scene visible" id="scene-1">
-            <div class="scene-header">
-                <div class="wax-seal love-letter-seal">
-                    <span class="seal-heart">💌</span>
-                </div>
-            </div>
+  <nav>
+    <div class="nav-inner">
+      <a href="#konsep">Konsep Dasar</a>
+      <a href="#jenis">Jenis Aktivitas</a>
+      <a href="#perairan">Jenis Perairan</a>
+      <a href="#odtw">ODTW & Kondisi Alam</a>
+      <a href="#wisatawan">Wisatawan</a>
+      <a href="#operator">Operator & Kepemanduan</a>
+      <a href="#ekowisata">Ekowisata</a>
+      <a href="#kecelakaan">Pelaporan Kecelakaan</a>
+      <a href="#urutan">Urutan Belajar</a>
+      <a href="#hafalan">Hafalan Cepat</a>
+    </div>
+  </nav>
 
-            <p class="subtitle-elegant">Special Message</p>
-            <h1 class="luxury-title">for ma chérie</h1>
+  <main class="container">
+    <section id="konsep">
+      <h2 class="section-title">1. Konsep Dasar</h2>
+      <p class="section-desc">Bagian ini adalah fondasi utama. Pahami dulu definisi dan perbedaannya.</p>
 
-            <div class="typing-container">
-                <p id="typing-text" class="luxury-quote"></p>
-                <span class="cursor-blink">|</span>
-            </div>
+      <div class="card highlight">
+        <div class="info">
+          <strong>Rekreasi dan olahraga air</strong> adalah aktivitas yang dilakukan di laut, sungai, danau, atau kolam untuk hiburan, relaksasi, pengalaman, maupun olahraga.
+        </div>
+      </div>
 
-            <div class="action-area hidden-fade" id="action-area-1">
-                <div class="instruction-shimmer">
-                    <span class="shimmer-text">sentuh tombolnya yaa sayangg✨</span>
-                    <div class="arrow-bounce">↓</div>
-                </div>
-                <button id="btn-next-1" class="btn-luxury-pink">
-                    <span class="btn-content">Aku ada pesan untuk kamu</span>
-                    <div class="btn-glow"></div>
-                    <div class="btn-shimmer"></div>
-                </button>
-            </div>
-        </section>
+      <div class="card" style="margin-top:16px;">
+        <div class="compare">
+          <div class="box left">
+            <div class="pill">Rekreasi Air</div>
+            <h3 class="mini-title">Fokus: menikmati dan bersantai</h3>
+            <ul>
+              <li>Tujuan utama: relaksasi, kesenangan, pengalaman</li>
+              <li>Orientasi: leisure dan pengalaman wisata</li>
+              <li>Intensitas fisik: ringan sampai sedang</li>
+              <li>Aturan: lebih fleksibel</li>
+              <li>Contoh: banana boat, floating, kayaking santai</li>
+            </ul>
+          </div>
+          <div class="box right">
+            <div class="pill">Olahraga Air</div>
+            <h3 class="mini-title">Fokus: skill, teknik, performa</h3>
+            <ul>
+              <li>Tujuan utama: kompetisi, pencapaian, performa</li>
+              <li>Orientasi: keterampilan, teknik, aturan</li>
+              <li>Intensitas fisik: sedang sampai tinggi</li>
+              <li>Aturan: lebih ketat dan formal</li>
+              <li>Contoh: rowing, surfing kompetisi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <section class="scene hidden" id="scene-2">
-            <div class="pulse-heart">
-                <span class="emoji-3d">🥺</span>
-            </div>
-            <p class="subtitle-elegant">my apology</p>
-            <h2 class="luxury-heading">Maafin Aku Yaaaa</h2>
-            <div class="divider-elegant"></div>
+    <section id="jenis">
+      <h2 class="section-title">2. Jenis-Jenis Aktivitas Air</h2>
+      <p class="section-desc">Kelompokkan aktivitas berdasarkan sifatnya supaya lebih mudah dihafal.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="pill">Bermotor</div>
+          <ul>
+            <li>Jet ski</li>
+            <li>Speed boating</li>
+            <li>Wakeboarding</li>
+            <li>Flyboarding</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Non-Bermotor</div>
+          <ul>
+            <li>Kayaking</li>
+            <li>Canoeing</li>
+            <li>Surfing</li>
+            <li>Windsurfing</li>
+            <li>Stand Up Paddleboarding (SUP)</li>
+            <li>Bodyboarding</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Bawah Air</div>
+          <ul>
+            <li>Snorkeling</li>
+            <li>Scuba diving</li>
+            <li>Free diving</li>
+            <li>Spearfishing</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Rekreasi Wisata</div>
+          <ul>
+            <li>Banana boat</li>
+            <li>Donat boat</li>
+            <li>Parasailing</li>
+            <li>Rafting</li>
+            <li>Tubing</li>
+            <li>Sea walking</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Ekstrem</div>
+          <ul>
+            <li>Whitewater rafting</li>
+            <li>Riverboarding</li>
+            <li>Cliff diving</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Tradisional & Inovatif</div>
+          <ul>
+            <li>Dragon boat racing</li>
+            <li>Outrigger canoeing</li>
+            <li>Hoverboard water sports</li>
+            <li>Electric surfing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-            <div class="glass-card">
-                <p class="text-luxury">
-                    Sayang, aku minta maaf karena sempat melupakan hal-hal penting tentang kamu.
-                    Aku sadar itu bisa bikin kamu sedih, kecewa, dan merasa kurang dihargai.
-                    Dengan kita yang saat ini sedang diem satu sama lain, aku benar-benar merasa kehilangan banget tanpa adanya kamu.
-                </p>
-                <p class="text-luxury">
-                    Padahal buat aku, kamu itu <span class="highlight-pink">sangat berarti</span>. Aku ingin jadi orang yang lebih baik,
-                    lebih peka, dan lebih perhatian sama semua hal kecil tentang kamu.
-                    Aku ingin hubungan kita bisa menjadi lebih baik lagi sayang.
-                    <span class="highlight-pink">Maaf sayang</span> aku baru bikin ini sekarang, sebisa mungkin aku buat sebagus mungkin agar kamu bisa terkesan dan merasa hal ini spesial untuk kamu.
+    <section id="perairan">
+      <h2 class="section-title">3. Jenis Perairan dan Tingkat Risiko</h2>
+      <p class="section-desc">Aktivitas air selalu dipengaruhi oleh karakter lingkungan perairan.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="pill">Perairan Laut</div>
+          <ul>
+            <li>Air asin</li>
+            <li>Dipengaruhi gelombang dan pasang surut</li>
+            <li>Ada ekosistem terumbu karang</li>
+            <li>Cocok untuk surfing, snorkeling, diving, jet ski</li>
+            <li><strong>Risiko: sedang–tinggi</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Perairan Tawar</div>
+          <ul>
+            <li>Sungai, danau, waduk</li>
+            <li>Arus relatif lebih terkontrol</li>
+            <li>Minim salinitas</li>
+            <li>Cocok untuk rafting, canoeing, kayaking, SUP</li>
+            <li><strong>Risiko: rendah–sedang</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Perairan Buatan</div>
+          <ul>
+            <li>Kolam renang, wave pool, danau buatan</li>
+            <li>Lebih mudah dikendalikan</li>
+            <li>Cocok untuk swimming, waterpark, latihan diving</li>
+            <li><strong>Risiko: rendah</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-                </p>
-                <p class="text-luxury">
-                    Aku tidak mau cuma minta maaf. Aku juga mau memperbaiki semuanya pelan-pelan,
-                    dengan tindakan aku kedepannya.
-                </p>
-            </div>
+    <section id="odtw">
+      <h2 class="section-title">4. ODTW, Kondisi Alam, dan Kesesuaian Aktivitas</h2>
+      <p class="section-desc">Bagian ini penting untuk menjawab soal analisis: aktivitas apa cocok di lokasi seperti apa.</p>
 
-            <button id="btn-next-2" class="btn-luxury-pink">
-                <span class="btn-content">Lanjut baca...</span>
-                <div class="btn-glow"></div>
-                <div class="btn-shimmer"></div>
-            </button>
-        </section>
+      <div class="grid-2">
+        <div class="card">
+          <div class="pill">ODTW</div>
+          <h3 class="mini-title">Objek Daya Tarik Wisata Rekreasi Olahraga Air</h3>
+          <ul>
+            <li>Destinasi yang menawarkan aktivitas rekreasi berbasis air</li>
+            <li>Bisa berupa kawasan alami maupun buatan</li>
+            <li>Contoh alami: pantai, danau, sungai, laut</li>
+            <li>Contoh buatan: waterpark, waduk, kolam renang, arena selancar buatan</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Contoh Kesesuaian</div>
+          <ul>
+            <li>Pantai dan laut → snorkeling, diving, surfing, jet ski, parasailing</li>
+            <li>Danau/waduk → kayaking, memancing, ski air, perahu dayung</li>
+            <li>Sungai → arung jeram, tubing, body rafting</li>
+            <li>Air terjun/gua air → canyoning, cave diving</li>
+            <li>Taman buatan → water park, wakeboarding park</li>
+          </ul>
+        </div>
+      </div>
 
-        <section class="scene hidden" id="scene-3">
-            <span class="emoji-3d icon-elegant">✍️</span>
-            <p class="subtitle-elegant">i want to listen</p>
-            <h2 class="luxury-heading">Tulis Semua Unek-Unek Kamu Sayang</h2>
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <div class="pill">Faktor Alam yang Menentukan</div>
+          <ul>
+            <li>Kondisi perairan: arus, kedalaman, visibilitas, suhu air</li>
+            <li>Kualitas lingkungan: kebersihan, polusi, kesehatan ekosistem</li>
+            <li>Cuaca dan iklim: musim, angin, curah hujan, gelombang</li>
+            <li>Kenampakan alam: terumbu karang, lamun, gua laut, pantai, mangrove</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Kesesuaian Aktivitas</div>
+          <ul>
+            <li>Arus tenang dan dangkal → snorkeling, wisata keluarga</li>
+            <li>Terumbu sehat dan kedalaman sedang → scuba diving</li>
+            <li>Pantai landai dan ombak besar → surfing</li>
+            <li>Laguna atau air tenang → kayaking dan SUP</li>
+          </ul>
+        </div>
+      </div>
 
-            <p class="text-luxury">
-                Sebelum kamu memutuskan apa pun, tulis semua unek-unek kamu di sini.
-                Aku mau dengerin semuanya dengan sepenuh hati dan aku renungin semuanya.
-            </p>
+      <div class="card warn" style="margin-top:16px;">
+        <strong>Inti penting:</strong> kondisi alam menentukan jenis aktivitas yang aman dan sesuai. Ini adalah salah satu inti terbesar dalam materi wisata bahari.
+      </div>
+    </section>
 
-            <div class="input-wrapper">
-                <textarea id="curhatan" class="luxury-input" placeholder=" "></textarea>
-                <div class="input-border-glow"></div>
-                <span class="floating-label" id="floating-label">Tulis semua isi hati kamu di sini yaa...</span>
-            </div>
+    <section id="wisatawan">
+      <h2 class="section-title">5. Karakteristik Wisatawan Olahraga Air</h2>
+      <p class="section-desc">Wisatawan harus dipahami agar produk, pelayanan, dan keselamatan bisa disesuaikan.</p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="pill">Karakter Umum</div>
+          <ul>
+            <li>Memiliki minat tinggi pada aktivitas outdoor</li>
+            <li>Menyukai tantangan dan petualangan</li>
+            <li>Memiliki kondisi fisik relatif baik</li>
+            <li>Bersedia membayar lebih untuk pengalaman yang unik</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Mengapa Penting?</div>
+          <ul>
+            <li>Membantu menentukan jenis produk wisata</li>
+            <li>Membantu menyesuaikan layanan dan fasilitas</li>
+            <li>Membantu menentukan tingkat keamanan yang diperlukan</li>
+            <li>Membantu membuat strategi pemasaran yang tepat</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-            <button id="btn-next-3" class="btn-luxury-pink">
-                <span class="btn-content">Kirim & Lanjut</span>
-                <div class="btn-glow"></div>
-                <div class="btn-shimmer"></div>
-            </button>
-        </section>
+    <section id="operator">
+      <h2 class="section-title">6. Pengelolaan Operator dan Kepemanduan</h2>
+      <p class="section-desc">Fokus pada pengelolaan kegiatan, data tamu, perlengkapan, briefing, keselamatan, dan pelaporan.</p>
 
-        <section class="scene hidden" id="scene-4">
-            <span class="emoji-3d icon-elegant">🌸</span>
-            <p class="subtitle-elegant">final question</p>
-            <h2 class="luxury-heading">Sayang jadii...</h2>
+      <details open>
+        <summary>Stand Up Paddleboard (SUP)</summary>
+        <div class="content">
+          <ul>
+            <li>Termasuk pariwisata minat khusus</li>
+            <li>Berasal dari Hawaii</li>
+            <li>Gabungan aktivitas selancar dan dayung</li>
+            <li>Dilakukan dengan berdiri di atas papan sambil menjaga keseimbangan</li>
+            <li>Lokasi ideal: perairan tidak berarus, tidak bergelombang, tidak berombak</li>
+            <li>Bisa dilakukan di pantai, laut, dan danau</li>
+          </ul>
+        </div>
+      </details>
 
-            <p class="text-luxury">
-                Aku sudah minta maaf. Kamu juga sudah ngeluarin isi hatimu.
-                Sekarang aku cuma mau tanya satu hal yang paling penting...
-            </p>
+      <details>
+        <summary>Peralatan SUP</summary>
+        <div class="content">
+          <ul>
+            <li>Papan dayung</li>
+            <li>Dayung</li>
+            <li>Pelampung</li>
+            <li>Tali</li>
+            <li>Pompa</li>
+            <li>Sirip</li>
+            <li>Tas</li>
+          </ul>
+        </div>
+      </details>
 
-            <div class="question-highlight">
-                <span class="sparkle">✨</span>
-                <p class="highlight-text">Apakah kamu mau memaafkan aku?</p>
-                <span class="sparkle">✨</span>
-            </div>
+      <details>
+        <summary>Penerimaan Tamu oleh Operator</summary>
+        <div class="content">
+          <ul>
+            <li>Booking guest / walking guest</li>
+            <li>Form wisatawan</li>
+            <li>Jenis aktivitas yang dipilih</li>
+            <li>Kebutuhan peralatan</li>
+            <li>Riwayat kesehatan</li>
+            <li>Liability form</li>
+          </ul>
+          <p><strong>Makna penting:</strong> operator harus memahami siapa tamu, ikut aktivitas apa, kondisi kesehatan tamu, dan risiko kegiatan sebelum aktivitas dimulai.</p>
+        </div>
+      </details>
 
-            <div class="button-group" id="button-group">
-                <button id="btn-yes" class="btn-luxury-pink">
-                    <span class="btn-content">
-                        <span class="btn-icon">💞</span>
-                        <span class="btn-text">Iya, Aku Maafin</span>
-                    </span>
-                    <div class="btn-glow"></div>
-                    <div class="btn-shimmer"></div>
-                </button>
-                <button id="btn-no" class="btn-outline-pink">Gak 😤</button>
-            </div>
-        </section>
+      <details>
+        <summary>Kepemanduan Wisata Snorkeling</summary>
+        <div class="content">
+          <ul>
+            <li>Berpedoman pada SKKNI bidang pemanduan wisata snorkeling</li>
+            <li>Trip leader harus mampu menganalisis profil wisatawan</li>
+            <li>Menyiapkan dokumen aktivitas</li>
+            <li>Menyusun rencana pemanduan</li>
+            <li>Mengidentifikasi lokasi snorkeling</li>
+            <li>Membuat perencanaan keselamatan dan kesehatan kerja</li>
+            <li>Menyiapkan peralatan dan perlengkapan</li>
+            <li>Melakukan briefing/taklimat</li>
+            <li>Melakukan orientasi snorkeling</li>
+            <li>Menerapkan keterampilan dasar snorkeling</li>
+            <li>Menerima keluhan dan mengatasi konflik</li>
+            <li>Memberikan pertolongan pertama saat darurat</li>
+            <li>Melakukan perawatan dan penyimpanan alat pasca-aktivitas</li>
+            <li>Mendokumentasikan laporan aktivitas</li>
+          </ul>
+        </div>
+      </details>
 
-        <section class="scene hidden" id="scene-5">
-            <div class="celebration-header">
-                <div class="hearts-celebration">
-                    <span class="heart-bounce" style="animation-delay: 0s">💖</span>
-                    <span class="heart-bounce" style="animation-delay: 0.2s">💝</span>
-                    <span class="heart-bounce" style="animation-delay: 0.4s">💗</span>
-                </div>
-                <p class="subtitle-elegant">thank you, my love</p>
-                <h1 class="luxury-title celebration-title">Merci Mon Amour</h1>
-            </div>
+      <details>
+        <summary>Kriteria Lokasi Sea Walker</summary>
+        <div class="content">
+          <ul>
+            <li>Hanya boleh dilakukan pada jalur yang disetujui</li>
+            <li>Berjarak sekitar 1–5 meter dari karang</li>
+            <li>Lokasi harus aman dan nyaman</li>
+            <li>Kedalaman maksimal sekitar 7 meter</li>
+            <li>Jarak lokasi maksimal sekitar 500 meter dari daratan terdekat</li>
+          </ul>
+          <p><strong>Intinya:</strong> sea walker harus dilakukan di lokasi yang dangkal, aman, dan mudah dikontrol.</p>
+        </div>
+      </details>
+    </section>
 
-            <div class="quote-french">
-                <p class="french-text">"Je t'aimerai aujourd'hui, demain et pour toujours. Je t'aime, mon amour.""</p>
-                <p class="french-translation">(Aku akan mencintaimu hari ini, besok, dan selamanya, aku sayang kamu sayang)</p>
-            </div>
+    <section id="ekowisata">
+      <h2 class="section-title">7. Pengembangan Produk Wisata dan Ekowisata</h2>
+      <p class="section-desc">Bagian ini menjelaskan bagaimana aktivitas wisata air dikembangkan menjadi produk wisata yang bernilai dan berkelanjutan.</p>
 
-            <div class="glass-card">
-                <p class="text-luxury">
-                    Terima kasih banyak ya sayang, karena sudah membuka hati dan mau memaafkanku.
-                    Aku benar-benar bersyukur punya kamu.
-                </p>
-                <p class="text-luxury">
-                    Mulai sekarang aku mau lebih perhatian, lebih peka, dan lebih serius menjaga perasaan kamu.
-                </p>
-            </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="pill">Sistem Kepariwisataan</div>
+          <ul>
+            <li><strong>Market</strong> = pasar</li>
+            <li><strong>Marketing</strong> = strategi pemasaran</li>
+            <li><strong>Travel</strong> = perjalanan/pergerakan wisatawan</li>
+            <li><strong>Destination</strong> = tujuan/destinasi wisata</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Sisi Penawaran dan Permintaan</div>
+          <ul>
+            <li>Penawaran: atraksi, akomodasi, transportasi, infrastruktur, fasilitas pendukung</li>
+            <li>Permintaan: wisatawan nusantara, wisatawan mancanegara, masyarakat lokal</li>
+          </ul>
+        </div>
+      </div>
 
-            <div class="reward-card-luxury">
-                <div class="reward-shine"></div>
-                <div class="reward-icon">🎁</div>
-                <h3 class="reward-title">Hadiah buat kamu</h3>
-                <p class="reward-content">
-                    Nanti kita makan <span class="food-highlight">sop burtok, ayam richeese, dan es krim</span> yaaa.
-                    Aku yang traktir dengan sepenuh hatiiiii!
-                </p>
-                <div class="food-emojis">🍲🍗🍦</div>
-            </div>
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <div class="pill">Kebijakan Pengembangan Produk Wisata</div>
+          <ul>
+            <li>Harus sesuai dengan identitas daerah</li>
+            <li>Harus ada produk unggulan</li>
+            <li>Harus mengangkat obyek wisata, kesenian daerah, dan event wisata</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Kunci Berkembangnya Ekowisata</div>
+          <ul>
+            <li>Keaslian alam</li>
+            <li>Keunikan lingkungan dan budaya</li>
+            <li>Dukungan masyarakat</li>
+            <li>Nilai pendidikan dan pengalaman</li>
+            <li>Keberlanjutan</li>
+            <li>Kemampuan pengelolaan</li>
+          </ul>
+        </div>
+      </div>
 
-            <div style="margin-top: 30px;">
-                <button id="btn-replay" class="btn-outline-pink">Baca dari awal</button>
-            </div>
-        </section>
-    </main>
+      <div class="card" style="margin-top:16px;">
+        <div class="pill">Identifikasi Potensi Ekowisata</div>
+        <ul>
+          <li>Jenis potensi daya tarik wisata</li>
+          <li>Efektivitas pengelolaan</li>
+          <li>Kontribusi pada pendapatan daerah dan ekonomi masyarakat</li>
+          <li>Pelestarian nilai budaya dan lingkungan</li>
+          <li>Dukungan sarana dan prasarana</li>
+          <li>Partisipasi berbagai pihak terkait</li>
+        </ul>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="kecelakaan">
+      <h2 class="section-title">8. Pelaporan Kecelakaan Aktivitas Wisata Bahari</h2>
+      <p class="section-desc">Ini bagian penting untuk hafalan karena berisi aturan, tenggat waktu, dan alur pelaporan.</p>
+
+      <div class="grid-2">
+        <div class="card danger">
+          <div class="pill">Wajib Dilaporkan Jika</div>
+          <ul>
+            <li>Mengakibatkan korban jiwa</li>
+            <li>Membutuhkan rawat inap di rumah sakit</li>
+            <li>Wisatawan/penyelam hilang lebih dari 60 menit</li>
+            <li>Laporan diserahkan paling lambat <strong>3 x 24 jam</strong></li>
+          </ul>
+        </div>
+        <div class="card ok">
+          <div class="pill">Kontak Darurat</div>
+          <ul>
+            <li>Hubungi BASARNAS</li>
+            <li>Call center: <strong>115</strong></li>
+            <li>Dilanjutkan dengan pencarian, pertolongan, evakuasi, dan penyerahan korban</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="pill">Isi Detail Laporan Kecelakaan</div>
+        <ul>
+          <li>Tanggal, jam, dan lokasi kejadian</li>
+          <li>Kronologi kejadian</li>
+          <li>Penanganan setelah kejadian</li>
+          <li>Tindakan medis dan proses evakuasi</li>
+          <li>Nama dan identitas korban</li>
+          <li>Kontak emergency korban</li>
+          <li>Kondisi korban</li>
+          <li>Nama pemandu selam / instruktur yang bertanggung jawab</li>
+          <li>Jika melibatkan kapal: nama kapten dan awak kapal</li>
+          <li>Tindakan hukum bila ada</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="urutan">
+      <h2 class="section-title">9. Urutan Belajar yang Disarankan</h2>
+      <p class="section-desc">Gunakan urutan ini agar materi terasa runtut dan tidak membingungkan.</p>
+      <div class="timeline">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <strong>Pahami definisi dasar</strong>
+            <div>Pelajari dulu apa itu rekreasi air dan olahraga air.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <strong>Bedakan rekreasi air dan olahraga air</strong>
+            <div>Fokus pada tujuan, intensitas, orientasi, dan aturan.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <strong>Hafalkan jenis-jenis aktivitas air</strong>
+            <div>Kelompokkan per kategori: bermotor, non-bermotor, bawah air, ekstrem, dan wisata.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div>
+            <strong>Pelajari jenis perairan</strong>
+            <div>Pahami perbedaan laut, perairan tawar, dan perairan buatan beserta tingkat risikonya.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">5</div>
+          <div>
+            <strong>Pahami ODTW dan kondisi alam</strong>
+            <div>Ini penting untuk soal analisis kesesuaian aktivitas dengan lokasi.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">6</div>
+          <div>
+            <strong>Pelajari karakteristik wisatawan</strong>
+            <div>Agar paham mengapa produk dan layanan harus disesuaikan.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">7</div>
+          <div>
+            <strong>Masuk ke pengelolaan operator dan kepemanduan</strong>
+            <div>Fokus pada SOP, briefing, peralatan, dan keselamatan.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">8</div>
+          <div>
+            <strong>Pelajari pengembangan produk dan ekowisata</strong>
+            <div>Pahami unsur pasar, produk, keberlanjutan, dan partisipasi masyarakat.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">9</div>
+          <div>
+            <strong>Hafalkan pelaporan kecelakaan</strong>
+            <div>Bagian ini cenderung mudah keluar sebagai soal hafalan atau studi kasus.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hafalan">
+      <h2 class="section-title">10. Hafalan Cepat Menjelang Ujian</h2>
+      <p class="section-desc">Bagian ini dibuat sesingkat mungkin untuk review terakhir.</p>
+      <div class="grid-2">
+        <div class="card highlight">
+          <ul>
+            <li><strong>Rekreasi air</strong> = santai, hiburan, pengalaman</li>
+            <li><strong>Olahraga air</strong> = skill, teknik, performa</li>
+            <li><strong>Laut</strong> = risiko paling tinggi dibanding perairan buatan</li>
+            <li><strong>Air tenang</strong> = cocok untuk snorkeling, kayak, SUP</li>
+            <li><strong>Ombak besar</strong> = cocok untuk surfing</li>
+          </ul>
+        </div>
+        <div class="card highlight">
+          <ul>
+            <li><strong>Trip leader snorkeling</strong> harus paham lokasi, keselamatan, briefing, dan P3K</li>
+            <li><strong>Sea walker</strong> harus di lokasi aman, dangkal, dan terkendali</li>
+            <li><strong>Ekowisata</strong> = alam + masyarakat + pendidikan + keberlanjutan</li>
+            <li><strong>Kecelakaan tertentu</strong> wajib dilaporkan maksimal 3 x 24 jam</li>
+            <li><strong>Nomor BASARNAS</strong> = 115</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title" style="margin-top:0;">Kesimpulan Singkat</h2>
+        <p>
+          Materi Rekreasi dan Olahraga Air tidak hanya membahas jenis-jenis aktivitas air, tetapi juga hubungan antara <strong>aktivitas, kondisi alam, karakter wisatawan, pengelolaan operator, keselamatan, dan keberlanjutan</strong>. Jadi, inti besar yang harus kamu kuasai adalah: <strong>aktivitas yang tepat harus ditempatkan pada lokasi yang tepat, dikelola dengan aman, sesuai karakter wisatawan, dan dikembangkan secara berkelanjutan</strong>.
+        </p>
+      </div>
+      <div class="footer">
+        Dibuat untuk membantu belajar lebih cepat, lebih rapi, dan lebih mudah dipahami.
+      </div>
+    </section>
+  </main>
 </body>
 </html>
