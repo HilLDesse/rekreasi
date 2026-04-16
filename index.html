@@ -1,848 +1,1824 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ringkasan Rekreasi dan Olahraga Air</title>
-  <style>
-    :root {
-      --bg: #f4f8fb;
-      --card: #ffffff;
-      --ink: #17324d;
-      --muted: #5f7488;
-      --line: #d8e2ec;
-      --accent: #0077b6;
-      --accent-2: #00b4d8;
-      --soft: #eaf7fb;
-      --warn: #fff4d6;
-      --danger: #ffe4e6;
-      --ok: #e8fff1;
-      --shadow: 0 12px 30px rgba(20, 50, 77, 0.08);
-      --radius: 18px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belajar Oseanografi — Dinamika Oseanografi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean-deep: #0a1628;
+    --ocean-mid: #0d2444;
+    --ocean-surface: #0f3460;
+    --teal: #1a9e8f;
+    --teal-light: #2dc4b3;
+    --teal-pale: #e0f7f5;
+    --accent: #f5a623;
+    --accent-light: #ffd384;
+    --white: #ffffff;
+    --text: #1a2332;
+    --text-muted: #4a6080;
+    --border: #d0e4ef;
+    --card-bg: #f0f8ff;
+    --section-bg: #fafcff;
+    --danger: #e74c3c;
+    --success: #27ae60;
+    --info: #2980b9;
+    --warning: #e67e22;
+  }
 
-    * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      margin: 0;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #eef7fb 0%, #f8fbfd 100%);
-      color: var(--ink);
-      line-height: 1.65;
-    }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--section-bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
 
-    .hero {
-      background: linear-gradient(135deg, #0a4f7a 0%, #0077b6 55%, #00b4d8 100%);
-      color: white;
-      padding: 56px 20px 38px;
-    }
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-surface) 60%, #1a7a7a 100%);
+    padding: 3rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 80px;
+    background: var(--section-bg);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+  .wave-text { font-size: 2.2rem; margin-bottom: 0.3rem; }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 2.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .header p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
 
-    .hero-inner,
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-    }
+  /* LAYOUT */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
 
-    .badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      margin-bottom: 14px;
-    }
+  /* PROGRESS BAR */
+  .progress-bar {
+    background: var(--ocean-deep);
+    padding: 12px 2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .progress-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--teal-light);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-count {
+    color: var(--teal-light);
+    font-size: 0.75rem;
+    min-width: 40px;
+    text-align: right;
+  }
 
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(30px, 5vw, 50px);
-      line-height: 1.12;
-    }
+  /* NAV CHAPTERS */
+  .nav-chapters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 1.5rem 0 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .nav-chapters::-webkit-scrollbar { display: none; }
+  .chapter-btn {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+    transition: all 0.25s;
+    font-weight: 500;
+  }
+  .chapter-btn:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: var(--teal-pale);
+  }
+  .chapter-btn.active {
+    background: var(--ocean-surface);
+    border-color: var(--ocean-surface);
+    color: var(--white);
+  }
 
-    .subtitle {
-      max-width: 850px;
-      font-size: 17px;
-      opacity: 0.95;
-      margin: 0;
-    }
+  /* SECTION PANELS */
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
 
-    .top-grid {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
+  /* INTRO CARD */
+  .intro-card {
+    background: linear-gradient(135deg, var(--ocean-mid), var(--ocean-surface));
+    border-radius: 16px;
+    padding: 2rem;
+    color: var(--white);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-card::after {
+    content: attr(data-emoji);
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    opacity: 0.15;
+  }
+  .intro-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .intro-card p { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
+  .chapter-num {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--teal-light);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
 
-    .top-card {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 16px;
-      padding: 14px;
-    }
+  /* TOPIC GRID */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
 
-    .top-card strong {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 1.4rem;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,60,100,0.1); }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .icon-blue { background: #dbeafe; }
+  .icon-teal { background: #d1fae5; }
+  .icon-orange { background: #fef3c7; }
+  .icon-purple { background: #ede9fe; }
+  .icon-red { background: #fee2e2; }
+  .icon-green { background: #dcfce7; }
+  .card h3 { font-size: 1rem; font-weight: 600; color: var(--text); }
+  .card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+  .card ul li {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .card ul li:last-child { border-bottom: none; }
+  .card ul li::before {
+    content: '›';
+    color: var(--teal);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
-    }
+  /* HIGHLIGHT BOXES */
+  .highlight-box {
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-left: 4px solid;
+  }
+  .highlight-box.info { background: #eff8ff; border-color: var(--info); }
+  .highlight-box.tip { background: #f0fdf4; border-color: var(--success); }
+  .highlight-box.warning { background: #fffbeb; border-color: var(--warning); }
+  .highlight-box.danger { background: #fef2f2; border-color: var(--danger); }
+  .highlight-box strong {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .highlight-box.info strong { color: var(--info); }
+  .highlight-box.tip strong { color: var(--success); }
+  .highlight-box.warning strong { color: var(--warning); }
+  .highlight-box.danger strong { color: var(--danger); }
+  .highlight-box p { font-size: 0.88rem; color: var(--text); margin: 0; }
 
-    .nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 12px 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  /* FORMULA */
+  .formula-box {
+    background: var(--ocean-deep);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    color: var(--white);
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .formula-box small {
+    display: block;
+    color: rgba(255,255,255,0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    margin-top: 6px;
+  }
 
-    .nav-inner a {
-      text-decoration: none;
-      color: var(--ink);
-      font-size: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #f1f7fb;
-      border: 1px solid #dceaf3;
-    }
+  /* DEFINITION TABLE */
+  .def-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+  .def-table th {
+    background: var(--ocean-surface);
+    color: var(--white);
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    text-align: left;
+    font-weight: 500;
+  }
+  .def-table td {
+    padding: 9px 14px;
+    font-size: 0.86rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .def-table tr:nth-child(even) td { background: var(--card-bg); }
+  .def-table tr:hover td { background: var(--teal-pale); }
 
-    .nav-inner a:hover { background: #e7f4fb; }
+  /* LAYER DIAGRAM */
+  .layer-diagram {
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .layer {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .layer-0 { background: #bfdbfe; }
+  .layer-1 { background: #93c5fd; }
+  .layer-2 { background: #3b82f6; }
+  .layer-3 { background: #1d4ed8; }
+  .layer-4 { background: #1e3a8a; }
+  .layer span:first-child {
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 90px;
+    color: rgba(0,0,40,0.7);
+  }
+  .layer span:last-child {
+    font-size: 0.82rem;
+    color: rgba(0,0,40,0.8);
+  }
+  .layer-3 span, .layer-4 span { color: rgba(255,255,255,0.9); }
 
-    .container {
-      padding: 28px 20px 60px;
-    }
+  /* QUIZ */
+  .quiz-section {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  .quiz-section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .quiz-q {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .quiz-q:hover { border-color: var(--teal); background: var(--teal-pale); }
+  .quiz-q .q-text { font-size: 0.9rem; font-weight: 500; margin-bottom: 0; }
+  .quiz-q .q-answer {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .quiz-q.open .q-answer { display: block; }
+  .quiz-q.open { border-color: var(--teal); background: var(--teal-pale); }
+  .toggle-hint {
+    font-size: 0.75rem;
+    color: var(--teal);
+    float: right;
+    font-weight: 500;
+  }
 
-    section {
-      margin-bottom: 28px;
-    }
+  /* TIMELINE */
+  .timeline { padding: 0.5rem 0; }
+  .timeline-item {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 42px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--ocean-surface);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .timeline-content { flex: 1; }
+  .timeline-content h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 3px; }
+  .timeline-content p { font-size: 0.83rem; color: var(--text-muted); }
 
-    .section-title {
-      margin: 0 0 12px;
-      font-size: 28px;
-    }
+  /* INSTRUMENT CARDS */
+  .instrument-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .instrument-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    transition: all 0.2s;
+  }
+  .instrument-card:hover { box-shadow: 0 4px 16px rgba(0,80,120,0.12); }
+  .instr-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ocean-surface);
+    margin-bottom: 0.25rem;
+  }
+  .instr-full {
+    font-size: 0.75rem;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .instr-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; }
+  .instr-measures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .measure-tag {
+    background: var(--teal-pale);
+    color: var(--teal);
+    font-size: 0.7rem;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
 
-    .section-desc {
-      margin: 0 0 18px;
-      color: var(--muted);
-    }
+  /* KEY POINTS */
+  .key-points {
+    background: linear-gradient(135deg, #0d2444, #0f4a6e);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    color: var(--white);
+  }
+  .key-points h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent-light);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .key-points ul { list-style: none; }
+  .key-points ul li {
+    padding: 6px 0;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.85);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    gap: 8px;
+  }
+  .key-points ul li:last-child { border-bottom: none; }
+  .key-points ul li::before {
+    content: '★';
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    margin-top: 3px;
+  }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
+  /* SECTION HEADING */
+  .section-h {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ocean-surface);
+    margin: 1.8rem 0 0.8rem;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--teal-pale);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    .grid-2,
-    .grid-3,
-    .grid-4 {
-      display: grid;
-      gap: 16px;
-    }
+  /* FOOTER */
+  .footer {
+    background: var(--ocean-deep);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    margin-top: 3rem;
+  }
+  .footer strong { color: var(--teal-light); }
 
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* OVERVIEW GRID */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin: 1.5rem 0;
+  }
+  .overview-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .overview-item:hover {
+    border-color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26,158,143,0.15);
+  }
+  .overview-item .ov-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .overview-item .ov-title { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+  .overview-item .ov-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; }
 
-    .pill {
-      display: inline-block;
-      padding: 6px 10px;
-      background: var(--soft);
-      border: 1px solid #cae9f3;
-      color: #0c618e;
-      border-radius: 999px;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
+  /* TAG LABELS */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #d1fae5; color: #065f46; }
+  .tag-orange { background: #fef3c7; color: #92400e; }
+  .tag-red { background: #fee2e2; color: #991b1b; }
+  .tag-teal { background: #d1fae5; color: #0f6e56; }
 
-    .mini-title {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
-
-    ul {
-      margin: 10px 0 0 18px;
-      padding: 0;
-    }
-
-    li { margin-bottom: 6px; }
-
-    .compare {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .compare .box {
-      border-radius: 16px;
-      padding: 18px;
-      border: 1px solid var(--line);
-    }
-
-    .compare .left { background: #f8fcff; }
-    .compare .right { background: #f8fbff; }
-
-    .info {
-      border-left: 5px solid var(--accent);
-      background: #f7fcff;
-      padding: 16px 18px;
-      border-radius: 12px;
-    }
-
-    .highlight {
-      background: linear-gradient(180deg, #f8fdff 0%, #eff9fd 100%);
-      border: 1px solid #d2eef8;
-    }
-
-    .warn { background: var(--warn); border: 1px solid #f2df9d; }
-    .danger { background: var(--danger); border: 1px solid #f6c2cb; }
-    .ok { background: var(--ok); border: 1px solid #bde8ca; }
-
-    .timeline {
-      display: grid;
-      gap: 12px;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 46px 1fr;
-      gap: 14px;
-      align-items: start;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    .num {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: white;
-      font-weight: 700;
-    }
-
-    details {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: white;
-      padding: 0 16px;
-    }
-
-    details + details { margin-top: 12px; }
-
-    summary {
-      cursor: pointer;
-      padding: 16px 0;
-      font-weight: 700;
-    }
-
-    details .content {
-      padding: 0 0 16px;
-      color: var(--ink);
-    }
-
-    .footer {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-    }
-
-    @media (max-width: 960px) {
-      .top-grid,
-      .grid-4,
-      .grid-3,
-      .grid-2,
-      .compare {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .top-grid,
-      .grid-4,
-      .grid-3,
-      .grid-2,
-      .compare {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 42px;
-      }
-
-      .nav-inner {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-      }
-    }
-  </style>
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.8rem; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="badge">Ringkasan Ujian • Rekreasi dan Olahraga Air</div>
-      <h1>Ringkasan Materi Rekreasi dan Olahraga Air</h1>
-      <p class="subtitle">
-        Disusun lebih jelas, terstruktur, dan mudah dipahami dari materi yang kamu unggah. Fokus utama halaman ini adalah membantu belajar cepat, memahami konsep inti, dan mempermudah hafalan menjelang ujian.
-      </p>
 
-      <div class="top-grid">
-        <div class="top-card">
-          <strong>Konsep Dasar</strong>
-          Bedakan rekreasi air dan olahraga air.
-        </div>
-        <div class="top-card">
-          <strong>Kondisi Alam</strong>
-          Pahami kecocokan aktivitas dengan lokasi.
-        </div>
-        <div class="top-card">
-          <strong>Operator & Safety</strong>
-          Fokus pada kepemanduan, SOP, dan keselamatan.
-        </div>
-        <div class="top-card">
-          <strong>Ekowisata</strong>
-          Ingat unsur pengembangan produk dan keberlanjutan.
-        </div>
-      </div>
-    </div>
-  </header>
+<div class="header">
+  <div class="wave-text">🌊</div>
+  <h1>Dinamika Oseanografi</h1>
+  <p>Rangkuman Buku Purba & Pranowo (2019) — Edisi Kedua · UNPAD Press</p>
+  <div class="badges">
+    <span class="badge">📚 7 Bagian Utama</span>
+    <span class="badge">🎓 Pariwisata Bahari</span>
+    <span class="badge">⚓ Oseanografi Fisis</span>
+    <span class="badge">🇮🇩 Perairan Indonesia</span>
+  </div>
+</div>
 
-  <nav>
-    <div class="nav-inner">
-      <a href="#konsep">Konsep Dasar</a>
-      <a href="#jenis">Jenis Aktivitas</a>
-      <a href="#perairan">Jenis Perairan</a>
-      <a href="#odtw">ODTW & Kondisi Alam</a>
-      <a href="#wisatawan">Wisatawan</a>
-      <a href="#operator">Operator & Kepemanduan</a>
-      <a href="#ekowisata">Ekowisata</a>
-      <a href="#kecelakaan">Pelaporan Kecelakaan</a>
-      <a href="#urutan">Urutan Belajar</a>
-      <a href="#hafalan">Hafalan Cepat</a>
-    </div>
+<div class="progress-bar">
+  <span class="progress-label">Progress Belajar</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-count" id="progressCount">0/7</span>
+</div>
+
+<div class="container">
+  <nav class="nav-chapters" id="navChapters">
+    <button class="chapter-btn active" onclick="showSection(0)">🗺️ Peta Materi</button>
+    <button class="chapter-btn" onclick="showSection(1)">① Sejarah & Bumi</button>
+    <button class="chapter-btn" onclick="showSection(2)">② Fisika-Kimia Laut</button>
+    <button class="chapter-btn" onclick="showSection(3)">③ Arus Laut</button>
+    <button class="chapter-btn" onclick="showSection(4)">④ Gelombang</button>
+    <button class="chapter-btn" onclick="showSection(5)">⑤ Pasang-Surut</button>
+    <button class="chapter-btn" onclick="showSection(6)">⑥ Instrumentasi</button>
+    <button class="chapter-btn" onclick="showSection(7)">⑦ Operasional</button>
   </nav>
 
-  <main class="container">
-    <section id="konsep">
-      <h2 class="section-title">1. Konsep Dasar</h2>
-      <p class="section-desc">Bagian ini adalah fondasi utama. Pahami dulu definisi dan perbedaannya.</p>
+  <!-- SECTION 0: OVERVIEW -->
+  <div class="section-panel active" id="section-0">
+    <br>
+    <div class="key-points">
+      <h3>📖 Tentang Buku Ini</h3>
+      <ul>
+        <li>Buku edisi kedua (2019), penulis: Noir Primadona Purba & Widodo Setiyo Pranowo</li>
+        <li>Membahas karakteristik fisis air laut, arus, gelombang, dan pasang-surut</li>
+        <li>Difokuskan untuk perairan Indonesia sebagai negara maritim (¾ wilayah adalah laut)</li>
+        <li>Cocok untuk mata kuliah Oseanografi Fisis tingkat dasar</li>
+        <li>Total 395 halaman mencakup teori + studi kasus di Indonesia</li>
+      </ul>
+    </div>
 
-      <div class="card highlight">
-        <div class="info">
-          <strong>Rekreasi dan olahraga air</strong> adalah aktivitas yang dilakukan di laut, sungai, danau, atau kolam untuk hiburan, relaksasi, pengalaman, maupun olahraga.
-        </div>
+    <div class="section-h">🗂️ Peta 7 Bagian Materi</div>
+    <div class="overview-grid">
+      <div class="overview-item" onclick="showSection(1)">
+        <div class="ov-icon">🌏</div>
+        <div class="ov-title">Bagian I</div>
+        <div class="ov-sub">Sejarah & Gambaran Bumi</div>
       </div>
-
-      <div class="card" style="margin-top:16px;">
-        <div class="compare">
-          <div class="box left">
-            <div class="pill">Rekreasi Air</div>
-            <h3 class="mini-title">Fokus: menikmati dan bersantai</h3>
-            <ul>
-              <li>Tujuan utama: relaksasi, kesenangan, pengalaman</li>
-              <li>Orientasi: leisure dan pengalaman wisata</li>
-              <li>Intensitas fisik: ringan sampai sedang</li>
-              <li>Aturan: lebih fleksibel</li>
-              <li>Contoh: banana boat, floating, kayaking santai</li>
-            </ul>
-          </div>
-          <div class="box right">
-            <div class="pill">Olahraga Air</div>
-            <h3 class="mini-title">Fokus: skill, teknik, performa</h3>
-            <ul>
-              <li>Tujuan utama: kompetisi, pencapaian, performa</li>
-              <li>Orientasi: keterampilan, teknik, aturan</li>
-              <li>Intensitas fisik: sedang sampai tinggi</li>
-              <li>Aturan: lebih ketat dan formal</li>
-              <li>Contoh: rowing, surfing kompetisi</li>
-            </ul>
-          </div>
-        </div>
+      <div class="overview-item" onclick="showSection(2)">
+        <div class="ov-icon">🌡️</div>
+        <div class="ov-title">Bagian II</div>
+        <div class="ov-sub">Fisika-Kimia Laut</div>
       </div>
-    </section>
-
-    <section id="jenis">
-      <h2 class="section-title">2. Jenis-Jenis Aktivitas Air</h2>
-      <p class="section-desc">Kelompokkan aktivitas berdasarkan sifatnya supaya lebih mudah dihafal.</p>
-      <div class="grid-3">
-        <div class="card">
-          <div class="pill">Bermotor</div>
-          <ul>
-            <li>Jet ski</li>
-            <li>Speed boating</li>
-            <li>Wakeboarding</li>
-            <li>Flyboarding</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Non-Bermotor</div>
-          <ul>
-            <li>Kayaking</li>
-            <li>Canoeing</li>
-            <li>Surfing</li>
-            <li>Windsurfing</li>
-            <li>Stand Up Paddleboarding (SUP)</li>
-            <li>Bodyboarding</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Bawah Air</div>
-          <ul>
-            <li>Snorkeling</li>
-            <li>Scuba diving</li>
-            <li>Free diving</li>
-            <li>Spearfishing</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Rekreasi Wisata</div>
-          <ul>
-            <li>Banana boat</li>
-            <li>Donat boat</li>
-            <li>Parasailing</li>
-            <li>Rafting</li>
-            <li>Tubing</li>
-            <li>Sea walking</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Ekstrem</div>
-          <ul>
-            <li>Whitewater rafting</li>
-            <li>Riverboarding</li>
-            <li>Cliff diving</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Tradisional & Inovatif</div>
-          <ul>
-            <li>Dragon boat racing</li>
-            <li>Outrigger canoeing</li>
-            <li>Hoverboard water sports</li>
-            <li>Electric surfing</li>
-          </ul>
-        </div>
+      <div class="overview-item" onclick="showSection(3)">
+        <div class="ov-icon">🌀</div>
+        <div class="ov-title">Bagian III</div>
+        <div class="ov-sub">Arus Laut</div>
       </div>
-    </section>
-
-    <section id="perairan">
-      <h2 class="section-title">3. Jenis Perairan dan Tingkat Risiko</h2>
-      <p class="section-desc">Aktivitas air selalu dipengaruhi oleh karakter lingkungan perairan.</p>
-      <div class="grid-3">
-        <div class="card">
-          <div class="pill">Perairan Laut</div>
-          <ul>
-            <li>Air asin</li>
-            <li>Dipengaruhi gelombang dan pasang surut</li>
-            <li>Ada ekosistem terumbu karang</li>
-            <li>Cocok untuk surfing, snorkeling, diving, jet ski</li>
-            <li><strong>Risiko: sedang–tinggi</strong></li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Perairan Tawar</div>
-          <ul>
-            <li>Sungai, danau, waduk</li>
-            <li>Arus relatif lebih terkontrol</li>
-            <li>Minim salinitas</li>
-            <li>Cocok untuk rafting, canoeing, kayaking, SUP</li>
-            <li><strong>Risiko: rendah–sedang</strong></li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Perairan Buatan</div>
-          <ul>
-            <li>Kolam renang, wave pool, danau buatan</li>
-            <li>Lebih mudah dikendalikan</li>
-            <li>Cocok untuk swimming, waterpark, latihan diving</li>
-            <li><strong>Risiko: rendah</strong></li>
-          </ul>
-        </div>
+      <div class="overview-item" onclick="showSection(4)">
+        <div class="ov-icon">〰️</div>
+        <div class="ov-title">Bagian IV</div>
+        <div class="ov-sub">Gelombang</div>
       </div>
-    </section>
-
-    <section id="odtw">
-      <h2 class="section-title">4. ODTW, Kondisi Alam, dan Kesesuaian Aktivitas</h2>
-      <p class="section-desc">Bagian ini penting untuk menjawab soal analisis: aktivitas apa cocok di lokasi seperti apa.</p>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="pill">ODTW</div>
-          <h3 class="mini-title">Objek Daya Tarik Wisata Rekreasi Olahraga Air</h3>
-          <ul>
-            <li>Destinasi yang menawarkan aktivitas rekreasi berbasis air</li>
-            <li>Bisa berupa kawasan alami maupun buatan</li>
-            <li>Contoh alami: pantai, danau, sungai, laut</li>
-            <li>Contoh buatan: waterpark, waduk, kolam renang, arena selancar buatan</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Contoh Kesesuaian</div>
-          <ul>
-            <li>Pantai dan laut → snorkeling, diving, surfing, jet ski, parasailing</li>
-            <li>Danau/waduk → kayaking, memancing, ski air, perahu dayung</li>
-            <li>Sungai → arung jeram, tubing, body rafting</li>
-            <li>Air terjun/gua air → canyoning, cave diving</li>
-            <li>Taman buatan → water park, wakeboarding park</li>
-          </ul>
-        </div>
+      <div class="overview-item" onclick="showSection(5)">
+        <div class="ov-icon">🌕</div>
+        <div class="ov-title">Bagian V</div>
+        <div class="ov-sub">Pasang-Surut</div>
       </div>
-
-      <div class="grid-2" style="margin-top:16px;">
-        <div class="card">
-          <div class="pill">Faktor Alam yang Menentukan</div>
-          <ul>
-            <li>Kondisi perairan: arus, kedalaman, visibilitas, suhu air</li>
-            <li>Kualitas lingkungan: kebersihan, polusi, kesehatan ekosistem</li>
-            <li>Cuaca dan iklim: musim, angin, curah hujan, gelombang</li>
-            <li>Kenampakan alam: terumbu karang, lamun, gua laut, pantai, mangrove</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Kesesuaian Aktivitas</div>
-          <ul>
-            <li>Arus tenang dan dangkal → snorkeling, wisata keluarga</li>
-            <li>Terumbu sehat dan kedalaman sedang → scuba diving</li>
-            <li>Pantai landai dan ombak besar → surfing</li>
-            <li>Laguna atau air tenang → kayaking dan SUP</li>
-          </ul>
-        </div>
+      <div class="overview-item" onclick="showSection(6)">
+        <div class="ov-icon">🔬</div>
+        <div class="ov-title">Bagian VI</div>
+        <div class="ov-sub">Data & Instrumentasi</div>
       </div>
-
-      <div class="card warn" style="margin-top:16px;">
-        <strong>Inti penting:</strong> kondisi alam menentukan jenis aktivitas yang aman dan sesuai. Ini adalah salah satu inti terbesar dalam materi wisata bahari.
+      <div class="overview-item" onclick="showSection(7)">
+        <div class="ov-icon">🛳️</div>
+        <div class="ov-title">Bagian VII</div>
+        <div class="ov-sub">Operasional Oseanografi</div>
       </div>
-    </section>
+    </div>
 
-    <section id="wisatawan">
-      <h2 class="section-title">5. Karakteristik Wisatawan Olahraga Air</h2>
-      <p class="section-desc">Wisatawan harus dipahami agar produk, pelayanan, dan keselamatan bisa disesuaikan.</p>
-      <div class="grid-2">
-        <div class="card">
-          <div class="pill">Karakter Umum</div>
-          <ul>
-            <li>Memiliki minat tinggi pada aktivitas outdoor</li>
-            <li>Menyukai tantangan dan petualangan</li>
-            <li>Memiliki kondisi fisik relatif baik</li>
-            <li>Bersedia membayar lebih untuk pengalaman yang unik</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Mengapa Penting?</div>
-          <ul>
-            <li>Membantu menentukan jenis produk wisata</li>
-            <li>Membantu menyesuaikan layanan dan fasilitas</li>
-            <li>Membantu menentukan tingkat keamanan yang diperlukan</li>
-            <li>Membantu membuat strategi pemasaran yang tepat</li>
-          </ul>
-        </div>
+    <div class="section-h">🎯 Kata Kunci Penting</div>
+    <div class="card">
+      <p>Beberapa konsep inti yang akan sering muncul di seluruh buku:</p>
+      <div style="margin-top: 10px; line-height: 2.2;">
+        <span class="tag tag-blue">Termoklin</span>
+        <span class="tag tag-blue">Salinitas</span>
+        <span class="tag tag-blue">Densitas</span>
+        <span class="tag tag-green">Arus Ekman</span>
+        <span class="tag tag-green">Geostrofik</span>
+        <span class="tag tag-green">Upwelling</span>
+        <span class="tag tag-orange">Gelombang Permukaan</span>
+        <span class="tag tag-orange">Gelombang Internal</span>
+        <span class="tag tag-red">Pasang Surut</span>
+        <span class="tag tag-red">Amphidromik</span>
+        <span class="tag tag-teal">CTD</span>
+        <span class="tag tag-teal">ADCP</span>
+        <span class="tag tag-teal">T-S Diagram</span>
+        <span class="tag tag-blue">Muson</span>
+        <span class="tag tag-blue">ENSO / El Niño</span>
+        <span class="tag tag-green">Arus Lintas Indonesia</span>
       </div>
-    </section>
+    </div>
 
-    <section id="operator">
-      <h2 class="section-title">6. Pengelolaan Operator dan Kepemanduan</h2>
-      <p class="section-desc">Fokus pada pengelolaan kegiatan, data tamu, perlengkapan, briefing, keselamatan, dan pelaporan.</p>
+    <div class="highlight-box warning">
+      <strong>💡 Tips Ujian</strong>
+      <p>Buku ini sangat menekankan aplikasi di perairan Indonesia. Pelajari setiap konsep dikaitkan dengan kondisi perairan Indonesia (upwelling selatan Jawa, arus Lintas Indonesia, pasang surut Selat Malaka, dsb.)</p>
+    </div>
+  </div>
 
-      <details open>
-        <summary>Stand Up Paddleboard (SUP)</summary>
-        <div class="content">
-          <ul>
-            <li>Termasuk pariwisata minat khusus</li>
-            <li>Berasal dari Hawaii</li>
-            <li>Gabungan aktivitas selancar dan dayung</li>
-            <li>Dilakukan dengan berdiri di atas papan sambil menjaga keseimbangan</li>
-            <li>Lokasi ideal: perairan tidak berarus, tidak bergelombang, tidak berombak</li>
-            <li>Bisa dilakukan di pantai, laut, dan danau</li>
-          </ul>
-        </div>
-      </details>
+  <!-- SECTION 1: SEJARAH & BUMI -->
+  <div class="section-panel" id="section-1">
+    <br>
+    <div class="intro-card" data-emoji="🌏">
+      <div class="chapter-num">Bagian I</div>
+      <h2>Gambaran Umum & Sejarah Oseanografi</h2>
+      <p>Sejarah perkembangan ilmu kelautan, profil bumi, struktur interior bumi, dan kontur dasar laut</p>
+    </div>
 
-      <details>
-        <summary>Peralatan SUP</summary>
-        <div class="content">
-          <ul>
-            <li>Papan dayung</li>
-            <li>Dayung</li>
-            <li>Pelampung</li>
-            <li>Tali</li>
-            <li>Pompa</li>
-            <li>Sirip</li>
-            <li>Tas</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>Penerimaan Tamu oleh Operator</summary>
-        <div class="content">
-          <ul>
-            <li>Booking guest / walking guest</li>
-            <li>Form wisatawan</li>
-            <li>Jenis aktivitas yang dipilih</li>
-            <li>Kebutuhan peralatan</li>
-            <li>Riwayat kesehatan</li>
-            <li>Liability form</li>
-          </ul>
-          <p><strong>Makna penting:</strong> operator harus memahami siapa tamu, ikut aktivitas apa, kondisi kesehatan tamu, dan risiko kegiatan sebelum aktivitas dimulai.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Kepemanduan Wisata Snorkeling</summary>
-        <div class="content">
-          <ul>
-            <li>Berpedoman pada SKKNI bidang pemanduan wisata snorkeling</li>
-            <li>Trip leader harus mampu menganalisis profil wisatawan</li>
-            <li>Menyiapkan dokumen aktivitas</li>
-            <li>Menyusun rencana pemanduan</li>
-            <li>Mengidentifikasi lokasi snorkeling</li>
-            <li>Membuat perencanaan keselamatan dan kesehatan kerja</li>
-            <li>Menyiapkan peralatan dan perlengkapan</li>
-            <li>Melakukan briefing/taklimat</li>
-            <li>Melakukan orientasi snorkeling</li>
-            <li>Menerapkan keterampilan dasar snorkeling</li>
-            <li>Menerima keluhan dan mengatasi konflik</li>
-            <li>Memberikan pertolongan pertama saat darurat</li>
-            <li>Melakukan perawatan dan penyimpanan alat pasca-aktivitas</li>
-            <li>Mendokumentasikan laporan aktivitas</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>Kriteria Lokasi Sea Walker</summary>
-        <div class="content">
-          <ul>
-            <li>Hanya boleh dilakukan pada jalur yang disetujui</li>
-            <li>Berjarak sekitar 1–5 meter dari karang</li>
-            <li>Lokasi harus aman dan nyaman</li>
-            <li>Kedalaman maksimal sekitar 7 meter</li>
-            <li>Jarak lokasi maksimal sekitar 500 meter dari daratan terdekat</li>
-          </ul>
-          <p><strong>Intinya:</strong> sea walker harus dilakukan di lokasi yang dangkal, aman, dan mudah dikontrol.</p>
-        </div>
-      </details>
-    </section>
-
-    <section id="ekowisata">
-      <h2 class="section-title">7. Pengembangan Produk Wisata dan Ekowisata</h2>
-      <p class="section-desc">Bagian ini menjelaskan bagaimana aktivitas wisata air dikembangkan menjadi produk wisata yang bernilai dan berkelanjutan.</p>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="pill">Sistem Kepariwisataan</div>
-          <ul>
-            <li><strong>Market</strong> = pasar</li>
-            <li><strong>Marketing</strong> = strategi pemasaran</li>
-            <li><strong>Travel</strong> = perjalanan/pergerakan wisatawan</li>
-            <li><strong>Destination</strong> = tujuan/destinasi wisata</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Sisi Penawaran dan Permintaan</div>
-          <ul>
-            <li>Penawaran: atraksi, akomodasi, transportasi, infrastruktur, fasilitas pendukung</li>
-            <li>Permintaan: wisatawan nusantara, wisatawan mancanegara, masyarakat lokal</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:16px;">
-        <div class="card">
-          <div class="pill">Kebijakan Pengembangan Produk Wisata</div>
-          <ul>
-            <li>Harus sesuai dengan identitas daerah</li>
-            <li>Harus ada produk unggulan</li>
-            <li>Harus mengangkat obyek wisata, kesenian daerah, dan event wisata</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="pill">Kunci Berkembangnya Ekowisata</div>
-          <ul>
-            <li>Keaslian alam</li>
-            <li>Keunikan lingkungan dan budaya</li>
-            <li>Dukungan masyarakat</li>
-            <li>Nilai pendidikan dan pengalaman</li>
-            <li>Keberlanjutan</li>
-            <li>Kemampuan pengelolaan</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px;">
-        <div class="pill">Identifikasi Potensi Ekowisata</div>
-        <ul>
-          <li>Jenis potensi daya tarik wisata</li>
-          <li>Efektivitas pengelolaan</li>
-          <li>Kontribusi pada pendapatan daerah dan ekonomi masyarakat</li>
-          <li>Pelestarian nilai budaya dan lingkungan</li>
-          <li>Dukungan sarana dan prasarana</li>
-          <li>Partisipasi berbagai pihak terkait</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="kecelakaan">
-      <h2 class="section-title">8. Pelaporan Kecelakaan Aktivitas Wisata Bahari</h2>
-      <p class="section-desc">Ini bagian penting untuk hafalan karena berisi aturan, tenggat waktu, dan alur pelaporan.</p>
-
-      <div class="grid-2">
-        <div class="card danger">
-          <div class="pill">Wajib Dilaporkan Jika</div>
-          <ul>
-            <li>Mengakibatkan korban jiwa</li>
-            <li>Membutuhkan rawat inap di rumah sakit</li>
-            <li>Wisatawan/penyelam hilang lebih dari 60 menit</li>
-            <li>Laporan diserahkan paling lambat <strong>3 x 24 jam</strong></li>
-          </ul>
-        </div>
-        <div class="card ok">
-          <div class="pill">Kontak Darurat</div>
-          <ul>
-            <li>Hubungi BASARNAS</li>
-            <li>Call center: <strong>115</strong></li>
-            <li>Dilanjutkan dengan pencarian, pertolongan, evakuasi, dan penyerahan korban</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px;">
-        <div class="pill">Isi Detail Laporan Kecelakaan</div>
-        <ul>
-          <li>Tanggal, jam, dan lokasi kejadian</li>
-          <li>Kronologi kejadian</li>
-          <li>Penanganan setelah kejadian</li>
-          <li>Tindakan medis dan proses evakuasi</li>
-          <li>Nama dan identitas korban</li>
-          <li>Kontak emergency korban</li>
-          <li>Kondisi korban</li>
-          <li>Nama pemandu selam / instruktur yang bertanggung jawab</li>
-          <li>Jika melibatkan kapal: nama kapten dan awak kapal</li>
-          <li>Tindakan hukum bila ada</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="urutan">
-      <h2 class="section-title">9. Urutan Belajar yang Disarankan</h2>
-      <p class="section-desc">Gunakan urutan ini agar materi terasa runtut dan tidak membingungkan.</p>
-      <div class="timeline">
-        <div class="step">
-          <div class="num">1</div>
-          <div>
-            <strong>Pahami definisi dasar</strong>
-            <div>Pelajari dulu apa itu rekreasi air dan olahraga air.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">2</div>
-          <div>
-            <strong>Bedakan rekreasi air dan olahraga air</strong>
-            <div>Fokus pada tujuan, intensitas, orientasi, dan aturan.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">3</div>
-          <div>
-            <strong>Hafalkan jenis-jenis aktivitas air</strong>
-            <div>Kelompokkan per kategori: bermotor, non-bermotor, bawah air, ekstrem, dan wisata.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">4</div>
-          <div>
-            <strong>Pelajari jenis perairan</strong>
-            <div>Pahami perbedaan laut, perairan tawar, dan perairan buatan beserta tingkat risikonya.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">5</div>
-          <div>
-            <strong>Pahami ODTW dan kondisi alam</strong>
-            <div>Ini penting untuk soal analisis kesesuaian aktivitas dengan lokasi.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">6</div>
-          <div>
-            <strong>Pelajari karakteristik wisatawan</strong>
-            <div>Agar paham mengapa produk dan layanan harus disesuaikan.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">7</div>
-          <div>
-            <strong>Masuk ke pengelolaan operator dan kepemanduan</strong>
-            <div>Fokus pada SOP, briefing, peralatan, dan keselamatan.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">8</div>
-          <div>
-            <strong>Pelajari pengembangan produk dan ekowisata</strong>
-            <div>Pahami unsur pasar, produk, keberlanjutan, dan partisipasi masyarakat.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="num">9</div>
-          <div>
-            <strong>Hafalkan pelaporan kecelakaan</strong>
-            <div>Bagian ini cenderung mudah keluar sebagai soal hafalan atau studi kasus.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="hafalan">
-      <h2 class="section-title">10. Hafalan Cepat Menjelang Ujian</h2>
-      <p class="section-desc">Bagian ini dibuat sesingkat mungkin untuk review terakhir.</p>
-      <div class="grid-2">
-        <div class="card highlight">
-          <ul>
-            <li><strong>Rekreasi air</strong> = santai, hiburan, pengalaman</li>
-            <li><strong>Olahraga air</strong> = skill, teknik, performa</li>
-            <li><strong>Laut</strong> = risiko paling tinggi dibanding perairan buatan</li>
-            <li><strong>Air tenang</strong> = cocok untuk snorkeling, kayak, SUP</li>
-            <li><strong>Ombak besar</strong> = cocok untuk surfing</li>
-          </ul>
-        </div>
-        <div class="card highlight">
-          <ul>
-            <li><strong>Trip leader snorkeling</strong> harus paham lokasi, keselamatan, briefing, dan P3K</li>
-            <li><strong>Sea walker</strong> harus di lokasi aman, dangkal, dan terkendali</li>
-            <li><strong>Ekowisata</strong> = alam + masyarakat + pendidikan + keberlanjutan</li>
-            <li><strong>Kecelakaan tertentu</strong> wajib dilaporkan maksimal 3 x 24 jam</li>
-            <li><strong>Nomor BASARNAS</strong> = 115</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="section-h">🌍 Profil Bumi</div>
+    <div class="topic-grid">
       <div class="card">
-        <h2 class="section-title" style="margin-top:0;">Kesimpulan Singkat</h2>
-        <p>
-          Materi Rekreasi dan Olahraga Air tidak hanya membahas jenis-jenis aktivitas air, tetapi juga hubungan antara <strong>aktivitas, kondisi alam, karakter wisatawan, pengelolaan operator, keselamatan, dan keberlanjutan</strong>. Jadi, inti besar yang harus kamu kuasai adalah: <strong>aktivitas yang tepat harus ditempatkan pada lokasi yang tepat, dikelola dengan aman, sesuai karakter wisatawan, dan dikembangkan secara berkelanjutan</strong>.
-        </p>
+        <div class="card-header">
+          <div class="card-icon icon-blue">🌊</div>
+          <h3>Komposisi Bumi</h3>
+        </div>
+        <ul>
+          <li>72% permukaan bumi adalah air (~361.254.000 km²)</li>
+          <li>Pertama kali terlihat dari foto Apollo tahun 1972</li>
+          <li>Kata "Earth" dari Anglo-Saxon "erda" (tanah), tapi bumi lebih banyak air</li>
+          <li>5 Samudra di dunia dengan karakteristik berbeda</li>
+          <li>Rata-rata kedalaman laut: 3.400 – 3.740 meter</li>
+        </ul>
       </div>
-      <div class="footer">
-        Dibuat untuk membantu belajar lebih cepat, lebih rapi, dan lebih mudah dipahami.
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">⬇️</div>
+          <h3>Kedalaman Samudra</h3>
+        </div>
+        <ul>
+          <li>Samudra Pasifik: 4.188 m (terdalam)</li>
+          <li>Samudra Hindia: 3.872 m</li>
+          <li>Samudra Atlantik: 3.844 m</li>
+          <li>Palung terdalam: Palung Mariana (±10.911 m)</li>
+          <li>Manusia hanya dapat menyelam max. 100 m</li>
+          <li>Gunung Everest: 8.850 m (lebih rendah dari Palung Mariana)</li>
+        </ul>
       </div>
-    </section>
-  </main>
+    </div>
+
+    <div class="section-h">🔩 Struktur Interior Bumi</div>
+    <div class="layer-diagram">
+      <div class="layer layer-0"><span>Continental Crust</span><span>Kerak benua — lapisan terluar daratan</span></div>
+      <div class="layer layer-1"><span>Oceanic Crust</span><span>Kerak samudra — dasar laut</span></div>
+      <div class="layer layer-2"><span>Upper Mantle</span><span>Mantel atas — batuan padat/semi-cair (Diskontinuitas Mohorovičić)</span></div>
+      <div class="layer layer-3"><span>Lower Mantle</span><span>Mantel bawah — sangat panas (Diskontinuitas Gutenberg)</span></div>
+      <div class="layer layer-4"><span>Core (Dalam)</span><span>Inti dalam padat + inti luar cair (Diskontinuitas Lehmann-Bullen)</span></div>
+    </div>
+
+    <div class="highlight-box info">
+      <strong>📌 Konsep Pergerakan Lempeng</strong>
+      <p>Teori ditemukan oleh Alfred Lothar Wegener (~1912). Pergerakan lempeng terjadi akibat proses konveksi di interior bumi. Jenis pergerakan: <strong>Divergen</strong> (menjauh), <strong>Konvergen</strong> (bertemu), <strong>Transform</strong> (geser), dan <strong>Gabungan</strong>. Dapat menyebabkan gempa, tsunami, dan gunung api.</p>
+    </div>
+
+    <div class="section-h">🗺️ Kontur Dasar Laut</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-teal">📐</div>
+        <h3>Profil Penampang Dasar Laut</h3>
+      </div>
+      <ul>
+        <li><strong>Shore</strong> — batas antara daratan dan laut (pesisir)</li>
+        <li><strong>Shelf (Continental Shelf)</strong> — landas kontinen, dangkal, tempat tumbuh lamun & terumbu karang</li>
+        <li><strong>Slope</strong> — lereng dengan sudut ~60°, transisi ke laut dalam</li>
+        <li><strong>Rise</strong> — kaki lereng benua, lebih landai</li>
+        <li><strong>Mid-Ocean Ridge</strong> — punggung tengah samudra (patahan di tengah laut)</li>
+        <li><strong>Seamount</strong> — gunung api bawah laut</li>
+        <li><strong>Palung (Trench)</strong> — cekungan terdalam di laut</li>
+      </ul>
+    </div>
+
+    <div class="section-h">🏛️ Teori Pembentukan Tata Surya</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-purple">💫</div>
+          <h3>Teori-Teori Utama</h3>
+        </div>
+        <ul>
+          <li><strong>Kant</strong> — Awan gas berputar membentuk planet (kabut piringan)</li>
+          <li><strong>Laplace (Nebular)</strong> — Bola gas panas berputar cepat, terlempar menjadi planet</li>
+          <li><strong>Big Bang (Lemaître)</strong> — Ledakan nuklir besar membentuk alam semesta</li>
+          <li><strong>Planetisimal (Moulton & Chamberlain)</strong> — Tarikan bintang menarik gas matahari</li>
+          <li><strong>Bintang Kembar (Lyttleton)</strong> — Dua bintang, satu meledak menjadi planet</li>
+          <li><strong>Kuiper (1950)</strong> — Nebula berbentuk piringan dengan promatahari</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">🌍</div>
+          <h3>Pangea & Seafloor Spreading</h3>
+        </div>
+        <ul>
+          <li>Pada awalnya daratan bumi hanya 1 benua: <strong>Pangea</strong></li>
+          <li>Dicetuskan Alfred Wegener berdasarkan kemiripan bentuk Afrika-Amerika Selatan</li>
+          <li>Proses pemisahan: sejak ~250 juta tahun lalu</li>
+          <li>Bukti: kemiripan fosil, jenis sedimen, lokasi es, dan gunung api antar benua</li>
+          <li>Peta batimetri modern: GEBCO (sejak 1903), diperbarui terus hingga kini</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">⏳ Sejarah Perkembangan Oseanografi</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">Kuno</div>
+        <div class="timeline-content">
+          <h4>Pelayaran Awal (sebelum abad 15)</h4>
+          <p>Penyelam Mesir menggunakan topeng & pipa. Phyteas menemukan Canary Current. Pelaut Polynesia navigasi dengan bintang & angin. Nelayan tradisional nusantara menggunakan pengetahuan arus & bintang.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">1400s</div>
+        <div class="timeline-content">
+          <h4>Era Eksplorasi Eropa</h4>
+          <p>Bartholomeus Diaz (1487), Columbus (1492), Vasco da Gama (1497), Ferdinand Magellan (1519–1522) — pemetaan jalur laut dunia dan deskripsi kondisi samudra.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">1700s</div>
+        <div class="timeline-content">
+          <h4>Era Ilmiah Awal</h4>
+          <p>James Cook (1728–1779) dengan HMS Endeavour. Charles Darwin (1809–1882) dengan HMS Beagle. Pemetaan sistematis mulai dilakukan dengan metode ilmiah.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">1872</div>
+        <div class="timeline-content">
+          <h4>Pelayaran HMS Challenger</h4>
+          <p>Tonggak lahirnya oseanografi modern. Menggunakan plankton net, menemukan ribuan spesies baru. Peta kontur Atlantik Utara oleh Mattew Maury (akhir 1800an).</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">Kini</div>
+        <div class="timeline-content">
+          <h4>Era Teknologi Modern</h4>
+          <p>Satelit, gelombang akustik, model komputer, ADCP, CTD, Argo Float. Indonesia dengan 14.664 pulau masih banyak yang belum terpetakan secara detail.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian I</h3>
+      <ul>
+        <li>Oseanografi = studi tentang laut (fisika, kimia, biologi, geologi)</li>
+        <li>72% bumi adalah air, kedalaman rata-rata 3.740 m, palung terdalam: Mariana 10.911 m</li>
+        <li>Interior bumi: kerak → mantel (atas & bawah) → inti luar → inti dalam</li>
+        <li>Pergerakan lempeng: divergen, konvergen, transform → gempa, tsunami, gunung api</li>
+        <li>Pangea: 1 superbenua, terpecah sejak 250 juta tahun lalu (seafloor spreading)</li>
+        <li>HMS Challenger (1872): tonggak lahirnya oseanografi modern</li>
+        <li>Indonesia: negara maritim, ¾ wilayah adalah laut, 14.664 pulau</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FISIKA KIMIA LAUT -->
+  <div class="section-panel" id="section-2">
+    <br>
+    <div class="intro-card" data-emoji="🌡️">
+      <div class="chapter-num">Bagian II</div>
+      <h2>Karakteristik Fisika-Kimia Laut</h2>
+      <p>Suhu, salinitas, densitas, tekanan, cahaya, bunyi, dan T-S diagram massa air laut</p>
+    </div>
+
+    <div class="section-h">🌡️ Temperatur (Suhu) Laut</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-red">🌡️</div>
+          <h3>Distribusi Suhu</h3>
+        </div>
+        <ul>
+          <li>Suhu permukaan tropis: 25°–33°C</li>
+          <li>Sub-tropis (~35°N/S): 10°–25°C</li>
+          <li>Kutub: ~3°C</li>
+          <li>Suhu tertinggi bukan tepat di permukaan, tetapi di kedalaman 0,8–1 m</li>
+          <li>Rata-rata suhu laut keseluruhan: ~4°C (dominasi lapisan dalam)</li>
+          <li>Untuk Indonesia: 25°–32°C, tertinggi April–Mei, terendah Des–Jan</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">📊</div>
+          <h3>Lapisan Suhu Vertikal</h3>
+        </div>
+        <ul>
+          <li><strong>Mixed Layer (0–300 m)</strong> — langsung berbatasan dengan atmosfer, dipengaruhi angin (turbulent)</li>
+          <li><strong>Termoklin (300–500 m)</strong> — penurunan suhu drastis, lapisan peralihan</li>
+          <li><strong>Lapisan Dalam/Homogen</strong> — suhu paling dingin, quasi-stationary</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box info">
+      <strong>📌 Suhu Insitu vs Suhu Potensial</strong>
+      <p><strong>Suhu Insitu:</strong> diukur langsung pada kedalaman tertentu. <strong>Suhu Potensial:</strong> suhu jika massa air dipindahkan secara adiabatik ke tekanan referensi (permukaan). Setiap turun 1.000 m, koreksi ±0,124°C. Contoh: pada 1.000 m suhu 10°C → suhu potensial = 10 – 0,124 = 9,876°C.</p>
+    </div>
+
+    <div class="section-h">🧂 Salinitas</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-teal">💧</div>
+          <h3>Definisi & Satuan</h3>
+        </div>
+        <p>Jumlah garam-garam dalam 1 kg air laut bila semua karbonat diubah jadi oksida, brom/iod diganti klor, bahan organik dioksidasi sempurna.</p>
+        <ul>
+          <li>Satuan: <strong>PSU</strong> (Practical Salinity Unit) atau ppt</li>
+          <li>Salinitas normal laut: 34–37 ppt</li>
+          <li>Diukur via konduktivitas listrik</li>
+          <li>Ion mayor: Klorida, Sodium, Sulfida, Magnesium, Kalsium, Potasium, Bikarbonat</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">🌧️</div>
+          <h3>Sumber & Keseimbangan Salinitas</h3>
+        </div>
+        <ul>
+          <li><strong>Masuk:</strong> pelapukan batuan dibawa sungai, hydrothermal vent, magma gunung api</li>
+          <li><strong>Keluar:</strong> aerosol ke daratan, reaksi kimia dasar laut, proses biologi, deposit evaporasi</li>
+          <li>Waktu tinggal garam di laut: ~10⁷ tahun</li>
+          <li>Laut tidak makin asin karena ada mekanisme keluaran</li>
+          <li>Salinitas berubah hanya karena penambahan/pengurangan air tawar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">⚖️ Densitas (Kerapatan)</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-purple">⚖️</div>
+        <h3>Faktor Penentu Densitas</h3>
+      </div>
+      <p>Densitas air laut (ρ) dipengaruhi oleh tiga faktor utama:</p>
+      <div class="formula-box">
+        ρ = f(T, S, P)
+        <small>Densitas = fungsi dari Suhu (T), Salinitas (S), dan Tekanan (P)</small>
+      </div>
+      <ul>
+        <li>Semakin dingin suhu → densitas meningkat</li>
+        <li>Semakin tinggi salinitas → densitas meningkat</li>
+        <li>Semakin dalam (tekanan besar) → densitas meningkat</li>
+        <li>Satuan: σ (sigma-t) = (ρ – 1000) kg/m³</li>
+        <li>Densitas air laut ~1025 kg/m³ (lebih berat dari air tawar 1000 kg/m³)</li>
+      </ul>
+    </div>
+
+    <div class="section-h">💡 Cahaya & Kecerahan</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">☀️</div>
+          <h3>Penetrasi Cahaya</h3>
+        </div>
+        <ul>
+          <li>Cahaya merah diserap di kedalaman dangkal, biru menembus lebih dalam</li>
+          <li><strong>Zona Fotik:</strong> 3 × kedalaman secchi, ada fotosintesis</li>
+          <li><strong>Zona Afotik:</strong> gelap total, tidak ada fotosintesis</li>
+          <li>Kekeruhan menurunkan kecerahan perairan</li>
+          <li>Pengukuran: Secchi Disk (Pietro A. Secchi)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-green">🔵</div>
+          <h3>Secchi Disk</h3>
+        </div>
+        <ul>
+          <li>Piringan hitam-putih diameter 40–60 cm (laut) / 20–30 cm (air tawar)</li>
+          <li>Diturunkan hingga tidak terlihat, lalu diangkat hingga terlihat lagi</li>
+          <li>Kedalaman secchi = rata-rata kedalaman hilang & muncul</li>
+          <li>Zona fotik ≈ 3 × kedalaman secchi</li>
+          <li>Visibilitas horizontal ≈ 0,7 × kedalaman secchi</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">📈 Diagram T-S (Temperature-Salinity)</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-blue">📈</div>
+        <h3>Apa itu T-S Diagram?</h3>
+      </div>
+      <p>Visualisasi hubungan antara suhu (sumbu-Y) dan salinitas (sumbu-X) untuk mengidentifikasi karakteristik dan asal-usul massa air.</p>
+      <ul>
+        <li>Setiap massa air memiliki "sidik jari" T-S yang unik</li>
+        <li>Digunakan untuk melacak sumber dan pergerakan massa air</li>
+        <li>Garis isopyknal = garis densitas sama di diagram T-S</li>
+        <li><strong>T-S-V Diagram:</strong> menambahkan dimensi volume (diperkenalkan Montgomery, 1958)</li>
+        <li>Tidak cocok untuk perairan dekat muara sungai (nilai salinitas/suhu ekstrem)</li>
+      </ul>
+    </div>
+
+    <div class="section-h">🔊 Suara di Laut</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-teal">🔊</div>
+        <h3>Perambatan Bunyi di Laut</h3>
+      </div>
+      <ul>
+        <li>Kecepatan bunyi di laut: ~1.500 m/s (lebih cepat dari udara 340 m/s)</li>
+        <li>Dipengaruhi oleh suhu, salinitas, dan tekanan</li>
+        <li>Semakin hangat, salin, dan dalam → semakin cepat bunyi merambat</li>
+        <li><strong>SOFAR Channel (Sound Fixing and Ranging):</strong> lapisan minimum kecepatan bunyi pada kedalaman ~700–1.200 m</li>
+        <li>Dimanfaatkan untuk sonar, deteksi kapal selam, dan komunikasi bawah laut</li>
+        <li>Prinsip ini digunakan dalam ADCP (Acoustic Doppler Current Profiler)</li>
+      </ul>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian II</h3>
+      <ul>
+        <li>Suhu laut tropis 25–33°C; termoklin di 300–500 m; lapisan dalam quasi-stationary</li>
+        <li>Salinitas: ~34–37 ppt, diukur via konduktivitas; 7 ion mayor dalam air laut</li>
+        <li>Densitas = f(T, S, P): dingin+asin+dalam = lebih berat/padat</li>
+        <li>Zona fotik = 3× kedalaman secchi; biru menembus lebih dalam dari merah</li>
+        <li>T-S diagram: sidik jari massa air untuk lacak asal-usul dan pergerakan</li>
+        <li>Kecepatan bunyi di laut ~1.500 m/s, dipengaruhi T, S, P</li>
+        <li>Lapisan termoklin di Indonesia dipengaruhi arus muson, upwelling, dan curah hujan</li>
+      </ul>
+    </div>
+
+    <div class="quiz-section">
+      <h3>❓ Latihan Soal Bagian II</h3>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Mengapa suhu tertinggi di laut bukan tepat di permukaan, tetapi di kedalaman 0,8–1 m? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Karena di permukaan terjadi: (a) pemancaran panas kembali ke atmosfer, (b) konveksi dengan udara dingin yang menyerap panas, dan (c) penguapan yang memerlukan panas sehingga mendinginkan permukaan. Akibatnya lapisan tepat di bawah permukaan (0,8–1 m) justru lebih hangat.</div>
+      </div>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Apa perbedaan suhu insitu dan suhu potensial? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Suhu insitu adalah suhu yang terukur langsung pada kedalaman tertentu. Suhu potensial adalah suhu yang akan dimiliki massa air jika dipindahkan secara adiabatik (tanpa pertukaran panas) ke tekanan referensi (biasanya permukaan, 1 atm). Koreksi adiabatik: ~0,124°C per 1.000 m. Suhu potensial biasanya dinyatakan dalam Kelvin.</div>
+      </div>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Sebutkan 3 sumber utama garam di laut! <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">1) Proses pelapukan batuan (weathering) yang terbawa oleh sungai ke laut. 2) Gas-gas yang keluar dari mantel laut melalui hydrothermal vent. 3) Magma dari gunung api bawah laut.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: ARUS -->
+  <div class="section-panel" id="section-3">
+    <br>
+    <div class="intro-card" data-emoji="🌀">
+      <div class="chapter-num">Bagian III</div>
+      <h2>Arus Laut</h2>
+      <p>Gaya pembangkit arus, mekanisme, jenis-jenis arus, Ekman, geostrofik, upwelling, downwelling</p>
+    </div>
+
+    <div class="section-h">⚡ Gaya Pembangkit Arus</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">💨</div>
+          <h3>Arus Permukaan (Wind-Driven)</h3>
+        </div>
+        <ul>
+          <li>Dibangkitkan oleh angin di permukaan laut</li>
+          <li>Mewakili ~10% dari total arus laut</li>
+          <li>Pola global dipengaruhi oleh pola angin global (muson, trade winds, westerlies)</li>
+          <li>Contoh: Arus Kuroshio, Arus Gulf Stream, Arus Circumpolar</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-teal">🌡️</div>
+          <h3>Arus Termohalin</h3>
+        </div>
+        <ul>
+          <li>Digerakkan oleh perbedaan densitas (suhu + salinitas)</li>
+          <li>Mewakili ~90% total arus laut (arus dalam)</li>
+          <li>"Conveyor Belt" atau Sirkulasi Termohalin Global</li>
+          <li>Dimulai di Atlantik Utara, bergerak ke seluruh samudra</li>
+          <li>Berperan penting dalam regulasi iklim global</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">⚖️</div>
+          <h3>Gaya-Gaya yang Bekerja</h3>
+        </div>
+        <ul>
+          <li><strong>Gaya Coriolis:</strong> membelokkan arus ke kanan (BBU) / kiri (BBS)</li>
+          <li><strong>Gradien tekanan:</strong> dari tekanan tinggi ke rendah</li>
+          <li><strong>Gesekan (friction):</strong> antara lapisan air & dengan dasar laut</li>
+          <li><strong>Gravitasi:</strong> terutama untuk arus pasang surut</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">🌀 Arus Ekman</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-blue">🌀</div>
+        <h3>Teori Ekman (Vagn Walfrid Ekman, 1905)</h3>
+      </div>
+      <p>Arus permukaan tidak searah dengan angin, tetapi dibelokkan oleh gaya Coriolis.</p>
+      <div class="formula-box">
+        Arus permukaan = dibelokkan 20°–45° dari arah angin
+        <br>Transpor Ekman: tegak lurus 90° dari arah angin
+        <small>Ke kanan di BBU (Belahan Bumi Utara) · Ke kiri di BBS (Belahan Bumi Selatan)</small>
+      </div>
+      <ul>
+        <li>Arus spiral ke bawah membentuk "Spiral Ekman" semakin melemah & berputar</li>
+        <li>Kedalaman Lapisan Ekman: 50–250 m (tergantung lintang & kecepatan angin)</li>
+        <li>Kecepatan arus permukaan: 1–3% dari kecepatan angin</li>
+        <li>Transpor Ekman membawa massa air secara horizontal → menyebabkan upwelling/downwelling</li>
+      </ul>
+    </div>
+
+    <div class="section-h">⚖️ Arus Geostrofik</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-purple">⚖️</div>
+        <h3>Keseimbangan Geostrofik</h3>
+      </div>
+      <p>Terjadi saat gaya gradien tekanan seimbang dengan gaya Coriolis.</p>
+      <div class="formula-box">
+        Gaya Gradien Tekanan ⟺ Gaya Coriolis
+        <small>Arus mengalir sejajar dengan isobar (garis tekanan sama), bukan melintasinya</small>
+      </div>
+      <ul>
+        <li>Di BBU: searah jarum jam (anticyclonic) untuk tekanan tinggi, berlawanan (cyclonic) untuk tekanan rendah</li>
+        <li>Arus geostrofik merupakan arus dominan di lautan terbuka</li>
+        <li>Dapat dihitung dari data suhu & salinitas (dynamic height method)</li>
+        <li>Konvergensi (penumpukan) → downwelling; Divergensi (sibakan) → upwelling</li>
+      </ul>
+    </div>
+
+    <div class="section-h">⬆️⬇️ Upwelling & Downwelling</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-green">⬆️</div>
+          <h3>Upwelling (Taikan Air)</h3>
+        </div>
+        <p>Naiknya massa air dari lapisan bawah ke permukaan</p>
+        <ul>
+          <li><strong>Indikasi:</strong> suhu rendah, salinitas tinggi, O₂ rendah, nutrien tinggi, klorofil-a tinggi</li>
+          <li><strong>Tipe Stasioner:</strong> sepanjang tahun (contoh: lepas pantai Peru)</li>
+          <li><strong>Tipe Periodik:</strong> musiman (1 musim saja)</li>
+          <li><strong>Tipe Silih Berganti:</strong> bergantian upwelling-downwelling (contoh: Laut Arafura, Laut Banda)</li>
+          <li><strong>Di Indonesia:</strong> Selatan Jawa, Laut Banda, Barat Sumatera, akibat monsun tenggara dari Australia (Juni–Oktober)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-red">⬇️</div>
+          <h3>Downwelling (Penyasapan)</h3>
+        </div>
+        <p>Tenggelamnya massa air permukaan ke lapisan bawah</p>
+        <ul>
+          <li>Terjadi di zona konvergensi (massa air bertemu)</li>
+          <li>Suhu relatif lebih hangat dari upwelling</li>
+          <li>Klorofil-a rendah → perairan kurang subur</li>
+          <li>Di kutub: air padat (dingin + asin) tenggelam → membentuk arus dalam global</li>
+          <li>Di Indonesia: terjadi saat muson barat (periode transisi)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box tip">
+      <strong>💡 Upwelling & Perikanan</strong>
+      <p>Upwelling membawa nutrien dari lapisan dalam ke permukaan → fitoplankton subur → zooplankton → ikan. Area upwelling adalah <strong>zona penangkapan ikan potensial</strong>. Contoh: 5 arus upwelling terkenal di dunia: California Current, Humbolt Current (Peru), Canary Current, Benguela Current, dan Somali Current.</p>
+    </div>
+
+    <div class="section-h">🌊 Arus Lintas Indonesia (ARLINDO)</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-blue">🌊</div>
+        <h3>Indonesian Through Flow (ITF)</h3>
+      </div>
+      <ul>
+        <li>Indonesia adalah satu-satunya negara di lintang rendah yang dilalui arus antar-samudra</li>
+        <li>Arus dari Samudra Pasifik → Samudra Hindia melewati perairan Indonesia</li>
+        <li>Jalur utama: Selat Makassar, Selat Lombok, Selat Ombai, Laut Timor</li>
+        <li>Volume transport: beberapa Sverdrup (1 Sv = 10⁶ m³/s)</li>
+        <li>Berpengaruh pada distribusi suhu, salinitas, dan biota laut di Indonesia</li>
+        <li>Berkorelasi dengan transport volume termoklin (Gordon et al., 2000)</li>
+      </ul>
+    </div>
+
+    <div class="section-h">🌀 Langmuir Cells (LC)</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-teal">🌀</div>
+        <h3>Sirkulasi Langmuir</h3>
+      </div>
+      <p>Ditemukan Irving Langmuir (1938): arus spiral di lapisan permukaan (0–60 m) yang membentuk garis lurus di permukaan laut.</p>
+      <ul>
+        <li>Muncul akibat interaksi angin kuat dengan gelombang permukaan</li>
+        <li>Kecepatan angin: >14 m/s, membentuk LC sejauh 20 m dengan sudut 15° dari arah angin</li>
+        <li>Terjadi di wilayah mixed layer perairan atas</li>
+        <li>Penting: membawa nutrien ke permukaan, mempengaruhi biologi, pumping kolom air</li>
+        <li>Dapat juga terjadi di sungai, danau, dan tambak</li>
+      </ul>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian III</h3>
+      <ul>
+        <li>Arus permukaan digerakkan angin; arus dalam digerakkan perbedaan densitas (termohalin)</li>
+        <li>Gaya Coriolis membelokkan arus ke kanan (BBU) / kiri (BBS)</li>
+        <li>Arus Ekman: permukaan berbelok 20°–45°, transpor massa 90° dari arah angin</li>
+        <li>Arus Geostrofik: keseimbangan gradien tekanan & Coriolis</li>
+        <li>Upwelling: air dingin+nutrient naik → indikator: T rendah, S tinggi, nutrien tinggi, klorofil tinggi</li>
+        <li>Upwelling Indonesia: Selatan Jawa & Laut Banda (Muson Tenggara, Juni–Oktober)</li>
+        <li>ARLINDO: arus Pasifik → Hindia lewat Indonesia, unik di lintang rendah</li>
+      </ul>
+    </div>
+
+    <div class="quiz-section">
+      <h3>❓ Latihan Soal Bagian III</h3>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Jelaskan mekanisme upwelling di pantai selatan Jawa! <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Pada musim muson tenggara (Juni–Oktober), angin bertiup dari Australia (tenggara). Transpor Ekman bergerak 90° ke kiri dari arah angin (di BBS) → massa air permukaan bergerak ke barat/barat laut menjauhi pantai → terjadi kekosongan di pantai → air dari lapisan bawah naik ke permukaan (upwelling). Tanda: suhu rendah (&lt;25°C), salinitas tinggi, klorofil-a tinggi, nutrien tinggi.</div>
+      </div>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Apa itu transpor Ekman dan ke mana arahnya di BBU vs BBS? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Transpor Ekman adalah perpindahan massa air secara horizontal akibat perpaduan gaya angin dan gaya Coriolis. Arahnya: di BBU (Belahan Bumi Utara) → 90° ke KANAN dari arah angin. Di BBS (Belahan Bumi Selatan) → 90° ke KIRI dari arah angin. Formula: |Me| = |τ/f| (stress angin dibagi parameter Coriolis).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: GELOMBANG -->
+  <div class="section-panel" id="section-4">
+    <br>
+    <div class="intro-card" data-emoji="〰️">
+      <div class="chapter-num">Bagian IV</div>
+      <h2>Gelombang Laut</h2>
+      <p>Karakteristik, mekanisme pembentukan, jenis-jenis gelombang, dan fenomena gelombang di perairan Indonesia</p>
+    </div>
+
+    <div class="section-h">〰️ Karakteristik Dasar Gelombang</div>
+    <table class="def-table">
+      <thead>
+        <tr><th>Parameter</th><th>Simbol</th><th>Definisi</th><th>Satuan</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tinggi Gelombang</td><td>H</td><td>Jarak vertikal antara puncak (crest) dan lembah (trough)</td><td>meter (m)</td></tr>
+        <tr><td>Panjang Gelombang</td><td>L / λ</td><td>Jarak horizontal antara dua puncak berurutan</td><td>meter (m)</td></tr>
+        <tr><td>Periode</td><td>T</td><td>Waktu yang diperlukan satu gelombang melewati satu titik</td><td>detik (s)</td></tr>
+        <tr><td>Frekuensi</td><td>f</td><td>Jumlah gelombang per detik (f = 1/T)</td><td>Hz (s⁻¹)</td></tr>
+        <tr><td>Kecepatan Fase</td><td>c / Cp</td><td>Kecepatan rambat puncak gelombang (c = L/T)</td><td>m/s</td></tr>
+        <tr><td>Kecepatan Grup</td><td>Cg</td><td>Kecepatan rambat energi gelombang</td><td>m/s</td></tr>
+        <tr><td>Steepness</td><td>H/L</td><td>Kecuraman gelombang; jika H/L > 1/7 → pecah</td><td>—</td></tr>
+        <tr><td>Amplitudo</td><td>a</td><td>Setengah tinggi gelombang (a = H/2)</td><td>meter (m)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-h">⚡ Pembangkit Gelombang</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">💨</div>
+          <h3>Gelombang Angin (Wind Wave)</h3>
+        </div>
+        <ul>
+          <li>Paling umum di lautan</li>
+          <li>Faktor: kecepatan angin, fetch (jarak hembusan), durasi</li>
+          <li>Kapasitas energi: E = ρgH²/8 (per satuan luas)</li>
+          <li>Semakin besar kecepatan angin & fetch → gelombang makin besar</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">🌊</div>
+          <h3>Jenis Gelombang Berdasarkan Air</h3>
+        </div>
+        <ul>
+          <li><strong>Deep Water:</strong> kedalaman &gt; L/2, tidak terpengaruh dasar</li>
+          <li><strong>Intermediate Water:</strong> kedalaman antara L/2 dan L/20</li>
+          <li><strong>Shallow Water:</strong> kedalaman &lt; L/20, kecepatan bergantung kedalaman (c = √gh)</li>
+          <li>Shallow water: gelombang melambat, tinggi naik → pecah (breaking)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">🏄 Transformasi Gelombang di Pantai</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-teal">↩️</div>
+          <h3>Refraksi</h3>
+        </div>
+        <p>Pembelokan arah rambat gelombang ketika memasuki perairan yang lebih dangkal. Bagian gelombang di perairan dangkal melambat, bagian lain tetap → gelombang berbelok mengikuti kontur kedalaman.</p>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-purple">🔀</div>
+          <h3>Difraksi</h3>
+        </div>
+        <p>Penyebaran energi gelombang di sekitar rintangan (tanjung, pemecah gelombang, pulau). Gelombang masuk ke daerah teduh (shadow zone) secara melengkung.</p>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-red">💥</div>
+          <h3>Breaking (Pecah Gelombang)</h3>
+        </div>
+        <p>Terjadi saat H/L > 1/7 atau kedalaman terlalu dangkal. Jenis: Spilling (mendidih), Plunging (menukik), Surging (menggelontor). Penting untuk surfing, erosi pantai, dan transportasi sedimen.</p>
+      </div>
+    </div>
+
+    <div class="section-h">🌊 Gelombang Internal</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-blue">🌊</div>
+        <h3>Internal Wave</h3>
+      </div>
+      <ul>
+        <li>Terjadi di bawah permukaan laut, pada lapisan perbedaan densitas (pycnocline/termoklin)</li>
+        <li>Amplitudo dapat sangat besar (puluhan meter) tapi tidak terlihat dari permukaan</li>
+        <li>Dibangkitkan oleh: pasang surut, arus melewati topografi, angin</li>
+        <li>Penting di Indonesia: Selat Lombok, Selat Sunda, Laut Banda (akibat ARLINDO & pasut)</li>
+        <li>Dampak: turbulensi internal, pencampuran vertikal massa air, pengaruh kapal selam</li>
+      </ul>
+    </div>
+
+    <div class="section-h">🌊 Gelombang Khusus</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-red">⚠️</div>
+          <h3>Tsunami</h3>
+        </div>
+        <ul>
+          <li>Gelombang panjang akibat gangguan dasar laut (gempa, longsor, letusan gunung api)</li>
+          <li>Di laut dalam: kecepatan sangat tinggi (500–900 km/jam), amplitudo kecil</li>
+          <li>Di pantai: melambat, amplitudo sangat besar → berbahaya</li>
+          <li>Indonesia: sangat rentan (Cincin Api Pasifik)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-orange">🌊</div>
+          <h3>Gelombang Kelvin & Rossby</h3>
+        </div>
+        <ul>
+          <li><strong>Gelombang Kelvin:</strong> merambat sepanjang pantai, dipengaruhi gaya Coriolis</li>
+          <li>Penting: kaitannya dengan upwelling/downwelling musiman di pantai Selatan Jawa</li>
+          <li><strong>Gelombang Rossby:</strong> skala besar, merambat ke barat, periode tahunan-dekadal</li>
+          <li>Keduanya berperan dalam ENSO (El Niño-La Niña)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box info">
+      <strong>📌 Hukum Gaussian dalam Gelombang</strong>
+      <p>Distribusi tinggi gelombang di laut mengikuti distribusi Gaussian (distribusi normal). Dari distribusi ini didapatkan parameter penting: <strong>H₁/₃</strong> (significant wave height) = rata-rata sepertiga gelombang tertinggi. Nilai ini yang biasa digunakan dalam prakiraan gelombang dan desain bangunan laut.</p>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian IV</h3>
+      <ul>
+        <li>Parameter gelombang: H (tinggi), L (panjang), T (periode), c (kecepatan), f (frekuensi)</li>
+        <li>Gelombang pecah jika H/L > 1/7 atau kedalaman terlalu dangkal</li>
+        <li>Deep water: c tidak bergantung kedalaman; Shallow water: c = √gh</li>
+        <li>Refraksi = pembelokan; Difraksi = penyebaran; Breaking = pecah</li>
+        <li>Gelombang internal terjadi di bawah permukaan (termoklin), amplitudo besar</li>
+        <li>Tsunami = gelombang panjang akibat gempa/longsor dasar laut, cepat di laut dalam</li>
+        <li>H₁/₃ (significant wave height) = rata-rata 1/3 gelombang tertinggi → standar prakiraan</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 5: PASANG SURUT -->
+  <div class="section-panel" id="section-5">
+    <br>
+    <div class="intro-card" data-emoji="🌕">
+      <div class="chapter-num">Bagian V</div>
+      <h2>Pasang Surut</h2>
+      <p>Gaya gravitasi pembangkit pasut, mekanisme, tipe pasang surut, dan sistem amphidromik</p>
+    </div>
+
+    <div class="section-h">🌕 Gaya Pembangkit Pasang Surut</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-blue">🌕</div>
+        <h3>Peran Bulan dan Matahari</h3>
+      </div>
+      <div class="formula-box">
+        F = G × M₁ × M₂ / R²
+        <small>G = 6,6 × 10⁻¹¹ Nm²kg⁻², M = massa, R = jarak</small>
+      </div>
+      <ul>
+        <li>Bulan lebih dekat (390× lebih dekat dari matahari) → pengaruh lebih besar walau massanya kecil</li>
+        <li>Massa matahari 27× lebih besar dari bulan, tapi jarak jauh lebih jauh</li>
+        <li>Gaya tarik bulan ~2× lebih besar dari matahari dalam memengaruhi pasut</li>
+        <li>Prinsip: makin jauh jaraknya, makin kecil gaya gravitasinya (kuadrat jarak)</li>
+      </ul>
+    </div>
+
+    <div class="section-h">📈 Tipe-Tipe Pasang Surut</div>
+    <table class="def-table">
+      <thead>
+        <tr><th>Tipe</th><th>Karakteristik</th><th>Contoh Lokasi</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Diurnal (Harian)</strong></td><td>1 pasang + 1 surut per hari, periode ~24 jam</td><td>Selat Makassar, Laut Jawa bagian barat</td></tr>
+        <tr><td><strong>Semi-Diurnal</strong></td><td>2 pasang + 2 surut per hari, periode ~12 jam</td><td>Selat Malaka, Pantai Selatan Jawa</td></tr>
+        <tr><td><strong>Mixed Dominan Diurnal</strong></td><td>Campuran, lebih dominan harian</td><td>Bali, Lombok</td></tr>
+        <tr><td><strong>Mixed Dominan Semi-Diurnal</strong></td><td>Campuran, lebih dominan 2× sehari</td><td>Beberapa wilayah Indonesia timur</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-h">🌑🌕 Purnama & Perbani</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">🌕</div>
+          <h3>Pasut Purnama (Spring Tide)</h3>
+        </div>
+        <p>Terjadi saat <strong>bulan purnama</strong> atau <strong>bulan baru</strong> (matahari-bumi-bulan segaris = syzygy)</p>
+        <ul>
+          <li>Gaya tarik bulan & matahari saling menguatkan</li>
+          <li>Amplitudo pasut sangat besar (pasang sangat tinggi, surut sangat rendah)</li>
+          <li>Interval: sekitar 2× per bulan</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-teal">🌓</div>
+          <h3>Pasut Perbani (Neap Tide)</h3>
+        </div>
+        <p>Terjadi saat <strong>bulan setengah</strong> (kuarter pertama / ketiga, posisi tegak lurus)</p>
+        <ul>
+          <li>Gaya tarik bulan & matahari saling melemahkan</li>
+          <li>Amplitudo pasut kecil (perbedaan pasang-surut minimal)</li>
+          <li>Interval: sekitar 2× per bulan, di antara spring tide</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">🌀 Sistem Amphidromik</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-purple">🌀</div>
+        <h3>Amphidromic System</h3>
+      </div>
+      <ul>
+        <li>Titik amphidromik: titik di mana amplitudo pasut = 0 (nol)</li>
+        <li>Ko-tidal lines (garis fase sama) berputar mengelilingi titik amphidromik</li>
+        <li>Di BBU: rotasi berlawanan jarum jam; di BBS: searah jarum jam (pengaruh Coriolis)</li>
+        <li>Di Indonesia: terdapat beberapa titik amphidromik di berbagai laut pedalaman</li>
+        <li>Penting untuk memahami pola pasut kompleks di perairan Indonesia yang terfragmentasi</li>
+      </ul>
+    </div>
+
+    <div class="section-h">🌊 Arus Pasang Surut</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-teal">🌊</div>
+        <h3>Pekala (Tidal Current)</h3>
+      </div>
+      <ul>
+        <li>Arus yang dibangkitkan oleh gaya pasang surut, bergerak secara periodik</li>
+        <li>Sangat kuat di selat-selat sempit (Selat Lombok, Selat Bali, Selat Madura)</li>
+        <li>Pengukuran: minimal 25 jam untuk tipe diurnal, minimal 13 jam untuk semi-diurnal</li>
+        <li>Analisis harmonik: memisahkan komponen-komponen frekuensi pasut (M2, S2, K1, O1, dll.)</li>
+        <li>Penting untuk navigasi kapal, desain dermaga, dan budidaya laut</li>
+      </ul>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian V</h3>
+      <ul>
+        <li>Bulan = pembangkit utama pasut (lebih dekat), matahari = sekunder</li>
+        <li>Gaya gravitasi: F = G × M₁ × M₂ / R² (kuadrat jarak menentukan besarnya)</li>
+        <li>Tipe pasut: Diurnal (1/hari), Semi-Diurnal (2/hari), Campuran Dominan Diurnal/Semi-Diurnal</li>
+        <li>Spring tide (purnama/baru): pasut besar; Neap tide (kuarter): pasut kecil</li>
+        <li>Titik amphidromik: amplitudo = 0, ko-tidal lines berputar mengelilinginya</li>
+        <li>Arus pasut sangat kuat di selat sempit Indonesia</li>
+        <li>Pengukuran: min. 25 jam (diurnal), min. 13 jam (semi-diurnal)</li>
+      </ul>
+    </div>
+
+    <div class="quiz-section">
+      <h3>❓ Latihan Soal Bagian V</h3>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Mengapa bulan lebih berpengaruh pada pasut dibanding matahari, padahal massa matahari jauh lebih besar? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Karena gaya gravitasi berbanding terbalik dengan kuadrat jarak (F = G×M₁×M₂/R²). Walaupun massa matahari ~27× lebih besar dari bulan, matahari berada 390× lebih jauh dari bumi dibanding bulan. Akibatnya, gaya tarik bulan terhadap bumi jauh lebih besar untuk membangkitkan pasut.</div>
+      </div>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Apa yang dimaksud dengan titik amphidromik? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Titik amphidromik adalah titik di dalam suatu perairan tertutup/semi-tertutup di mana amplitudo pasut sama dengan nol (tidak ada naik turun permukaan laut). Ko-tidal lines (garis yang menghubungkan titik dengan fase pasut sama) berputar mengelilingi titik ini. Di BBU berputar berlawanan jarum jam, di BBS searah jarum jam.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: INSTRUMENTASI -->
+  <div class="section-panel" id="section-6">
+    <br>
+    <div class="intro-card" data-emoji="🔬">
+      <div class="chapter-num">Bagian VI</div>
+      <h2>Data & Instrumentasi Kelautan</h2>
+      <p>Berbagai alat ukur oseanografi, teknik pengukuran, dan pengelolaan data kelautan</p>
+    </div>
+
+    <div class="section-h">🔬 Instrumen Pengukuran Utama</div>
+    <div class="instrument-grid">
+      <div class="instrument-card">
+        <div class="instr-name">CTD</div>
+        <div class="instr-full">Conductivity, Temperature, Depth</div>
+        <div class="instr-desc">Instrumen paling penting dalam oseanografi. Diturunkan ke kolom air dengan wire/tali, merekam profil vertikal secara real-time. Biasanya dilengkapi dengan rosette (botol Niskin) untuk pengambilan sampel air.</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Konduktivitas</span>
+          <span class="measure-tag">Suhu</span>
+          <span class="measure-tag">Kedalaman/Tekanan</span>
+          <span class="measure-tag">O₂ (opsional)</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">XBT</div>
+        <div class="instr-full">Expendable Bathythermograph</div>
+        <div class="instr-desc">Probe yang dijatuhkan dari kapal bergerak. Terdiri dari thermistor dalam probe + kawat tembaga ke kapal. Jatuh dengan kecepatan ~20 m/s. Data berakhir saat kawat habis. Sekali pakai (expendable). Akurasi: ±0,1°C.</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Suhu</span>
+          <span class="measure-tag">Kedalaman (tersirat)</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">ADCP</div>
+        <div class="instr-full">Acoustic Doppler Current Profiler</div>
+        <div class="instr-desc">Menggunakan efek Doppler: gelombang akustik dipancarkan ke kolom air, pantulan dari partikel (plankton, bubble, material tersuspensi) direkam untuk menghitung kecepatan arus. Dapat dioperasikan dari kapal (hull-mounted) atau dasar laut (mooring).</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Kecepatan Arus</span>
+          <span class="measure-tag">Arah Arus</span>
+          <span class="measure-tag">Profil Vertikal</span>
+          <span class="measure-tag">Time Series</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">Buoy & Mooring</div>
+        <div class="instr-full">Platform Pengamatan Tetap</div>
+        <div class="instr-desc">Konfigurasi sensor yang ditambatkan di satu titik. Mengukur parameter atmosfer (angin, radiasi, curah hujan, suhu udara) dan oseanografi (SST, konduktivitas, tekanan, arus) secara bersamaan dalam durasi panjang (6 bulan – 2 tahun).</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Suhu Laut</span>
+          <span class="measure-tag">Salinitas</span>
+          <span class="measure-tag">Angin</span>
+          <span class="measure-tag">Curah Hujan</span>
+          <span class="measure-tag">Arus</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">Secchi Disk</div>
+        <div class="instr-full">Piringan Kecerahan</div>
+        <div class="instr-desc">Piringan hitam-putih untuk mengukur kecerahan (transparansi) perairan. Ditemukan oleh Pietro A. Secchi. Diameter: 40–60 cm (laut), 20–30 cm (air tawar). Zona fotik ≈ 3 × kedalaman secchi.</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Kecerahan</span>
+          <span class="measure-tag">Zona Fotik</span>
+          <span class="measure-tag">Kekeruhan</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">Current Meter</div>
+        <div class="instr-full">Pengukur Arus Euler</div>
+        <div class="instr-desc">Diturunkan ke kedalaman tertentu, merekam massa air yang melewatinya (metode Euler). Pengukuran di 0,2d, 0,4d, 0,6d, 0,8d kedalaman perairan. Interval pengukuran: 30 menit – 1 jam.</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Kecepatan Arus</span>
+          <span class="measure-tag">Arah Arus</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">Topdal / Drogue</div>
+        <div class="instr-full">Current Drogue (Lagrangian)</div>
+        <div class="instr-desc">Pelampung + lempeng silang yang mengikuti gerakan massa air (metode Lagrangian). Terdiri dari bola, pipa, lempeng seng, pemberat, bendera. Bola ¾ tenggelam (mengurangi angin). Berpasangan dengan GPS & stopwatch.</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Arah Arus</span>
+          <span class="measure-tag">Kecepatan</span>
+          <span class="measure-tag">Lintasan</span>
+        </div>
+      </div>
+      <div class="instrument-card">
+        <div class="instr-name">Argo Float</div>
+        <div class="instr-full">Autonomous Profiling Float</div>
+        <div class="instr-desc">Robot otonom yang mengapung di laut, menyelam dan naik secara periodik (biasanya 0–2.000 m setiap 10 hari). Data dikirim via satelit (Argos/Iridium). Jaringan global Argo: >3.900 pelampung aktif di seluruh dunia.</div>
+        <div class="instr-measures">
+          <span class="measure-tag">Suhu</span>
+          <span class="measure-tag">Salinitas</span>
+          <span class="measure-tag">Kedalaman</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-h">📊 Metode Pengukuran Arus</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">🏄</div>
+          <h3>Metode Lagrangian</h3>
+        </div>
+        <p>Mengikuti pergerakan partikel air (Lagrangian = ikuti partikel)</p>
+        <ul>
+          <li>Alat: Topdal/Drogue, GPS Drifter, Argo Float</li>
+          <li>Menghasilkan lintasan/trajektori massa air</li>
+          <li>Baik untuk: memahami pola dispersi, polutan, larva ikan</li>
+          <li>Hanya untuk arus permukaan (topdal biasa)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-teal">📍</div>
+          <h3>Metode Euler</h3>
+        </div>
+        <p>Mengamati massa air yang melewati satu titik tetap (Euler = titik tetap)</p>
+        <ul>
+          <li>Alat: Current Meter, ADCP mooring</li>
+          <li>Menghasilkan data time series di satu lokasi</li>
+          <li>Baik untuk: memahami variabilitas temporal, karakteristik arus di satu titik</li>
+          <li>Dapat mengukur berbagai kedalaman sekaligus</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">💻 Format & Pengelolaan Data</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-green">💾</div>
+        <h3>Format Data Oseanografi</h3>
+      </div>
+      <ul>
+        <li><strong>netCDF</strong> (.nc) — format standar internasional untuk data oseanografi & atmosfer</li>
+        <li><strong>ASCII/text</strong> — data mentah dari instrumen yang mudah dibaca</li>
+        <li>Software pengolahan: MATLAB, ODV (Ocean Data View), Golden Surfer, R, Python</li>
+        <li>Database global: NODC (nodc.noaa.gov), GEBCO (batimetri), WOD (World Ocean Database)</li>
+        <li>Data satelit: SST dari MODIS, ketinggian laut dari Altimetri (AVISO)</li>
+      </ul>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian VI</h3>
+      <ul>
+        <li>CTD: instrumen utama, ukur konduktivitas, suhu, kedalaman secara profil vertikal</li>
+        <li>XBT: sekali pakai, dijatuhkan dari kapal bergerak, ukur suhu, akurasi ±0,1°C</li>
+        <li>ADCP: prinsip Doppler, ukur profil vertikal arus (kecepatan + arah) time series</li>
+        <li>Metode Lagrangian (ikuti partikel) vs Euler (titik tetap)</li>
+        <li>Buoy/Mooring: platform multi-parameter jangka panjang (6 bulan – 2 tahun)</li>
+        <li>Pengukuran pasut: min. 25 jam (diurnal), min. 13 jam (semi-diurnal)</li>
+        <li>Zona fotik = 3 × kedalaman Secchi disk</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 7: OPERASIONAL -->
+  <div class="section-panel" id="section-7">
+    <br>
+    <div class="intro-card" data-emoji="🛳️">
+      <div class="chapter-num">Bagian VII</div>
+      <h2>Operasional Oseanografi</h2>
+      <p>Sistem data oseanografi Indonesia, pelayaran ilmiah, dan observasi kelautan operasional</p>
+    </div>
+
+    <div class="section-h">🇮🇩 Oseanografi Operasional Indonesia</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">📡</div>
+          <h3>INAOFS</h3>
+        </div>
+        <p><strong>Indonesia Ocean Forecasting System</strong></p>
+        <ul>
+          <li>Sistem prakiraan laut operasional untuk Indonesia</li>
+          <li>Menghasilkan prediksi: arus, gelombang, suhu permukaan laut</li>
+          <li>Dikelola oleh Pusat Riset Kelautan, KKP</li>
+          <li>Penting untuk navigasi, keselamatan nelayan, dan manajemen pesisir</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-teal">🛰️</div>
+          <h3>INDESO</h3>
+        </div>
+        <p><strong>Indonesia Infrastructure Development for Space Oceanography</strong></p>
+        <ul>
+          <li>Infrastruktur pemanfaatan data satelit untuk oseanografi Indonesia</li>
+          <li>Data satelit: ketinggian laut, suhu permukaan, klorofil-a, warna laut</li>
+          <li>Mendukung pengelolaan sumber daya laut dan ikan</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-h">⚓ Pelayaran Ilmiah</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-orange">⚓</div>
+        <h3>Kapal Penelitian Indonesia</h3>
+      </div>
+      <ul>
+        <li><strong>Baruna Jaya</strong> (I–VIII) — armada kapal riset utama Indonesia milik BRIN</li>
+        <li>Peralatan: CTD rosette, ADCP hull-mounted, sonar multibeam, laboratorium</li>
+        <li>Beberapa pelayaran penting: MOMSEI 2011, INDOMIX 2010, PKIM 2010</li>
+        <li>Kerjasama internasional: WOCE, GO-SHIP, ARGO, CLIVAR</li>
+      </ul>
+    </div>
+
+    <div class="section-h">📊 Sumber Data Oseanografi Global</div>
+    <table class="def-table">
+      <thead>
+        <tr><th>Sumber Data</th><th>Tipe</th><th>Kegunaan</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>NODC / NOAA</td><td>In-situ historis</td><td>CTD, XBT, botol data dari seluruh dunia</td></tr>
+        <tr><td>GEBCO</td><td>Batimetri</td><td>Peta kedalaman laut global (sejak 1903)</td></tr>
+        <tr><td>Argo Program</td><td>In-situ real-time</td><td>>3.900 pelampung otonom global</td></tr>
+        <tr><td>AVISO / Copernicus</td><td>Satelit</td><td>Ketinggian permukaan laut (altimetri)</td></tr>
+        <tr><td>MODIS (Aqua/Terra)</td><td>Satelit</td><td>SST, klorofil-a, warna laut</td></tr>
+        <tr><td>ERA5 (ECMWF)</td><td>Reanalysis</td><td>Data angin, cuaca global historis</td></tr>
+        <tr><td>CMEMS</td><td>Model+Satelit</td><td>Arus, suhu, salinitas operasional Eropa</td></tr>
+        <tr><td>ODV (Ocean Data View)</td><td>Software</td><td>Visualisasi data oseanografi, Schlitzer 2012</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-h">🌐 Konteks Oseanografi Indonesia</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-green">🇮🇩</div>
+        <h3>Mengapa Indonesia Penting Secara Oseanografis?</h3>
+      </div>
+      <ul>
+        <li>¾ wilayah Indonesia adalah laut (~14.664 pulau)</li>
+        <li>Berada di pertemuan Samudra Pasifik & Hindia → unik secara oseanografis</li>
+        <li>Satu-satunya negara di lintang rendah yang dilalui arus antar-samudra (ARLINDO)</li>
+        <li>Berada di Cincin Api Pasifik → rentan tsunami, gempa bawah laut</li>
+        <li>Kekayaan hayati laut tertinggi di dunia (Coral Triangle)</li>
+        <li>Pola muson ganda (barat & timur) mengontrol dinamika laut secara musiman</li>
+        <li>Masih banyak area yang belum terpetakan secara detail → peluang riset</li>
+      </ul>
+    </div>
+
+    <div class="section-h">🔄 Fenomena Iklim yang Mempengaruhi Laut Indonesia</div>
+    <div class="topic-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-red">🌊</div>
+          <h3>ENSO (El Niño – La Niña)</h3>
+        </div>
+        <ul>
+          <li>Fluktuasi suhu permukaan laut di Pasifik Timur ekuator</li>
+          <li><strong>El Niño:</strong> pemanasan SPL Pasifik → kekeringan di Indonesia, upwelling lebih kuat</li>
+          <li><strong>La Niña:</strong> pendinginan SPL Pasifik → curah hujan tinggi di Indonesia</li>
+          <li>Mempengaruhi: upwelling selatan Jawa, klorofil-a, perikanan</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon icon-blue">💨</div>
+          <h3>Muson (Monsoon)</h3>
+        </div>
+        <ul>
+          <li><strong>Muson Barat</strong> (Des–Feb): angin dari Asia, curah hujan tinggi Jawa</li>
+          <li><strong>Muson Timur</strong> (Jun–Agt): angin dari Australia, kering, upwelling selatan Jawa</li>
+          <li><strong>Transisi</strong> (Mar–Mei, Sep–Nov): arah angin berubah</li>
+          <li>Mengontrol pola arus musiman di seluruh Indonesia</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="key-points">
+      <h3>⭐ Poin Kunci Bagian VII</h3>
+      <ul>
+        <li>INAOFS: sistem prakiraan laut operasional Indonesia (arus, gelombang, SST)</li>
+        <li>INDESO: infrastruktur data satelit oseanografi Indonesia</li>
+        <li>Baruna Jaya: armada kapal riset utama Indonesia</li>
+        <li>Data global penting: NODC, GEBCO, Argo, AVISO/Copernicus, MODIS</li>
+        <li>Indonesia: 14.664 pulau, ¾ laut, ARLINDO, Coral Triangle</li>
+        <li>ENSO mempengaruhi pola upwelling, klorofil-a, dan perikanan di Indonesia</li>
+        <li>Muson barat (Des–Feb) & muson timur (Jun–Agt) mengontrol dinamika laut Indonesia</li>
+      </ul>
+    </div>
+
+    <div class="quiz-section">
+      <h3>❓ Pertanyaan Review Akhir</h3>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Mengapa Indonesia sangat penting secara oseanografis di tingkat global? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">1) Satu-satunya negara di lintang rendah yang dilalui Arus Lintas Indonesia (ARLINDO), menghubungkan Samudra Pasifik dan Hindia. 2) Berada di pertemuan dua samudra besar → dinamika laut unik. 3) ¾ wilayah adalah laut dengan 14.664 pulau. 4) Coral Triangle (biodiversitas laut tertinggi dunia). 5) Berada di Cincin Api Pasifik → studi tsunami/gempa. 6) Pola muson ganda yang mengontrol variabilitas musiman.</div>
+      </div>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Jelaskan perbedaan metode pengukuran arus Lagrangian vs Euler! <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">Lagrangian: mengikuti pergerakan partikel air itu sendiri. Alat: drogue/topdal, GPS drifter, Argo float. Menghasilkan trajektori (lintasan) massa air. Euler: mengamati massa air yang melewati satu titik tetap. Alat: current meter, ADCP mooring. Menghasilkan data time series di satu lokasi. Lagrangian lebih baik untuk memahami distribusi polutan/larva; Euler lebih baik untuk memahami variabilitas temporal arus di satu tempat.</div>
+      </div>
+      <div class="quiz-q" onclick="toggleQuiz(this)">
+        <div class="q-text">Bagaimana ENSO mempengaruhi upwelling di selatan Jawa? <span class="toggle-hint">Klik untuk jawaban</span></div>
+        <div class="q-answer">El Niño memperkuat upwelling di selatan Jawa karena mengubah pola angin muson. Pada El Niño, angin dari Australia (muson tenggara) lebih kuat, memperkuat transpor Ekman menjauhi pantai → upwelling lebih intens. Akibatnya: suhu permukaan lebih dingin, klorofil-a lebih tinggi. Susanto & Marra (2005) menunjukkan konsentrasi klorofil-a meningkat signifikan di selatan Jawa pada periode El Niño.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>📚 Rangkuman dari: <strong>Dinamika Oseanografi — Deskripsi Karakteristik Massa Air dan Sirkulasi Laut</strong></p>
+  <p>Purba, N.P. & Pranowo, W.S. (2019) · UNPAD Press · Edisi Kedua · 395 halaman</p>
+  <p style="margin-top: 10px; font-size: 0.72rem;">🎓 Dibuat untuk persiapan ujian Oseanografi · Pariwisata Bahari</p>
+</div>
+
+<script>
+  var visited = [false, false, false, false, false, false, false, false];
+  visited[0] = true;
+
+  function showSection(n) {
+    document.querySelectorAll('.section-panel').forEach(function(p, i) {
+      p.classList.toggle('active', i === n);
+    });
+    document.querySelectorAll('.chapter-btn').forEach(function(b, i) {
+      b.classList.toggle('active', i === n);
+    });
+    visited[n] = true;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    var count = visited.filter(Boolean).length;
+    var pct = Math.round((count / 8) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = count + '/8';
+  }
+
+  function toggleQuiz(el) {
+    var wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.quiz-q').forEach(function(q) { q.classList.remove('open'); });
+    if (!wasOpen) el.classList.add('open');
+  }
+
+  updateProgress();
+</script>
 </body>
 </html>
